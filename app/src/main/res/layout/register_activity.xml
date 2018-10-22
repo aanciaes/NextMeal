@@ -3,11 +3,141 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" xmlns:tools="http://schemas.android.com/tools"
                 tools:context=".register.RegisterActivity"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
 >
+    <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="387dp"
+            android:layout_height="247dp"
+            app:srcCompat="@drawable/logo_placeholder"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="24dp"
+            android:contentDescription="@string/logo"
+            android:layout_centerHorizontal="true"/>
 
-    <Button
-            android:text="Button"
+    <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+        <ImageView
+                android:layout_width="44dp"
+                android:layout_height="32dp" app:srcCompat="@android:color/transparent"
+                android:id="@+id/checkUsername"
+                android:layout_alignParentTop="true" android:layout_alignEnd="@+id/usernameField"/>
+        <EditText
+                android:id="@+id/usernameField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:hint="@string/choseAnUsername"
+                android:background="#11000000"
+                android:drawableStart="@drawable/ic_action_username"
+                android:drawablePadding="10dp"
+                android:textSize="24sp"
+                android:textAlignment="viewStart"
+                android:layout_centerInParent="true"/>
+        <TextView android:id="@+id/availability" android:text="negative" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/passwordLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+        <EditText
+                android:id="@+id/passwordField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:background="#11000000"
+                android:hint="@string/password"
+                android:drawableStart="@drawable/ic_action_password"
+                android:drawablePadding="10dp"
+                android:textSize="24sp" android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="287dp"
+                android:textAlignment="viewStart"/>
+
+        <ImageButton
+                android:id="@+id/showHidePassword"
+                android:layout_width="42dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_action_show_password"
+                android:background="@null"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="64dp"
+                android:layout_alignTop="@+id/passwordField"
+                android:contentDescription="@string/showHidePasswordContentDesc"/>
+    </RelativeLayout>
+    <RelativeLayout
+            android:id="@+id/repeatPasswordLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+        <EditText
+                android:id="@+id/repeatPasswordField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:background="#11000000"
+                android:hint="@string/repeatPasswordText"
+                android:drawableStart="@drawable/ic_action_password"
+                android:drawablePadding="10dp"
+                android:textSize="24sp" android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="222dp"
+                android:textAlignment="viewStart"/>
+
+        <ImageButton
+                android:id="@+id/showHideRepeatPassword"
+                android:layout_width="42dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_action_show_password"
+                android:background="@null"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="64dp"
+                android:layout_alignTop="@+id/repeatPasswordField"
+                android:contentDescription="@string/showHidePasswordContentDesc"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:srcCompat="@android:color/transparent"
+                android:id="@+id/passwordsMatch"/>
+
+        <TextView
+                android:text="negative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/passwordsMatchText" android:visibility="gone"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+            android:id="@+id/registerButtonCardView"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            app:cardBackgroundColor="@color/colorAccent"
+            android:layout_width="300dp" android:layout_centerHorizontal="true" android:layout_marginBottom="116dp"
+            app:cardCornerRadius="25dp" app:cardElevation="10dp">
+
+        <RelativeLayout
+                android:id="@+id/registerButtonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+            <TextView
+                    android:text="@string/registerButtonText"
+                    android:textColor="#fff"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/registerButtonText" android:textSize="18sp"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <TextView
+            android:id="@+id/registerText"
+            android:text="@string/registerText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true" android:layout_marginTop="215dp" android:id="@+id/button"/>
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="44dp"/>
 </RelativeLayout>

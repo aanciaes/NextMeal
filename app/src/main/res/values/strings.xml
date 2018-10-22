@@ -12,4 +12,8 @@
     <string name="description_fingerprint_icon">Fingerprint icon</string>
     <string name="use_password">Use Password</string>
 
+    <string name="choseAnUsername">Chose Username</string>
+    <string name="repeatPasswordText">Repeat Password</string>
+    <string name="registerButtonText">Register</string>
+
 </resources>
