@@ -9,7 +9,7 @@ import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.widget.*
-import pt.unl.fct.mealroullete.MockDatabase
+import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.login.LoginActivity
 
