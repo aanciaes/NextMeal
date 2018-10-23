@@ -19,7 +19,14 @@ object MockDatabase {
             if (it.username == username)
                 return true
         }
+        return false
+    }
 
+    fun login (username: String, password: String): Boolean {
+        users.forEach {
+            if (it.username == username && it.password == password)
+                return true
+        }
         return false
     }
 }

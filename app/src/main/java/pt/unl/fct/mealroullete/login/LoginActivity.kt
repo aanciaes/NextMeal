@@ -8,6 +8,7 @@ import android.support.v7.widget.CardView
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.widget.*
+import pt.unl.fct.mealroullete.MockDatabase
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.register.RegisterActivity
 
@@ -80,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
             val username = findViewById<EditText>(R.id.usernameField)
             val password = findViewById<EditText>(R.id.passwordField)
 
-            if (username.text.toString() == "manel" && password.text.toString() == "sougay") {
+            if (MockDatabase.login(username.text.toString(), password.text.toString())) {
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show();
