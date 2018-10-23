@@ -15,5 +15,6 @@
     <string name="choseAnUsername">Chose Username</string>
     <string name="repeatPasswordText">Repeat Password</string>
     <string name="registerButtonText">Register</string>
+    <string name="backToLoginText">Already have an account? Log in here</string>
 
 </resources>

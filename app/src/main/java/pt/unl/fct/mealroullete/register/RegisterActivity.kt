@@ -1,5 +1,6 @@
 package pt.unl.fct.mealroullete.register
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.CardView
@@ -10,6 +11,7 @@ import android.text.method.PasswordTransformationMethod
 import android.widget.*
 import pt.unl.fct.mealroullete.MockDatabase
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.login.LoginActivity
 
 class RegisterActivity: AppCompatActivity()  {
 
@@ -17,7 +19,6 @@ class RegisterActivity: AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.register_activity)
         addListeners()
-        //TODO fix password match
     }
 
     private fun addListeners () {
@@ -26,6 +27,7 @@ class RegisterActivity: AppCompatActivity()  {
         onClickShowPassword()
         onClickShowRepeatPassword()
         passwordsMatch()
+        backToLoginListener()
     }
 
      private fun checkUsername () {
@@ -114,19 +116,25 @@ class RegisterActivity: AppCompatActivity()  {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val passwordsMatchView = findViewById<ImageView>(R.id.passwordsMatch)
                 val passwordsMatchText = findViewById<TextView>(R.id.passwordsMatchText)
                 val passwordField = findViewById<EditText>(R.id.passwordField)
 
-                if (s != passwordField) {
-                    passwordsMatchView.setImageResource(R.drawable.ic_action_check_username_negative)
+                if (s.toString() != passwordField.text.toString()) {
+                    repeatPasswordField.setBackgroundResource(R.drawable.password_matching_negative)
                     passwordsMatchText.text = "negative"
                 } else {
-                    passwordsMatchView.setImageResource(R.drawable.ic_action_check_username_positive)
+                    repeatPasswordField.setBackgroundResource(R.drawable.password_matching_positive)
                     passwordsMatchText.text = "positive"
                 }
             }
             override fun afterTextChanged(s: Editable) {}
         })
+    }
+
+    private fun backToLoginListener () {
+        val registerJump = findViewById<TextView>(R.id.backToLoginText)
+        registerJump.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
     }
 }
