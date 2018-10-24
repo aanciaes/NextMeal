@@ -30,9 +30,9 @@ class LoginActivity : AppCompatActivity() {
 
     // Changes between hidden or clear text password
     private fun onClickShowPassword() {
-        val showHidePassword = findViewById<ImageButton>(R.id.showHidePassword)
+        val showHidePassword = findViewById<ImageButton>(R.id.show_hide_password)
         showHidePassword.setOnClickListener {
-            val passwordField = findViewById<EditText>(R.id.passwordField)
+            val passwordField = findViewById<EditText>(R.id.password_field)
 
             if (passwordField.transformationMethod is PasswordTransformationMethod) {
                 passwordField.transformationMethod = HideReturnsTransformationMethod.getInstance();
@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
         val dialog = Dialog(this);
         dialog.setContentView(R.layout.fingerprint_dialog_content);
 
-        val usePassword = dialog.findViewById<Button>(R.id.usePasswordButton)
+        val usePassword = dialog.findViewById<Button>(R.id.use_password_button)
         usePassword.setOnClickListener {
             dialog.dismiss()
         }
@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
 
     // Changes from password authentication to fingerprint authentication
     private fun loginWithFingerprint() {
-        val loginWithFingerPrint = findViewById<ImageButton>(R.id.fingerprintLogin)
+        val loginWithFingerPrint = findViewById<ImageButton>(R.id.fingerprint_login)
         loginWithFingerPrint.setOnClickListener {
             showFingerprintLogin()
         }
@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
 
     // Jumps to register activity
     private fun noAccountYetRegister() {
-        val registerJump = findViewById<TextView>(R.id.registerText)
+        val registerJump = findViewById<TextView>(R.id.register_text)
         registerJump.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -76,10 +76,10 @@ class LoginActivity : AppCompatActivity() {
     // Performs simple username/password authentication
     // TODO: jump to home page
     private fun login() {
-        val login = findViewById<CardView>(R.id.loginButtonCardView)
+        val login = findViewById<CardView>(R.id.login_button_card_view)
         login.setOnClickListener {
-            val username = findViewById<EditText>(R.id.usernameField)
-            val password = findViewById<EditText>(R.id.passwordField)
+            val username = findViewById<EditText>(R.id.username_field)
+            val password = findViewById<EditText>(R.id.password_field)
 
             if (MockDatabase.login(username.text.toString(), password.text.toString())) {
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show();
