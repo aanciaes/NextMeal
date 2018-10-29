@@ -14,4 +14,9 @@
     <string name="repeat_password_text">Repeat Password</string>
     <string name="register_button_text">Register</string>
     <string name="back_to_login_text">Already have an account? Log in here</string>
+    <string name="title_activity_home_page">HomePage</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_generator_home">GeneratorHome</string>
 </resources>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomePage">
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" >
+
+    </android.support.design.widget.BottomNavigationView>
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="609dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toTopOf="@+id/navigation">
+
+        <TableRow android:layout_weight="0.5">
+
+            <ImageButton
+                android:id="@+id/breakfast"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_action_check_username_negative" />
+
+            <ImageButton
+                android:id="@+id/lunch"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:src="@drawable/ic_action_check_username_negative" />
+
+        </TableRow>
+
+        <TableRow android:layout_weight="0.5">
+
+            <ImageButton
+                android:id="@+id/dinner"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:src="@drawable/ic_action_check_username_negative" />
+
+
+            <ImageButton
+                android:id="@+id/brunch"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:src="@drawable/ic_action_check_username_negative" />
+
+        </TableRow>
+
+    </TableLayout>
+    <TableLayout
+        android:id="@+id/tabWrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+
+        android:layout_weight="1"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tab1"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Random Generator"
+                android:gravity = "center"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tab2"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Add Recipe"
+                android:gravity = "center"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tab3"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Favorites"
+                android:gravity = "center"
+                android:textSize="20dp" />
+
+
+        </TableRow>
+
+
+    </TableLayout>
+</android.support.constraint.ConstraintLayout>

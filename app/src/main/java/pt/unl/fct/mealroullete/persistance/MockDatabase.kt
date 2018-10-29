@@ -6,6 +6,10 @@ object MockDatabase {
 
     private val users = mutableListOf<User>()
 
+    init {
+        users.add(User(1, "admin", "admin"))
+    }
+
     fun count (): Int {
         return users.size
     }

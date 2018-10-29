@@ -8,6 +8,7 @@ import android.support.v7.widget.CardView
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.widget.*
+import pt.unl.fct.mealroullete.HomePage
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.register.RegisterActivity
@@ -82,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
             val password = findViewById<EditText>(R.id.password_field)
 
             if (MockDatabase.login(username.text.toString(), password.text.toString())) {
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show();
+                startActivity(Intent(this, HomePage::class.java))
             } else {
                 Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show();
             }
