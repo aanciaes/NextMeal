@@ -20,7 +20,7 @@
         app:menu="@menu/navigation" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/customize"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -31,13 +31,13 @@
         android:text="Customize Generator"
         android:textColor="@android:color/white"
         android:textSize="26dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/random"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/random"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -60,13 +60,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@null"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:src="@drawable/big_example_meal"
+        app:layout_constraintBottom_toTopOf="@+id/customize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.607"
-        android:background="@null"
-        android:src="@drawable/ic_action_check_username_negative" />
+        app:layout_constraintVertical_bias="0.607" />
 
     <ImageButton
         android:id="@+id/imageView2"
@@ -82,7 +82,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.831"
         android:background="@null"
-        android:src="@drawable/ic_action_check_username_negative" />
+        android:src="@drawable/meal_highlight_example" />
 
     <ImageButton
         android:id="@+id/imageView3"
@@ -93,10 +93,11 @@
         android:layout_marginBottom="48dp"
 
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/customize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         android:background="@null"
-        android:src="@drawable/ic_action_check_username_negative" />
+        android:src="@drawable/meal_highlight_example2" />
+
 </android.support.constraint.ConstraintLayout>

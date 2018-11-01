@@ -21,6 +21,7 @@
 
     </android.support.design.widget.BottomNavigationView>
 
+
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="fill_parent"
