@@ -75,7 +75,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // Performs simple username/password authentication
-    // TODO: jump to home page
     private fun login() {
         val login = findViewById<CardView>(R.id.login_button_card_view)
         login.setOnClickListener {

@@ -39,12 +39,17 @@ class RegisterActivity: AppCompatActivity()  {
              override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                  val availabilityImage = findViewById<ImageView>(R.id.check_username)
 
-                 if (checkUsernameAvailability(s.toString())) {
+                 if (count == 0){ // If user deletes all text from username field
                      availabilityImage.setImageResource(R.drawable.ic_action_check_username_negative)
                      availability.text = "negative"
-                 } else {
-                     availabilityImage.setImageResource(R.drawable.ic_action_check_username_positive)
-                     availability.text = "positive"
+                 }else {
+                     if (checkUsernameAvailability(s.toString())) {
+                         availabilityImage.setImageResource(R.drawable.ic_action_check_username_negative)
+                         availability.text = "negative"
+                     } else {
+                         availabilityImage.setImageResource(R.drawable.ic_action_check_username_positive)
+                         availability.text = "positive"
+                     }
                  }
              }
              override fun afterTextChanged(s: Editable) {}
