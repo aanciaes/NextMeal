@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdvancedGeneratorStep1">
+    tools:context=".mealgenerator.customize.AdvancedGeneratorStep1">
 
     <Button
         android:id="@+id/buttonNext"

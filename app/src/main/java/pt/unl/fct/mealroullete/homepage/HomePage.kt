@@ -1,4 +1,4 @@
-package pt.unl.fct.mealroullete
+package pt.unl.fct.mealroullete.homepage
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.ImageButton
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_home_page.*
+import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
+import pt.unl.fct.mealroullete.R
 
 class HomePage : AppCompatActivity() {
 

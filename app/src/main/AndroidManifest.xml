@@ -20,12 +20,12 @@
         </activity>
         <activity android:name=".register.RegisterActivity" />
         <activity
-            android:name=".HomePage"
+            android:name=".homepage.HomePage"
             android:label="@string/title_activity_home_page" />
         <activity
-            android:name=".GeneratorHome"
+            android:name=".mealgenerator.GeneratorHome"
             android:label="@string/title_activity_generator_home" />
-        <activity android:name=".AdvancedGeneratorStep1"></activity>
+        <activity android:name=".mealgenerator.customize.AdvancedGeneratorStep1"></activity>
     </application>
 
 </manifest>

@@ -1,12 +1,13 @@
-package pt.unl.fct.mealroullete
+package pt.unl.fct.mealroullete.mealgenerator
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
-import android.widget.ImageButton
 import kotlinx.android.synthetic.main.activity_generator_home.*
+import pt.unl.fct.mealroullete.mealgenerator.customize.AdvancedGeneratorStep1
+import pt.unl.fct.mealroullete.R
 
 class GeneratorHome : AppCompatActivity() {
 

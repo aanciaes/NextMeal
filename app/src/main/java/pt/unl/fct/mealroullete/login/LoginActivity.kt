@@ -8,7 +8,7 @@ import android.support.v7.widget.CardView
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.widget.*
-import pt.unl.fct.mealroullete.HomePage
+import pt.unl.fct.mealroullete.homepage.HomePage
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.register.RegisterActivity
