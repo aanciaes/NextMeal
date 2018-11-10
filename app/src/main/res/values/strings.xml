@@ -19,4 +19,18 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_generator_home">GeneratorHome</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="common_drawer_item_recipe">Recipe</string>
+    <string name="common_drawer_item_history">History</string>
+    <string name="common_drawer_item_calculator">Calculator</string>
+    <string name="common_drawer_item_poll">Poll</string>
+    <string name="common_drawer_item_profile">Profile</string>
+    <string name="manifest_activity_calculator">Calculator</string>
+    <string name="manifest_activity_history">History</string>
+    <string name="manifest_activity_poll">Poll</string>
+    <string name="manifest_activity_profile">Profile</string>
+    <string name="manifest_activity_recipe">Recipe</string>
+    <string name="common_header_user_full_name">Android Studio</string>
+    <string name="common_header_user_email_address">android.studio@android.com</string>
 </resources>

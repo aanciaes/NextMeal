@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/common_drawer_item_recipe"
+            android:icon="@drawable/ic_common_drawer_item_recipe"
+            android:title="@string/common_drawer_item_recipe" />
+        <item
+            android:id="@+id/common_drawer_item_history"
+            android:icon="@drawable/ic_common_drawer_item_history"
+            android:title="@string/common_drawer_item_history" />
+        <item
+            android:id="@+id/common_drawer_item_calculator"
+            android:icon="@drawable/ic_common_drawer_item_calculator"
+            android:title="@string/common_drawer_item_calculator" />
+        <item
+            android:id="@+id/common_drawer_item_poll"
+            android:icon="@drawable/ic_common_drawer_item_poll"
+            android:title="@string/common_drawer_item_poll" />
+        <item
+            android:id="@+id/common_drawer_item_profile"
+            android:icon="@drawable/ic_common_drawer_item_profile"
+            android:title="@string/common_drawer_item_profile" />
+    </group>
+
+</menu>
