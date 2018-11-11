@@ -7,12 +7,15 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.Button
+import kotlinx.android.synthetic.main.activity_generator_home.*
 import pt.unl.fct.mealroullete.homepage.calculator.CalculatorActivity
 import pt.unl.fct.mealroullete.homepage.history.HistoryActivity
 import pt.unl.fct.mealroullete.homepage.poll.PollActivity
 import pt.unl.fct.mealroullete.homepage.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_recipe.*
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.mealgenerator.customize.AdvancedGeneratorStep1
 
 class RecipeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -30,6 +33,13 @@ class RecipeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         recipe_pager.adapter = RecipePagerAdapter(supportFragmentManager)
         recipe_tab.setupWithViewPager(recipe_pager)
+
+        val advancedGeneratorStep1 = findViewById<Button>(R.id.customize)
+        if (advancedGeneratorStep1 !== null){
+            advancedGeneratorStep1.setOnClickListener {
+                startActivity(Intent(this, AdvancedGeneratorStep1::class.java))
+            }
+        }
     }
 
     override fun onBackPressed() {

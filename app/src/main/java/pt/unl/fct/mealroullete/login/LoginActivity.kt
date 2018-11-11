@@ -11,6 +11,7 @@ import android.widget.*
 import pt.unl.fct.mealroullete.homepage.HomePage
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import pt.unl.fct.mealroullete.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -82,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
             val password = findViewById<EditText>(R.id.password_field)
 
             if (MockDatabase.login(username.text.toString(), password.text.toString())) {
-                startActivity(Intent(this, HomePage::class.java))
+                startActivity(Intent(this, RecipeActivity::class.java))
             } else {
                 Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show();
             }
