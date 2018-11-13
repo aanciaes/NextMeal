@@ -20,6 +20,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         setMainListeners()
+
+        setUsernameFromRegisterActivity (intent.getStringExtra("registeredUsername"))
     }
 
     // Set all listeners for this activity
@@ -28,6 +30,13 @@ class LoginActivity : AppCompatActivity() {
         loginWithFingerprint();
         noAccountYetRegister()
         login()
+    }
+
+    private fun setUsernameFromRegisterActivity (username: String?) {
+        if (username != null){
+            val usernameField = findViewById<EditText>(R.id.username_field)
+            usernameField.setText(username, TextView.BufferType.EDITABLE)
+        }
     }
 
     // Changes between hidden or clear text password

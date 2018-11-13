@@ -79,22 +79,23 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show()
                 } else {
                     MockDatabase.addUser(username.text.toString(), password.text.toString())
-                    //Toast.makeText(this, "Account created with success", Toast.LENGTH_LONG).show()
-                    showRegisterSuccessful()
+                    showRegisterSuccessful(username.text.toString())
                 }
             }
         }
     }
 
     // Shows fingerprint dialog
-    private fun showRegisterSuccessful() {
+    private fun showRegisterSuccessful(username: String) {
         val builder: AlertDialog.Builder = this.let {
             AlertDialog.Builder(it)
         }
         builder.setMessage("Account created with success")
         builder.apply {
             setPositiveButton("OK") { _, _ ->
-                startActivity(Intent(this.context, LoginActivity::class.java))
+                val intent: Intent = Intent(this.context, LoginActivity::class.java)
+                intent.putExtra("registeredUsername", username)
+                startActivity(intent)
             }
         }
 
