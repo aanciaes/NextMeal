@@ -1,5 +1,7 @@
 package pt.unl.fct.mealroullete.register
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -9,11 +11,11 @@ import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.widget.*
-import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.login.LoginActivity
+import pt.unl.fct.mealroullete.persistance.MockDatabase
 
-class RegisterActivity: AppCompatActivity()  {
+class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +23,7 @@ class RegisterActivity: AppCompatActivity()  {
         addListeners()
     }
 
-    private fun addListeners () {
+    private fun addListeners() {
         checkUsername()
         registerListener()
         onClickShowPassword()
@@ -30,37 +32,38 @@ class RegisterActivity: AppCompatActivity()  {
         backToLoginListener()
     }
 
-     private fun checkUsername () {
-         val availability = findViewById<TextView>(R.id.availability)
-         val username = findViewById<EditText>(R.id.username_field)
-         username.addTextChangedListener(object : TextWatcher {
-             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+    private fun checkUsername() {
+        val availability = findViewById<TextView>(R.id.availability)
+        val username = findViewById<EditText>(R.id.username_field)
+        username.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                 val availabilityImage = findViewById<ImageView>(R.id.check_username)
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val availabilityImage = findViewById<ImageView>(R.id.check_username)
 
-                 if (count == 0){ // If user deletes all text from username field
-                     availabilityImage.setImageResource(R.drawable.ic_action_check_username_negative)
-                     availability.text = "negative"
-                 }else {
-                     if (checkUsernameAvailability(s.toString())) {
-                         availabilityImage.setImageResource(R.drawable.ic_action_check_username_negative)
-                         availability.text = "negative"
-                     } else {
-                         availabilityImage.setImageResource(R.drawable.ic_action_check_username_positive)
-                         availability.text = "positive"
-                     }
-                 }
-             }
-             override fun afterTextChanged(s: Editable) {}
-         })
-     }
+                if (count == 0) { // If user deletes all text from username field
+                    availabilityImage.setImageResource(R.drawable.ic_action_check_username_negative)
+                    availability.text = "negative"
+                } else {
+                    if (checkUsernameAvailability(s.toString())) {
+                        availabilityImage.setImageResource(R.drawable.ic_action_check_username_negative)
+                        availability.text = "negative"
+                    } else {
+                        availabilityImage.setImageResource(R.drawable.ic_action_check_username_positive)
+                        availability.text = "positive"
+                    }
+                }
+            }
 
-    private fun checkUsernameAvailability (username: String): Boolean {
+            override fun afterTextChanged(s: Editable) {}
+        })
+    }
+
+    private fun checkUsernameAvailability(username: String): Boolean {
         return MockDatabase.userExists(username)
     }
 
-    private fun registerListener () {
+    private fun registerListener() {
         val register = findViewById<CardView>(R.id.register_button_card_view)
 
         register.setOnClickListener {
@@ -69,17 +72,34 @@ class RegisterActivity: AppCompatActivity()  {
             val password = findViewById<EditText>(R.id.password_field)
             val repeatPassword = findViewById<EditText>(R.id.repeat_password_field)
 
-            if (availability.text == "negative"){
+            if (availability.text == "negative") {
                 Toast.makeText(this, "Username is not available", Toast.LENGTH_LONG).show()
             } else {
-                if (password.text.toString() != repeatPassword.text.toString()){
+                if (password.text.toString() != repeatPassword.text.toString()) {
                     Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show()
                 } else {
                     MockDatabase.addUser(username.text.toString(), password.text.toString())
-                    Toast.makeText(this, "Account created with success", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(this, "Account created with success", Toast.LENGTH_LONG).show()
+                    showRegisterSuccessful()
                 }
             }
         }
+    }
+
+    // Shows fingerprint dialog
+    private fun showRegisterSuccessful() {
+        val builder: AlertDialog.Builder = this.let {
+            AlertDialog.Builder(it)
+        }
+        builder.setMessage("Account created with success")
+        builder.apply {
+            setPositiveButton("OK") { _, _ ->
+                startActivity(Intent(this.context, LoginActivity::class.java))
+            }
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     // Changes between hidden or clear text password
@@ -114,7 +134,7 @@ class RegisterActivity: AppCompatActivity()  {
         }
     }
 
-    private fun passwordsMatch () {
+    private fun passwordsMatch() {
         val repeatPasswordField = findViewById<EditText>(R.id.repeat_password_field)
 
         repeatPasswordField.addTextChangedListener(object : TextWatcher {
@@ -132,11 +152,12 @@ class RegisterActivity: AppCompatActivity()  {
                     passwordsMatchText.text = "positive"
                 }
             }
+
             override fun afterTextChanged(s: Editable) {}
         })
     }
 
-    private fun backToLoginListener () {
+    private fun backToLoginListener() {
         val registerJump = findViewById<TextView>(R.id.back_to_login_text)
         registerJump.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
