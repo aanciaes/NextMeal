@@ -7,15 +7,16 @@
         android:layout_height="match_parent"
         android:background="@drawable/gradient_background"
         tools:context=".login.LoginActivity">
+
     <ImageView
-            android:id="@+id/logo_image"
-            android:layout_width="387dp"
-            android:layout_height="247dp"
-            app:srcCompat="@drawable/logo_placeholder"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="24dp"
-            android:contentDescription="@string/logo"
-            android:layout_centerHorizontal="true"/>
+        android:id="@+id/logo_image"
+        android:layout_width="387dp"
+        android:layout_height="247dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/logo"
+        app:srcCompat="@drawable/logo" />
     <EditText
             android:id="@+id/username_field"
             android:layout_width="wrap_content"

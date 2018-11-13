@@ -21,10 +21,6 @@ class RandomRecipeFragment : Fragment(), View.OnClickListener {
             R.id.lunch, R.id.brunch, R.id.breakfast, R.id.dinner -> {
                 startActivity(Intent(this.context, GeneratorHome::class.java))
             }
-            else -> {
-                println(R.id.lunch)
-                println(v?.id)
-            }
         }
     }
 
