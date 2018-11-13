@@ -34,12 +34,6 @@ class RecipeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         recipe_pager.adapter = RecipePagerAdapter(supportFragmentManager)
         recipe_tab.setupWithViewPager(recipe_pager)
 
-        val advancedGeneratorStep1 = findViewById<Button>(R.id.customize)
-        if (advancedGeneratorStep1 !== null){
-            advancedGeneratorStep1.setOnClickListener {
-                startActivity(Intent(this, AdvancedGeneratorStep1::class.java))
-            }
-        }
     }
 
     override fun onBackPressed() {
