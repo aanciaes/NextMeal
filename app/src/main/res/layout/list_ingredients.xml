@@ -6,31 +6,35 @@
     android:layout_marginTop="40dp">
 
     <LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="25">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="25"
+        android:orientation="vertical">
 
 
         <ImageButton
             android:id="@+id/icon1"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="70dp"
             android:layout_weight="1"
             android:background="@null"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_action_check_username_negative" />
 
         <TextView
-            android:gravity="center"
-            android:text="TextView1"
+            android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:id="@+id/textView1"/>
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="TextView1" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_weight="25"
         android:orientation="vertical">
 
@@ -38,7 +42,7 @@
         <ImageButton
             android:id="@+id/icon2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_weight="1"
             android:background="@null"
             android:scaleType="fitCenter"
@@ -48,6 +52,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="TextView2" />
     </LinearLayout>
@@ -55,6 +60,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_weight="25"
         android:orientation="vertical">
 
@@ -62,7 +68,7 @@
         <ImageButton
             android:id="@+id/icon3"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="70dp"
             android:layout_weight="1"
             android:background="@null"
             android:scaleType="fitCenter"
@@ -72,6 +78,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="TextView3" />
     </LinearLayout>
@@ -79,6 +86,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="0dp"
         android:layout_weight="25"
         android:orientation="vertical">
 
@@ -86,7 +95,7 @@
         <ImageButton
             android:id="@+id/icon4"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="70dp"
             android:layout_weight="1"
             android:background="@null"
             android:scaleType="fitCenter"
@@ -96,6 +105,7 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="TextView4" />
     </LinearLayout>

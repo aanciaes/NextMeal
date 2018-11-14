@@ -26,6 +26,9 @@
             android:name=".mealgenerator.GeneratorHome"
             android:label="@string/title_activity_generator_home" />
         <activity android:name=".mealgenerator.customize.AdvancedGeneratorStep1"></activity>
+        <activity android:name=".mealgenerator.customize.AdvancedGeneratorStep2"></activity>
+        <activity android:name=".mealgenerator.customize.RecipePresentation"></activity>
+        <activity android:name=".homepage.recipe.CardFlipActivity"></activity>
         <activity
                 android:name=".homepage.calculator.CalculatorActivity"
                 android:label="@string/manifest_activity_calculator"

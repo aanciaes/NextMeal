@@ -7,13 +7,12 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ListView
 import pt.unl.fct.mealroullete.R
-import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
 
-class AdvancedGeneratorStep1 : AppCompatActivity() {
+class AdvancedGeneratorStep2 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_advanced_generator_step1)
+        setContentView(R.layout.activity_advanced_generator_step2)
         val ingredients = findViewById<ListView>(R.id.list_ingredients)
 
         val ing1 = IngredientRow(1, "Carne", "url", "peixe", "sopa", "atum")
@@ -22,24 +21,21 @@ class AdvancedGeneratorStep1 : AppCompatActivity() {
         val arrayList = ArrayList<IngredientRow>().apply {
             add(ing1)
             add(ing2)
-            add(ing1)
-            add(ing2)
-            add(ing1)
-            add(ing2)
 
         }
 
         val adapter = IngredientListAdaptor(this, R.layout.list_ingredients, arrayList)
         ingredients.adapter = adapter
 
-        val advancedGeneratorStep2 = findViewById<Button>(R.id.buttonNext)
-        advancedGeneratorStep2.setOnClickListener {
-            startActivity(Intent(this, AdvancedGeneratorStep2::class.java))
+        val back = findViewById<ImageButton>(R.id.backToStep1)
+        back.setOnClickListener {
+            startActivity(Intent(this, AdvancedGeneratorStep1::class.java))
         }
 
-        val back = findViewById<ImageButton>(R.id.backToGeneratorHome)
-        back.setOnClickListener {
-            startActivity(Intent(this, GeneratorHome::class.java))
+        val generate = findViewById<Button>(R.id.buttonGenerate)
+        generate.setOnClickListener {
+            startActivity(Intent(this, RecipePresentation::class.java))
         }
+
     }
 }
