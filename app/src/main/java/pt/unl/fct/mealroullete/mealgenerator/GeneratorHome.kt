@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.ImageButton
-import pt.unl.fct.mealroullete.mealgenerator.customize.AdvancedGeneratorStep1
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
+import pt.unl.fct.mealroullete.mealgenerator.customize.CustomizeGeneratorMainCourse
 
 class GeneratorHome : AppCompatActivity() {
 
@@ -21,7 +21,7 @@ class GeneratorHome : AppCompatActivity() {
         }
         val advancedGeneratorStep1 = findViewById<Button>(R.id.customize)
         advancedGeneratorStep1.setOnClickListener {
-            startActivity(Intent(this, AdvancedGeneratorStep1::class.java))
+            startActivity(Intent(this, CustomizeGeneratorMainCourse::class.java))
         }
     }
 }

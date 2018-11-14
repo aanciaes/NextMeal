@@ -1,30 +1,28 @@
-package pt.unl.fct.mealroullete.mealgenerator.customizeGenerator
+package pt.unl.fct.mealroullete.mealgenerator.customize
 
 import android.content.Context
-import android.os.Bundle
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import pt.unl.fct.mealroullete.R
 
-class CustomizeGeneratorActivity : AppCompatActivity() {
+class CustomizeGeneratorSides : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.table_layout)
-        init()
+        setContentView(R.layout.customize_generator_sides)
+
+        setListeners()
+        initList()
     }
 
-    val items = listOf("Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva")
+    val items = listOf("arroz", "batata", "feijao verde", "feijao manteinga", "nabiças",
+            "funcho", "cenouras")
 
-
-    private fun init() {
-
+    private fun initList () {
         val tl = findViewById<TableLayout>(R.id.ingredient_table)
 
         var index = 0
@@ -46,6 +44,18 @@ class CustomizeGeneratorActivity : AppCompatActivity() {
                 row.addView(childLayout)
             }
             tl.addView(row)
+        }
+    }
+
+    private fun setListeners () {
+        val back = findViewById<ImageButton>(R.id.backToStep1)
+        back.setOnClickListener {
+            startActivity(Intent(this, CustomizeGeneratorMainCourse::class.java))
+        }
+
+        val generate = findViewById<Button>(R.id.buttonGenerate)
+        generate.setOnClickListener {
+            startActivity(Intent(this, RecipePresentation::class.java))
         }
     }
 }
