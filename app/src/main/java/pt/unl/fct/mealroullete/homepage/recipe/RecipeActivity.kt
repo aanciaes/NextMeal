@@ -30,6 +30,7 @@ class RecipeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         recipe_pager.adapter = RecipePagerAdapter(supportFragmentManager)
         recipe_tab.setupWithViewPager(recipe_pager)
+
     }
 
     override fun onBackPressed() {

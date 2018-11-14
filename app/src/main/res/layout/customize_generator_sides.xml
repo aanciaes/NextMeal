@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mealgenerator.customize.CustomizeGeneratorSides">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBackToHome"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/linear_layout_border"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/backToStep1"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="0dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="5dp"
+            android:clickable="false"
+            android:text="Previous"
+            android:textAlignment="textStart"
+            android:textSize="18dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutSearch"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:background="@drawable/linear_layout_border"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutBackToHome">
+
+        <EditText
+                android:layout_width="346dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="0dp"
+                android:background="@null"
+                android:clickable="false"
+                android:hint="Search"
+                android:inputType="text|textNoSuggestions"
+                android:text=""
+
+                android:textAlignment="textStart"
+                android:textSize="18dp" android:id="@+id/search_field"/>
+
+        <ImageButton
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="47dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="0dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_search" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonGenerate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="28dp"
+        android:background="@color/colorPrimaryDark"
+        android:padding="10dp"
+        android:text="GENERATE"
+        android:textColor="@android:color/white"
+        android:textSize="26dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <include layout="@layout/table_layout"
+             android:layout_height="0dp" app:layout_constraintStart_toStartOf="parent"
+             android:layout_marginStart="8dp" android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintBottom_toTopOf="@+id/buttonGenerate"
+             app:layout_constraintTop_toBottomOf="@+id/linearLayoutSearch" android:layout_width="0dp"
+             android:layout_marginBottom="16dp"/>
+
+</android.support.constraint.ConstraintLayout>

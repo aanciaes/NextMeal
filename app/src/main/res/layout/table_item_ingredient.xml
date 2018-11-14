@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:id="@+id/table_item"
+              android:layout_height="wrap_content" android:layout_margin="9dp"
+              android:foreground="?android:attr/selectableItemBackground"
+              android:clickable="true" android:focusable="true" android:layout_width="80dp">
+
+    <LinearLayout android:id="@+id/ingredient_image" android:layout_width="match_parent" android:layout_height="72dp"
+                  android:background="@android:drawable/btn_dialog">
+        <CheckBox
+                android:layout_width="80dp"
+                android:layout_height="68dp"
+                android:layout_marginTop="20dp"
+                android:button="@drawable/checkbox_selector"
+                android:checked="false"
+                android:layoutDirection="rtl"
+                android:id="@+id/ingredient_check_box"/>
+    </LinearLayout>
+
+    <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ingredient_name"
+
+            android:textAlignment="center"/>
+</LinearLayout>

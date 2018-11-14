@@ -26,6 +26,9 @@
             android:name=".mealgenerator.GeneratorHome"
             android:label="@string/title_activity_generator_home" />
         <activity android:name=".mealgenerator.customize.AdvancedGeneratorStep1"></activity>
+        <activity android:name=".mealgenerator.customize.CustomizeGeneratorSides"></activity>
+        <activity android:name=".mealgenerator.customize.RecipePresentation"></activity>
+        <activity android:name=".homepage.recipe.CardFlipActivity"></activity>
         <activity
                 android:name=".homepage.calculator.CalculatorActivity"
                 android:label="@string/manifest_activity_calculator"
@@ -35,6 +38,10 @@
                 android:label="@string/manifest_activity_history"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".homepage.recipe.RecipeActivity"
+            android:label="@string/manifest_activity_recipe"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
                 android:name=".homepage.poll.PollActivity"
                 android:label="@string/manifest_activity_poll"
                 android:theme="@style/AppTheme.NoActionBar" />
@@ -42,6 +49,7 @@
                 android:name=".homepage.profile.ProfileActivity"
                 android:label="@string/manifest_activity_profile"
                 android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".mealgenerator.customize.CustomizeGeneratorMainCourse"/>
     </application>
 
 </manifest>

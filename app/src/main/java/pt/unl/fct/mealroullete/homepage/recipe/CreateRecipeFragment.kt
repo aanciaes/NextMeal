@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import pt.unl.fct.mealroullete.R
 
-class CreateRecipeFragment : Fragment() {
+class CreateRecipeFragment : Fragment(), View.OnClickListener {
+    override fun onClick(v: View?) {
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_create_recipe, container, false)

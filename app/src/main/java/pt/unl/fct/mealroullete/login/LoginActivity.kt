@@ -11,6 +11,7 @@ import android.widget.*
 import pt.unl.fct.mealroullete.homepage.HomePage
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import pt.unl.fct.mealroullete.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -19,6 +20,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         setMainListeners()
+
+        setUsernameFromRegisterActivity (intent.getStringExtra("registeredUsername"))
     }
 
     // Set all listeners for this activity
@@ -27,6 +30,13 @@ class LoginActivity : AppCompatActivity() {
         loginWithFingerprint();
         noAccountYetRegister()
         login()
+    }
+
+    private fun setUsernameFromRegisterActivity (username: String?) {
+        if (username != null){
+            val usernameField = findViewById<EditText>(R.id.username_field)
+            usernameField.setText(username, TextView.BufferType.EDITABLE)
+        }
     }
 
     // Changes between hidden or clear text password
@@ -82,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
             val password = findViewById<EditText>(R.id.password_field)
 
             if (MockDatabase.login(username.text.toString(), password.text.toString())) {
-                startActivity(Intent(this, HomePage::class.java))
+                startActivity(Intent(this, RecipeActivity::class.java))
             } else {
                 Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show();
             }

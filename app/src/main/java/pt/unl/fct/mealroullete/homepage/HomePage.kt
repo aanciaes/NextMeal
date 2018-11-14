@@ -21,8 +21,9 @@ class HomePage : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home_page)
+        setContentView(R.layout.activity_recipe)
 
+        /*
         val image = findViewById<ImageButton>(R.id.dinner)
         image.setOnClickListener {
             startActivity(Intent(this, GeneratorHome::class.java))
@@ -44,5 +45,7 @@ class HomePage : AppCompatActivity() {
         }
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+    */
     }
 }

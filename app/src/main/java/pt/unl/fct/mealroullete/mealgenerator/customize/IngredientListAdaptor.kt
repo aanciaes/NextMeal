@@ -33,7 +33,7 @@ class IngredientListAdaptor
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
-        //get the persons information
+/*        //get the persons information
         val id = getItem(position)!!.id
         val name = getItem(position)!!.name
         val url = getItem(position)!!.image
@@ -78,10 +78,10 @@ class IngredientListAdaptor
         holder.name!!.text = ingredient.name
         holder.name1!!.text = ingredient.name2
         holder.name2!!.text = ingredient.name3
-        holder.name3!!.text = ingredient.name4
+        holder.name3!!.text = ingredient.name4*/
 
 
-        return convertView
+        return convertView!!
     }
 
     companion object {
