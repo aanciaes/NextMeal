@@ -4,20 +4,25 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
+import pt.unl.fct.mealroullete.persistance.MockDatabase
 
 class CustomizeGeneratorMainCourse : AppCompatActivity() {
+
+    val cachedItems = MockDatabase.mainCourseItems
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.customize_generator_main_course)
 
         setListeners()
-        init()
+        buildList(cachedItems)
     }
 
     private fun setListeners () {
@@ -30,18 +35,28 @@ class CustomizeGeneratorMainCourse : AppCompatActivity() {
         back.setOnClickListener {
             startActivity(Intent(this, GeneratorHome::class.java))
         }
+
+        val search = findViewById<EditText>(R.id.search_field)
+        search.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s != null) {
+                    val items = cachedItems.filter { it.contains(s, true) }
+                    buildList(items)
+                }else{
+                    buildList(cachedItems)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable) {}
+        })
     }
 
-    val items = listOf("Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva")
-
-
-    private fun init() {
+    private fun buildList(items: List<String>) {
 
         val tl = findViewById<TableLayout>(R.id.ingredient_table)
+        tl.removeAllViews()
 
         var index = 0
         while (index < items.size) {
