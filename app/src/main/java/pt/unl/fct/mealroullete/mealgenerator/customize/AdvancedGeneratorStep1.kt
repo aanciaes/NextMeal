@@ -16,8 +16,9 @@ class AdvancedGeneratorStep1 : AppCompatActivity() {
         setContentView(R.layout.activity_advanced_generator_step1)
         val ingredients = findViewById<ListView>(R.id.list_ingredients)
 
-        val ing1 = IngredientRow(1, "Carne", "url", "peixe", "sopa", "atum")
-        val ing2 = IngredientRow(1, "Carne", "url", "Queijo", "Facas", "Focas")
+        val ing1 = IngredientRow(Ingredient(1, "Carne", "url"))
+
+        val ing2 = IngredientRow(Ingredient(1, "Carne", "url"), Ingredient(1, "peixe", "url"))
 
         val arrayList = ArrayList<IngredientRow>().apply {
             add(ing1)
@@ -26,7 +27,6 @@ class AdvancedGeneratorStep1 : AppCompatActivity() {
             add(ing2)
             add(ing1)
             add(ing2)
-
         }
 
         val adapter = IngredientListAdaptor(this, R.layout.list_ingredients, arrayList)
