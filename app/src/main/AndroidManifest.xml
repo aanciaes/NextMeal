@@ -46,6 +46,7 @@
                 android:name=".homepage.profile.ProfileActivity"
                 android:label="@string/manifest_activity_profile"
                 android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".mealgenerator.customizeGenerator.CustomizeGeneratorActivity"/>
     </application>
 
 </manifest>
