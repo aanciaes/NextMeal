@@ -11,6 +11,8 @@ object MockDatabase {
     val sideItems = listOf("arroz", "batata", "feijao verde", "feijao manteinga", "nabiças",
             "funcho", "cenouras")
 
+    var loggedInUser: User? = null
+
     init {
         users.add(User(1, "root", "root"))
     }
@@ -33,8 +35,10 @@ object MockDatabase {
 
     fun login (username: String, password: String): Boolean {
         users.forEach {
-            if (it.username == username && it.password == password)
+            if (it.username == username && it.password == password) {
+                loggedInUser = it
                 return true
+            }
         }
         return false
     }

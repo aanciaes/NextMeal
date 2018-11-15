@@ -1,5 +1,6 @@
 package pt.unl.fct.mealroullete.homepage.profile
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -7,12 +8,15 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.view.TextureView
+import android.widget.TextView
 import pt.unl.fct.mealroullete.homepage.history.HistoryActivity
 import kotlinx.android.synthetic.main.activity_profile.*
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.calculator.CalculatorActivity
 import pt.unl.fct.mealroullete.homepage.poll.PollActivity
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
+import pt.unl.fct.mealroullete.persistance.MockDatabase
 
 class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,7 +31,17 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         profile_navbar.setCheckedItem(R.id.common_drawer_item_profile)
         profile_navbar.setNavigationItemSelectedListener(this)
+
+        setName()
     }
+
+    private fun setName () {
+        findViewById<TextView>(R.id.user_name).text = MockDatabase.loggedInUser?.username
+    }
+
+
+
+
 
     override fun onBackPressed() {
         if (profile_drawer.isDrawerOpen(GravityCompat.START)) {
