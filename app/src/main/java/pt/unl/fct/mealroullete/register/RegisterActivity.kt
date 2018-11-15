@@ -85,7 +85,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    // Shows fingerprint dialog
+    // Shows register successful dialog
     private fun showRegisterSuccessful(username: String) {
         val builder: AlertDialog.Builder = this.let {
             AlertDialog.Builder(it)

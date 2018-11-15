@@ -16,6 +16,7 @@ import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.calculator.CalculatorActivity
 import pt.unl.fct.mealroullete.homepage.poll.PollActivity
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
+import pt.unl.fct.mealroullete.logout.LogoutActivity
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 
 class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -71,6 +72,9 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
             R.id.common_drawer_item_recipe -> {
                 intent = Intent(this, RecipeActivity::class.java)
+            }
+            R.id.common_drawer_item_logout -> {
+                intent = Intent(this, LogoutActivity::class.java)
             }
         }
 

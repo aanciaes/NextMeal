@@ -8,10 +8,9 @@ import android.support.v7.widget.CardView
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.widget.*
-import pt.unl.fct.mealroullete.homepage.HomePage
-import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
+import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -20,8 +19,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         setMainListeners()
-
-        setUsernameFromRegisterActivity (intent.getStringExtra("registeredUsername"))
+        setUsernameFromRegisterActivity(intent.getStringExtra("registeredUsername"))
     }
 
     // Set all listeners for this activity
@@ -32,8 +30,8 @@ class LoginActivity : AppCompatActivity() {
         login()
     }
 
-    private fun setUsernameFromRegisterActivity (username: String?) {
-        if (username != null){
+    private fun setUsernameFromRegisterActivity(username: String?) {
+        if (username != null) {
             val usernameField = findViewById<EditText>(R.id.username_field)
             usernameField.setText(username, TextView.BufferType.EDITABLE)
         }
@@ -97,5 +95,9 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    override fun onBackPressed() {
+        //Do nothing
     }
 }

@@ -13,6 +13,7 @@ import pt.unl.fct.mealroullete.homepage.calculator.CalculatorActivity
 import pt.unl.fct.mealroullete.homepage.poll.PollActivity
 import pt.unl.fct.mealroullete.homepage.profile.ProfileActivity
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
+import pt.unl.fct.mealroullete.logout.LogoutActivity
 
 class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -59,6 +60,9 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
             R.id.common_drawer_item_recipe -> {
                 intent = Intent(this, RecipeActivity::class.java)
+            }
+            R.id.common_drawer_item_logout -> {
+                intent = Intent(this, LogoutActivity::class.java)
             }
         }
 

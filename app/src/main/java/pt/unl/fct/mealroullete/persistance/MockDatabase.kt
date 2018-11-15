@@ -42,6 +42,10 @@ object MockDatabase {
         }
         return false
     }
+
+    fun logout () {
+        loggedInUser = null
+    }
 }
 
 

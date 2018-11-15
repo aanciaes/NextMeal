@@ -50,6 +50,7 @@
                 android:label="@string/manifest_activity_profile"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".mealgenerator.customize.CustomizeGeneratorMainCourse"/>
+        <activity android:name=".logout.LogoutActivity"/>
     </application>
 
 </manifest>

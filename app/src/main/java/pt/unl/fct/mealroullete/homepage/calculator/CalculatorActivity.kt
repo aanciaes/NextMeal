@@ -13,6 +13,7 @@ import pt.unl.fct.mealroullete.homepage.profile.ProfileActivity
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import kotlinx.android.synthetic.main.activity_calculator.*
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.logout.LogoutActivity
 
 class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -56,6 +57,9 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             }
             R.id.common_drawer_item_recipe -> {
                 intent = Intent(this, RecipeActivity::class.java)
+            }
+            R.id.common_drawer_item_logout -> {
+                intent = Intent(this, LogoutActivity::class.java)
             }
         }
 

@@ -13,6 +13,7 @@ import pt.unl.fct.mealroullete.homepage.poll.PollActivity
 import pt.unl.fct.mealroullete.homepage.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_recipe.*
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.logout.LogoutActivity
 
 class RecipeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -61,6 +62,9 @@ class RecipeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             R.id.common_drawer_item_recipe -> {
                 recipe_drawer.closeDrawer(GravityCompat.START)
                 return false
+            }
+            R.id.common_drawer_item_logout -> {
+                intent = Intent(this, LogoutActivity::class.java)
             }
         }
 
