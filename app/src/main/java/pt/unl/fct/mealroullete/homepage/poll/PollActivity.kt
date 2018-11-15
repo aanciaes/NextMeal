@@ -7,6 +7,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.TextView
 import pt.unl.fct.mealroullete.homepage.history.HistoryActivity
 import pt.unl.fct.mealroullete.homepage.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_poll.*
@@ -14,6 +15,8 @@ import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.calculator.CalculatorActivity
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import pt.unl.fct.mealroullete.logout.LogoutActivity
+import pt.unl.fct.mealroullete.persistance.MockDatabase
+import pt.unl.fct.mealroullete.persistance.User
 
 class PollActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,6 +34,8 @@ class PollActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         poll_pager.adapter = PollPagerAdapter(supportFragmentManager)
         poll_tab.setupWithViewPager(poll_pager)
+
+        setCommonHeaderInformationForLoggedInUser(poll_navbar, MockDatabase.loggedInUser)
     }
 
     override fun onBackPressed() {
@@ -72,5 +77,13 @@ class PollActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         this.finish()
 
         return true
+    }
+
+    private fun setCommonHeaderInformationForLoggedInUser (navigationView: NavigationView, user: User?) {
+        val header = navigationView.getHeaderView(0)
+
+        header.findViewById<TextView>(R.id.common_header_user_full_name).text = user?.username
+        header.findViewById<TextView>(R.id.common_header_user_email_address).text = "mail.mail@nextmeal.com"
+        //TODO: Set profile image
     }
 }

@@ -7,6 +7,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.TextView
 import pt.unl.fct.mealroullete.homepage.history.HistoryActivity
 import pt.unl.fct.mealroullete.homepage.poll.PollActivity
 import pt.unl.fct.mealroullete.homepage.profile.ProfileActivity
@@ -14,6 +15,8 @@ import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import kotlinx.android.synthetic.main.activity_calculator.*
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.logout.LogoutActivity
+import pt.unl.fct.mealroullete.persistance.MockDatabase
+import pt.unl.fct.mealroullete.persistance.User
 
 class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -28,6 +31,8 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
         calculator_navbar.setCheckedItem(R.id.common_drawer_item_calculator)
         calculator_navbar.setNavigationItemSelectedListener(this)
+
+        setCommonHeaderInformationForLoggedInUser (calculator_navbar, MockDatabase.loggedInUser)
     }
 
     override fun onBackPressed() {
@@ -69,5 +74,13 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         this.finish()
 
         return true
+    }
+
+    private fun setCommonHeaderInformationForLoggedInUser (navigationView: NavigationView, user: User?) {
+        val header = navigationView.getHeaderView(0)
+
+        header.findViewById<TextView>(R.id.common_header_user_full_name).text = user?.username
+        header.findViewById<TextView>(R.id.common_header_user_email_address).text = "mail.mail@nextmeal.com"
+        //TODO: Set profile image
     }
 }

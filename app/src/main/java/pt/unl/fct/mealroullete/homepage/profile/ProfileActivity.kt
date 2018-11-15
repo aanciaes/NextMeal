@@ -18,6 +18,7 @@ import pt.unl.fct.mealroullete.homepage.poll.PollActivity
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import pt.unl.fct.mealroullete.logout.LogoutActivity
 import pt.unl.fct.mealroullete.persistance.MockDatabase
+import pt.unl.fct.mealroullete.persistance.User
 
 class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,16 +34,14 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         profile_navbar.setCheckedItem(R.id.common_drawer_item_profile)
         profile_navbar.setNavigationItemSelectedListener(this)
 
+        setCommonHeaderInformationForLoggedInUser(profile_navbar, MockDatabase.loggedInUser)
+
         setName()
     }
 
     private fun setName () {
         findViewById<TextView>(R.id.user_name).text = MockDatabase.loggedInUser?.username
     }
-
-
-
-
 
     override fun onBackPressed() {
         if (profile_drawer.isDrawerOpen(GravityCompat.START)) {
@@ -84,5 +83,13 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         this.finish()
 
         return true
+    }
+
+    private fun setCommonHeaderInformationForLoggedInUser (navigationView: NavigationView, user: User?) {
+        val header = navigationView.getHeaderView(0)
+
+        header.findViewById<TextView>(R.id.common_header_user_full_name).text = user?.username
+        header.findViewById<TextView>(R.id.common_header_user_email_address).text = "mail.mail@nextmeal.com"
+        //TODO: Set profile image
     }
 }

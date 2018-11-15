@@ -19,16 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".register.RegisterActivity" />
-        <activity
-            android:name=".homepage.HomePage"
-            android:label="@string/title_activity_home_page" />
-        <activity
-            android:name=".mealgenerator.GeneratorHome"
-            android:label="@string/title_activity_generator_home" />
-        <activity android:name=".mealgenerator.customize.AdvancedGeneratorStep1"></activity>
-        <activity android:name=".mealgenerator.customize.CustomizeGeneratorSides"></activity>
-        <activity android:name=".mealgenerator.customize.RecipePresentation"></activity>
-        <activity android:name=".homepage.recipe.CardFlipActivity"></activity>
+        <activity android:name=".mealgenerator.customize.CustomizeGeneratorMainCourse"/>
+        <activity android:name=".mealgenerator.customize.CustomizeGeneratorSides"/>
+        <activity android:name=".mealgenerator.customize.RecipePresentation"/>
         <activity
                 android:name=".homepage.calculator.CalculatorActivity"
                 android:label="@string/manifest_activity_calculator"
@@ -49,7 +42,6 @@
                 android:name=".homepage.profile.ProfileActivity"
                 android:label="@string/manifest_activity_profile"
                 android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".mealgenerator.customize.CustomizeGeneratorMainCourse"/>
         <activity android:name=".logout.LogoutActivity"/>
     </application>
 
