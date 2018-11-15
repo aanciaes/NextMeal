@@ -16,19 +16,27 @@ import pt.unl.fct.mealroullete.persistance.MockDatabase
 class CustomizeGeneratorMainCourse : AppCompatActivity() {
 
     val cachedItems = MockDatabase.mainCourseItems
+    private val selectedItems = ArrayList<String>()
+    private val sidesSelected = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.customize_generator_main_course)
 
+        intent.getStringArrayListExtra("mainCourseSelected")?.forEach { selectedItems.add(it) }
+        intent.getStringArrayListExtra("sidesSelected")?.forEach { sidesSelected.add(it) }
+
         setListeners()
         buildList(cachedItems)
     }
 
-    private fun setListeners () {
+    private fun setListeners() {
         val advancedGeneratorStep2 = findViewById<Button>(R.id.buttonNext)
         advancedGeneratorStep2.setOnClickListener {
-            startActivity(Intent(this, CustomizeGeneratorSides::class.java))
+            val intent = Intent(this, CustomizeGeneratorSides::class.java)
+            intent.putExtra("mainCourseSelected", selectedItems)
+            intent.putExtra("sidesSelected", sidesSelected)
+            startActivity(intent)
         }
 
         val back = findViewById<ImageButton>(R.id.backToGeneratorHome)
@@ -44,7 +52,7 @@ class CustomizeGeneratorMainCourse : AppCompatActivity() {
                 if (s != null) {
                     val items = cachedItems.filter { it.contains(s, true) }
                     buildList(items)
-                }else{
+                } else {
                     buildList(cachedItems)
                 }
             }
@@ -69,8 +77,26 @@ class CustomizeGeneratorMainCourse : AppCompatActivity() {
             while (index < items.size && aux < 4) {
                 val childLayout = inflater.inflate(R.layout.table_item_ingredient, row, false) as LinearLayout
 
-                childLayout.id = View.generateViewId()
-                childLayout.findViewById<TextView>(R.id.ingredient_name).text = items[index]
+                val id = View.generateViewId()
+                childLayout.id = id
+
+                val item = items[index]
+                childLayout.findViewById<TextView>(R.id.ingredient_name).text = item
+
+                if (selectedItems.contains(item)) {
+                    childLayout.findViewById<CheckBox>(R.id.ingredient_check_box).isChecked = true
+                }
+
+                childLayout.findViewById<CheckBox>(R.id.ingredient_check_box)
+                        .setOnCheckedChangeListener { buttonView, isChecked ->
+                            val parent = buttonView.parent.parent as View
+                            val name = parent.findViewById<TextView>(R.id.ingredient_name).text.toString()
+                            if (isChecked) {
+                                selectedItems.add(name)
+                            } else {
+                                selectedItems.remove(name)
+                            }
+                        }
 
                 index++
                 aux++

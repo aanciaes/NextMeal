@@ -5,11 +5,8 @@ package pt.unl.fct.mealroullete.persistance
 object MockDatabase {
 
     private val users = mutableListOf<User>()
-    val mainCourseItems = listOf("Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva", "carne de porco",
-            "Atum", "Carne de vaca", "relva")
+    val mainCourseItems = listOf("Atum", "Carne de Vaca", "Ricardo", "Carne de Porco",
+            "Manel", "Amaral", "Rodrigues")
 
     val sideItems = listOf("arroz", "batata", "feijao verde", "feijao manteinga", "nabiças",
             "funcho", "cenouras")
