@@ -31,6 +31,7 @@ class CustomizeGeneratorSides : AppCompatActivity() {
 
     private fun buildList (items: List<String>) {
         val tl = findViewById<TableLayout>(R.id.ingredient_table)
+        tl.removeAllViews()
 
         var index = 0
         while (index < items.size) {
