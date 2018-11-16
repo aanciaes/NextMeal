@@ -1,6 +1,5 @@
 package pt.unl.fct.mealroullete.homepage.profile
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -8,12 +7,11 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.view.TextureView
 import android.widget.TextView
-import pt.unl.fct.mealroullete.homepage.history.HistoryActivity
 import kotlinx.android.synthetic.main.activity_profile.*
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.calculator.CalculatorActivity
+import pt.unl.fct.mealroullete.homepage.history.HistoryActivity
 import pt.unl.fct.mealroullete.homepage.poll.PollActivity
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import pt.unl.fct.mealroullete.logout.LogoutActivity
@@ -39,7 +37,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         setName()
     }
 
-    private fun setName () {
+    private fun setName() {
         findViewById<TextView>(R.id.user_name).text = MockDatabase.loggedInUser?.username
     }
 
@@ -85,11 +83,11 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         return true
     }
 
-    private fun setCommonHeaderInformationForLoggedInUser (navigationView: NavigationView, user: User?) {
+    private fun setCommonHeaderInformationForLoggedInUser(navigationView: NavigationView, user: User?) {
         val header = navigationView.getHeaderView(0)
 
         header.findViewById<TextView>(R.id.common_header_user_full_name).text = user?.username
-        header.findViewById<TextView>(R.id.common_header_user_email_address).text = "mail.mail@nextmeal.com"
+        header.findViewById<TextView>(R.id.common_header_user_email_address).text = user?.email
         //TODO: Set profile image
     }
 }

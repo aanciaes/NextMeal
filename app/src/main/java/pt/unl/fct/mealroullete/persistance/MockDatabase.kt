@@ -1,5 +1,6 @@
 package pt.unl.fct.mealroullete.persistance
 
+import pt.unl.fct.mealroullete.mealgenerator.customize.Ingredient
 
 
 object MockDatabase {
@@ -14,15 +15,15 @@ object MockDatabase {
     var loggedInUser: User? = null
 
     init {
-        users.add(User(1, "root", "root"))
+        users.add(User(1, "root", "root", "root@nextmeal.com"))
     }
 
-    fun count (): Int {
+    private fun count (): Int {
         return users.size
     }
 
-    fun addUser (username: String, password: String) {
-        users.add(User(count() + 1L, username, password))
+    fun addUser (username: String, password: String, email: String) {
+        users.add(User(count() + 1L, username, password, email))
     }
 
     fun userExists (username: String): Boolean {
@@ -50,4 +51,11 @@ object MockDatabase {
 
 
 
-class User (val id: Long, val username: String, val password: String)
+class User (val id: Long,
+            var username: String,
+            var password: String,
+            var email: String) {
+
+    var picture: String? = null
+    val allergies: List<Ingredient> = mutableListOf()
+}

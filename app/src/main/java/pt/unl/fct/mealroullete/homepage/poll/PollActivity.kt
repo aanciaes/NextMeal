@@ -83,7 +83,7 @@ class PollActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val header = navigationView.getHeaderView(0)
 
         header.findViewById<TextView>(R.id.common_header_user_full_name).text = user?.username
-        header.findViewById<TextView>(R.id.common_header_user_email_address).text = "mail.mail@nextmeal.com"
+        header.findViewById<TextView>(R.id.common_header_user_email_address).text = user?.email
         //TODO: Set profile image
     }
 }
