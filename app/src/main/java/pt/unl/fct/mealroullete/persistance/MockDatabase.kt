@@ -57,7 +57,7 @@ class User (val id: Long,
             var email: String) {
 
     var picture: String? = null
-    var fullname: String? = null
+    var fullName: String? = null
     var dateOfBirth: String? = null
-    val allergies: List<Ingredient> = mutableListOf()
+    val allergies = mutableListOf<String>()
 }

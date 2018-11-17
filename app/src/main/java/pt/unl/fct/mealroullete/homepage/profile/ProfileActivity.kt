@@ -4,20 +4,23 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.text.InputType
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.calculator.CalculatorActivity
@@ -27,12 +30,6 @@ import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import pt.unl.fct.mealroullete.logout.LogoutActivity
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.persistance.User
-import android.provider.MediaStore
-import android.support.annotation.RequiresApi
-import android.text.InputType
-import android.view.Gravity
-import android.view.ViewGroup
-import android.widget.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -67,10 +64,12 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         findViewById<TextView>(R.id.user_email).text = MockDatabase.loggedInUser?.email
         setImageFromUrl(MockDatabase.loggedInUser?.picture.toString(), findViewById(R.id.profile_image))
 
-        val nameDateOfBirth = MockDatabase.loggedInUser?.fullname
+        val nameDateOfBirth = MockDatabase.loggedInUser?.fullName
         if (nameDateOfBirth != null) {
-            findViewById<TextView>(R.id.user_name_date_birth).text = "${MockDatabase.loggedInUser?.fullname} ${MockDatabase.loggedInUser?.dateOfBirth}"
+            findViewById<TextView>(R.id.user_name_date_birth).text = "${MockDatabase.loggedInUser?.fullName} ${MockDatabase.loggedInUser?.dateOfBirth}"
         }
+
+        addInitAllergies(MockDatabase.loggedInUser?.allergies)
     }
 
     override fun onBackPressed() {
@@ -128,7 +127,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
     }
 
-    private fun setListeners () {
+    private fun setListeners() {
         val editPicture = findViewById<ImageButton>(R.id.profile_edit_picture)
         editPicture.setOnClickListener {
             uploadPhoto(0)
@@ -139,9 +138,11 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         val editFullNameDateOfBirth = findViewById<ImageButton>(R.id.profile_edit_full_name)
         editFullNameDateOfBirth.setOnClickListener { editFullNameAndDateOfBirth() }
+
+        addAllergies()
     }
 
-    private fun editEmail () {
+    private fun editEmail() {
         var newEmail = ""
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Email")
@@ -151,8 +152,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         input.setText(findViewById<TextView>(R.id.user_email).text.toString())
         builder.setView(input)
 
-        builder.setPositiveButton("OK") {
-            _, _ ->
+        builder.setPositiveButton("OK") { _, _ ->
             newEmail = input.text.toString()
             MockDatabase.loggedInUser?.email = newEmail
             findViewById<TextView>(R.id.user_email).text = MockDatabase.loggedInUser?.email
@@ -160,15 +160,15 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     .findViewById<TextView>(R.id.common_header_user_email_address).text = MockDatabase.loggedInUser?.email
         }
 
-        builder.setNegativeButton("Cancel") {
-            dialog, _ ->  dialog.cancel()
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.cancel()
         }
 
         builder.show()
     }
 
     @SuppressLint("NewApi")
-    private fun editFullNameAndDateOfBirth () {
+    private fun editFullNameAndDateOfBirth() {
         var newFullName = ""
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Full Name")
@@ -177,27 +177,26 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         input.inputType = InputType.TYPE_CLASS_TEXT
         builder.setView(input)
 
-        builder.setPositiveButton("NEXT") {
-            _, _ ->
+        builder.setPositiveButton("NEXT") { _, _ ->
             newFullName = input.text.toString()
-            MockDatabase.loggedInUser?.fullname = newFullName
+            MockDatabase.loggedInUser?.fullName = newFullName
 
             val datePickerDialog = DatePickerDialog(this)
             datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
                 MockDatabase.loggedInUser?.dateOfBirth = year.toString() + "/" + month.toString() + "/" + dayOfMonth.toString()
-                findViewById<TextView>(R.id.user_name_date_birth).text = "${MockDatabase.loggedInUser?.fullname} ${MockDatabase.loggedInUser?.dateOfBirth}"
+                findViewById<TextView>(R.id.user_name_date_birth).text = "${MockDatabase.loggedInUser?.fullName} ${MockDatabase.loggedInUser?.dateOfBirth}"
             }
             datePickerDialog.show()
         }
 
-        builder.setNegativeButton("Cancel") {
-            dialog, _ ->  dialog.cancel()
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.cancel()
         }
 
         builder.show()
     }
 
-    private fun uploadPhoto (req_code: Int) {
+    private fun uploadPhoto(req_code: Int) {
         openGallery(req_code)
     }
 
@@ -231,7 +230,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         return saveImage(bitmap)
     }
 
-    private fun saveImage(myBitmap: Bitmap):String {
+    private fun saveImage(myBitmap: Bitmap): String {
         val bytes = ByteArrayOutputStream()
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
         val wallpaperDirectory = File(
@@ -241,8 +240,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             wallpaperDirectory.mkdirs()
         }
 
-        try
-        {
+        try {
             val f = File(wallpaperDirectory.absolutePath + "/" + Calendar.getInstance().timeInMillis.toString() + ".jpg")
             f.createNewFile()
             val fo = FileOutputStream(f)
@@ -252,20 +250,84 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             fo.close()
 
             return f.absolutePath
-        }
-        catch (e1: IOException) {
+        } catch (e1: IOException) {
             e1.printStackTrace()
         }
 
         return ""
     }
 
-    private fun setImageFromUrl (path: String, imageView: ImageView) {
+    private fun setImageFromUrl(path: String, imageView: ImageView) {
         val imgFile = File(path);
         if (imgFile.exists()) {
-            val myBitmap = BitmapFactory.decodeFile (imgFile.absolutePath);
+            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath);
 
             imageView.setImageBitmap(myBitmap);
+        }
+    }
+
+    private fun addAllergies() {
+        val addAllergies = findViewById<ImageButton>(R.id.add_allergies)
+        addAllergies.setOnClickListener {
+
+            var allergyName = ""
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Allergy")
+
+            val input = EditText(this)
+            input.inputType = InputType.TYPE_CLASS_TEXT
+            builder.setView(input)
+
+            // Set up the buttons
+            builder.setPositiveButton("Add") { _, _ ->
+                allergyName = input.text.toString()
+                if (allergyName != "") {
+                    val container = findViewById<LinearLayout>(R.id.allergiesContainer)
+                    val allergy = TextView(this)
+
+                    val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    params.setMargins(35, 25, 0, 0)
+
+                    allergy.setTextColor(resources.getColor(R.color.colorAccent, null))
+                    allergy.layoutParams = params
+                    allergy.text = allergyName
+
+                    val id = View.generateViewId()
+                    allergy.id = id
+                    val index = container.indexOfChild(addAllergies)
+
+                    MockDatabase.loggedInUser?.allergies?.add(allergyName)
+
+                    container.addView(allergy, index)
+                }
+            }
+
+            builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+            builder.show()
+        }
+    }
+
+    private fun addInitAllergies(allergies: List<String>?) {
+        val addAllergies = findViewById<ImageButton>(R.id.add_allergies)
+        if (allergies != null) {
+            for (allergyName in allergies) {
+
+                val container = findViewById<LinearLayout>(R.id.allergiesContainer)
+                val allergy = TextView(this)
+
+                val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                params.setMargins(35, 25, 0, 0)
+
+                allergy.setTextColor(resources.getColor(R.color.colorAccent, null))
+                allergy.layoutParams = params
+                allergy.text = allergyName
+
+                val id = View.generateViewId()
+                allergy.id = id
+                val index = container.indexOfChild(addAllergies)
+
+                container.addView(allergy, index)
+            }
         }
     }
 }
