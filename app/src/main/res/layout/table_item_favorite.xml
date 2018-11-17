@@ -15,16 +15,15 @@
         android:src="@drawable/meal_highlight_example" />
 
     <TextView
-        android:id="@+id/ingredient_name"
+        android:id="@+id/favoriteName"
         android:layout_width="171dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
-
-        android:text="RECIPE NAME"
         android:textAlignment="textStart" />
 
     <ImageButton
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:id="@+id/removeFavorite"
         android:background="@drawable/heart_favorite_full" />
 </LinearLayout>
