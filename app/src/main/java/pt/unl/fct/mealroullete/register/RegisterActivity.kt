@@ -19,7 +19,7 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.register_activity)
+        setContentView(R.layout.register_layout)
         addListeners()
     }
 
@@ -33,13 +33,13 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun checkUsername() {
-        val availability = findViewById<TextView>(R.id.availability)
-        val username = findViewById<EditText>(R.id.username_field)
+        val availability = findViewById<TextView>(R.id.username_availability)
+        val username = findViewById<EditText>(R.id.register_username_field)
         username.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val availabilityImage = findViewById<ImageView>(R.id.check_username)
+                val availabilityImage = findViewById<ImageView>(R.id.username_availability_image)
 
                 if (count == 0) { // If user deletes all text from username field
                     availabilityImage.setImageResource(R.drawable.ic_action_check_username_negative)
@@ -64,22 +64,28 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun registerListener() {
-        val register = findViewById<CardView>(R.id.register_button_card_view)
+        val register = findViewById<CardView>(R.id.register_button)
 
         register.setOnClickListener {
-            val username = findViewById<EditText>(R.id.username_field)
-            val availability = findViewById<TextView>(R.id.availability)
-            val password = findViewById<EditText>(R.id.password_field)
-            val repeatPassword = findViewById<EditText>(R.id.repeat_password_field)
+            val username = findViewById<EditText>(R.id.register_username_field)
+            val availability = findViewById<TextView>(R.id.username_availability)
+            val password = findViewById<EditText>(R.id.register_password_field)
+            val repeatPassword = findViewById<EditText>(R.id.register_repeat_password_field)
+            val email = findViewById<EditText>(R.id.register_email_field)
 
-            if (availability.text == "negative") {
-                Toast.makeText(this, "Username is not available", Toast.LENGTH_LONG).show()
+
+            if (username.text.isEmpty() || password.text.isEmpty() || repeatPassword.text.isEmpty() || email.text.isEmpty()) {
+                Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_LONG).show()
             } else {
-                if (password.text.toString() != repeatPassword.text.toString()) {
-                    Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show()
+                if (availability.text == "negative") {
+                    Toast.makeText(this, "Username is not available", Toast.LENGTH_LONG).show()
                 } else {
-                    MockDatabase.addUser(username.text.toString(), password.text.toString())
-                    showRegisterSuccessful(username.text.toString())
+                    if (password.text.toString() != repeatPassword.text.toString()) {
+                        Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show()
+                    } else {
+                        MockDatabase.addUser(username.text.toString(), password.text.toString(), email.text.toString())
+                        showRegisterSuccessful(username.text.toString())
+                    }
                 }
             }
         }
@@ -105,9 +111,9 @@ class RegisterActivity : AppCompatActivity() {
 
     // Changes between hidden or clear text password
     private fun onClickShowPassword() {
-        val showHidePassword = findViewById<ImageButton>(R.id.show_hide_password)
+        val showHidePassword = findViewById<ImageButton>(R.id.register_show_hide_password)
         showHidePassword.setOnClickListener {
-            val passwordField = findViewById<EditText>(R.id.password_field)
+            val passwordField = findViewById<EditText>(R.id.register_password_field)
 
             if (passwordField.transformationMethod is PasswordTransformationMethod) {
                 passwordField.transformationMethod = HideReturnsTransformationMethod.getInstance();
@@ -121,9 +127,9 @@ class RegisterActivity : AppCompatActivity() {
 
     // Changes between hidden or clear text repeat password
     private fun onClickShowRepeatPassword() {
-        val showHidePassword = findViewById<ImageButton>(R.id.show_hide_repeat_password)
+        val showHidePassword = findViewById<ImageButton>(R.id.register_show_hide_repeat_password_image)
         showHidePassword.setOnClickListener {
-            val passwordField = findViewById<EditText>(R.id.repeat_password_field)
+            val passwordField = findViewById<EditText>(R.id.register_repeat_password_field)
 
             if (passwordField.transformationMethod is PasswordTransformationMethod) {
                 passwordField.transformationMethod = HideReturnsTransformationMethod.getInstance();
@@ -136,21 +142,18 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun passwordsMatch() {
-        val repeatPasswordField = findViewById<EditText>(R.id.repeat_password_field)
+        val repeatPasswordField = findViewById<EditText>(R.id.register_repeat_password_field)
 
         repeatPasswordField.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val passwordsMatchText = findViewById<TextView>(R.id.passwords_match_text)
-                val passwordField = findViewById<EditText>(R.id.password_field)
+                val passwordField = findViewById<EditText>(R.id.register_password_field)
 
                 if (s.toString() != passwordField.text.toString()) {
                     repeatPasswordField.setBackgroundResource(R.drawable.password_matching_negative)
-                    passwordsMatchText.text = "negative"
                 } else {
                     repeatPasswordField.setBackgroundResource(R.drawable.password_matching_positive)
-                    passwordsMatchText.text = "positive"
                 }
             }
 
@@ -159,7 +162,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun backToLoginListener() {
-        val registerJump = findViewById<TextView>(R.id.back_to_login_text)
+        val registerJump = findViewById<TextView>(R.id.back_to_login)
         registerJump.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }

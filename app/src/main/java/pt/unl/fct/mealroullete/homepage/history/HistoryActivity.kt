@@ -1,12 +1,15 @@
 package pt.unl.fct.mealroullete.homepage.history
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_history.*
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.calculator.CalculatorActivity
@@ -14,6 +17,9 @@ import pt.unl.fct.mealroullete.homepage.poll.PollActivity
 import pt.unl.fct.mealroullete.homepage.profile.ProfileActivity
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import pt.unl.fct.mealroullete.logout.LogoutActivity
+import pt.unl.fct.mealroullete.persistance.MockDatabase
+import pt.unl.fct.mealroullete.persistance.User
+import java.io.File
 
 class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,6 +37,8 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         history_pager.adapter = HistoryPagerAdapter(supportFragmentManager)
         history_tab.setupWithViewPager(history_pager)
+
+        setCommonHeaderInformationForLoggedInUser(history_navbar, MockDatabase.loggedInUser)
     }
 
     override fun onBackPressed() {
@@ -72,5 +80,27 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         this.finish()
 
         return true
+    }
+
+    private fun setCommonHeaderInformationForLoggedInUser (navigationView: NavigationView, user: User?) {
+        val header = navigationView.getHeaderView(0)
+
+        header.findViewById<TextView>(R.id.common_header_user_full_name).text = user?.username
+        header.findViewById<TextView>(R.id.common_header_user_email_address).text = user?.email
+
+        val imageView = header.findViewById<ImageView>(R.id.common_header_user_profile_photo)
+
+        if (MockDatabase.loggedInUser?.picture != null) {
+            setImageFromUrl(MockDatabase.loggedInUser?.picture.toString(), imageView)
+        }
+    }
+
+    private fun setImageFromUrl (path: String, imageView: ImageView) {
+        val imgFile = File(path);
+        if (imgFile.exists()) {
+            val myBitmap = BitmapFactory.decodeFile (imgFile.absolutePath);
+
+            imageView.setImageBitmap(myBitmap);
+        }
     }
 }
