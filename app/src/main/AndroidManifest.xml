@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".register.RegisterActivity" />
-
+        <activity android:name=".mealgenerator.GeneratorHome"/>
         <activity android:name=".mealgenerator.customize.CustomizeGeneratorMainCourse"/>
         <activity android:name=".mealgenerator.customize.CustomizeGeneratorSides"/>
         <activity android:name=".mealgenerator.customize.RecipePresentation"/>
