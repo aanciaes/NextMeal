@@ -7,30 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".homepage.HomePage">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
-    </android.support.design.widget.BottomNavigationView>
-
 
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="fill_parent"
         android:layout_height="609dp"
-        android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:stretchColumns="*"
-        app:layout_constraintBottom_toTopOf="@+id/navigation">
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <TableRow android:layout_weight="0.5">
+        <TableRow
+            android:layout_marginTop="50dp"
+            android:layout_weight="0.5">
 
             <ImageButton
                 android:id="@+id/breakfast"
@@ -38,17 +26,17 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="@null"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_action_check_username_negative" />
+                android:scaleType="centerInside"
+                android:src="@drawable/breakfast" />
 
             <ImageButton
                 android:id="@+id/lunch"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
+                android:background="@color/colorPrimary"
                 android:scaleType="fitCenter"
-                android:background="@null"
-                android:src="@drawable/ic_action_check_username_negative" />
+                android:src="@drawable/lunch" />
 
         </TableRow>
 
@@ -59,9 +47,9 @@
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
+                android:background="@color/colorPrimary"
                 android:scaleType="fitCenter"
-                android:background="@null"
-                android:src="@drawable/ic_action_check_username_negative" />
+                android:src="@drawable/dinner" />
 
 
             <ImageButton
@@ -69,9 +57,9 @@
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:scaleType="fitCenter"
                 android:background="@null"
-                android:src="@drawable/ic_action_check_username_negative" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/brunch" />
 
         </TableRow>
 
