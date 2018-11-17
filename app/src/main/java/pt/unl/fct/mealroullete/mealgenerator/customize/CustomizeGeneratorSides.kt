@@ -15,10 +15,15 @@ import pt.unl.fct.mealroullete.persistance.MockDatabase
 class CustomizeGeneratorSides : AppCompatActivity() {
 
     val cachedItems = MockDatabase.sideItems
+    private val selectedItems = ArrayList<String>()
+    private val mainCourseSelectedItems = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.customize_generator_sides)
+
+        intent.getStringArrayListExtra("mainCourseSelected")?.forEach { mainCourseSelectedItems.add(it) }
+        intent.getStringArrayListExtra("sidesSelected")?.forEach { selectedItems.add(it) }
 
         setListeners()
         buildList(cachedItems)
@@ -26,6 +31,7 @@ class CustomizeGeneratorSides : AppCompatActivity() {
 
     private fun buildList (items: List<String>) {
         val tl = findViewById<TableLayout>(R.id.ingredient_table)
+        tl.removeAllViews()
 
         var index = 0
         while (index < items.size) {
@@ -39,7 +45,24 @@ class CustomizeGeneratorSides : AppCompatActivity() {
                 val childLayout = inflater.inflate(R.layout.table_item_ingredient, row, false) as LinearLayout
 
                 childLayout.id = View.generateViewId()
-                childLayout.findViewById<TextView>(R.id.ingredient_name).text = items[index]
+
+                val item = items[index]
+                childLayout.findViewById<TextView>(R.id.ingredient_name).text = item
+
+                if (selectedItems.contains(item)) {
+                    childLayout.findViewById<CheckBox>(R.id.ingredient_check_box).isChecked = true
+                }
+
+                childLayout.findViewById<CheckBox>(R.id.ingredient_check_box)
+                        .setOnCheckedChangeListener { buttonView, isChecked ->
+                            val parent = buttonView.parent.parent as View
+                            val name = parent.findViewById<TextView>(R.id.ingredient_name).text.toString()
+                            if (isChecked) {
+                                selectedItems.add(name)
+                            } else {
+                                selectedItems.remove(name)
+                            }
+                        }
 
                 index++
                 aux++
@@ -52,7 +75,10 @@ class CustomizeGeneratorSides : AppCompatActivity() {
     private fun setListeners () {
         val back = findViewById<ImageButton>(R.id.backToStep1)
         back.setOnClickListener {
-            startActivity(Intent(this, CustomizeGeneratorMainCourse::class.java))
+            val i = Intent(this, CustomizeGeneratorMainCourse::class.java)
+            i.putExtra("mainCourseSelected", mainCourseSelectedItems)
+            i.putExtra("sidesSelected", selectedItems)
+            startActivity(i)
         }
 
         val generate = findViewById<Button>(R.id.buttonGenerate)

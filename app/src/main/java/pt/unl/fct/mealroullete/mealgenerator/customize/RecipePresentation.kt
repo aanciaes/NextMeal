@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
 
 
 class RecipePresentation : AppCompatActivity() {
@@ -30,7 +31,7 @@ class RecipePresentation : AppCompatActivity() {
 
         val back = findViewById<ImageButton>(R.id.backToStep2)
         back.setOnClickListener {
-            startActivity(Intent(this, CustomizeGeneratorSides::class.java))
+            startActivity(Intent(this, GeneratorHome::class.java))
         }
 
     }
@@ -49,7 +50,55 @@ class RecipePresentation : AppCompatActivity() {
                 inflater: LayoutInflater,
                 container: ViewGroup?,
                 savedInstanceState: Bundle?
-        ): View = inflater.inflate(R.layout.card_back, container, false)
+        ): View {
+
+            val view = inflater.inflate(R.layout.card_back, container, false)
+            val fav = view.findViewById<ImageButton>(R.id.favorite_vote)
+            fav.setOnClickListener {
+                if(view.findViewById<TextView>(R.id.check_fav).text.equals("full")){
+                    fav.setBackgroundResource(R.drawable.heart_favorite_empty)
+                    view.findViewById<TextView>(R.id.check_fav).setText("empty")
+                }
+                else{
+                    fav.setBackgroundResource(R.drawable.heart_favorite_full)
+                    view.findViewById<TextView>(R.id.check_fav).setText("full")
+                }
+            }
+
+            val upVote = view.findViewById<ImageButton>(R.id.upVote)
+            val downVote = view.findViewById<ImageButton>(R.id.downVote)
+            upVote.setOnClickListener {
+                if(view.findViewById<TextView>(R.id.upVoteState).text.equals("full")){
+                    upVote.setBackgroundResource(R.drawable.vote_up_empty)
+                    view.findViewById<TextView>(R.id.upVoteState).setText("empty")
+                }
+                else{
+                    if(view.findViewById<TextView>(R.id.downVoteState).text.equals("full")){
+                        downVote.setBackgroundResource(R.drawable.vote_down_empty)
+                        view.findViewById<TextView>(R.id.downVoteState).setText("empty")
+                    }
+                    upVote.setBackgroundResource(R.drawable.vote_up_full)
+                    view.findViewById<TextView>(R.id.upVoteState).setText("full")
+                }
+            }
+
+
+            downVote.setOnClickListener {
+                if(view.findViewById<TextView>(R.id.downVoteState).text.equals("full")){
+                    downVote.setBackgroundResource(R.drawable.vote_down_empty)
+                    view.findViewById<TextView>(R.id.downVoteState).setText("empty")
+                }
+                else{
+                    if(view.findViewById<TextView>(R.id.upVoteState).text.equals("full")){
+                        upVote.setBackgroundResource(R.drawable.vote_up_empty)
+                        view.findViewById<TextView>(R.id.upVoteState).setText("empty")
+                    }
+                    downVote.setBackgroundResource(R.drawable.vote_down_full)
+                    view.findViewById<TextView>(R.id.downVoteState).setText("full")
+                }
+            }
+            return view
+        }
     }
 
 
@@ -79,9 +128,14 @@ class RecipePresentation : AppCompatActivity() {
                 x2 = event.x
                 val deltaX = x2 - x1
                 if (Math.abs(deltaX) > MIN_DISTANCE && x1 < x2) {
-                    Toast.makeText(this, "SELECTED", Toast.LENGTH_SHORT).show()
+                    //ON LOAD OF RECIPE PRESENTATION GO GET THE LIST OF RECIPES THAT MATCH CONSTRAINTS
+                    //THEN SHOW 1 TO USER
+                    //ON SWIPE LEFT DO NOTHING
+                    //ON SWIPE RIGHT SHOW NEXT RECIPE AND SAVE CURRENT RECIPE
+                    //ON SWIPE LEFT GET BACK TO PREVIOUS RECIPE
+                    Toast.makeText(this, "SHOW LAST RECIPE", Toast.LENGTH_SHORT).show()
                 } else if (Math.abs(deltaX) > MIN_DISTANCE && x2 < x1) {
-                    Toast.makeText(this, "SKIP", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "GIVE ME ANOTHER RECIPE", Toast.LENGTH_SHORT).show()
                 }
                 else {
                     if (mShowingBack) {
