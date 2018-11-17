@@ -181,7 +181,7 @@ class CreateRecipeFragment : Fragment() {
                 val imagePath = getPath(selectedImageUri)
                 val view = this.view?.findViewById<ImageView>(R.id.recipe_image)
                 view!!.scaleType = ImageView.ScaleType.CENTER_CROP
-                setImageFromUrl(imagePath, view!!)
+                setImageFromUrl(imagePath, view)
             }
         }
     }
