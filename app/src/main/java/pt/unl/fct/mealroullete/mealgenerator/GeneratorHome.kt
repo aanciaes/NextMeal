@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import pt.unl.fct.mealroullete.mealgenerator.customize.CustomizeGeneratorMainCourse
+import pt.unl.fct.mealroullete.mealgenerator.customize.RecipePresentation
 
 class GeneratorHome : AppCompatActivity() {
 
@@ -22,6 +23,11 @@ class GeneratorHome : AppCompatActivity() {
         val advancedGeneratorStep1 = findViewById<Button>(R.id.customize)
         advancedGeneratorStep1.setOnClickListener {
             startActivity(Intent(this, CustomizeGeneratorMainCourse::class.java))
+        }
+
+        val randomGenerator = findViewById<Button>(R.id.random)
+        randomGenerator.setOnClickListener {
+            startActivity(Intent(this, RecipePresentation::class.java))
         }
     }
 }

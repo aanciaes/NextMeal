@@ -187,7 +187,7 @@
                                 android:layout_height="32dp"
                                 android:layout_marginStart="220dp"
                                 android:layout_marginTop="4dp"
-                                android:background="@drawable/ic_search"/>
+                                android:background="@drawable/add_icon"/>
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>
