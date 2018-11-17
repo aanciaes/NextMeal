@@ -1,11 +1,16 @@
 package pt.unl.fct.mealroullete.homepage.profile
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.support.design.widget.NavigationView
@@ -13,8 +18,6 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_profile.*
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.calculator.CalculatorActivity
@@ -25,8 +28,11 @@ import pt.unl.fct.mealroullete.logout.LogoutActivity
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.persistance.User
 import android.provider.MediaStore
-import android.widget.ImageView
-import android.widget.Toast
+import android.support.annotation.RequiresApi
+import android.text.InputType
+import android.view.Gravity
+import android.view.ViewGroup
+import android.widget.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -53,11 +59,18 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         setListeners()
 
         setCommonHeaderInformationForLoggedInUser(profile_navbar, MockDatabase.loggedInUser)
-        setName()
+        setInfo()
     }
 
-    private fun setName() {
+    private fun setInfo() {
         findViewById<TextView>(R.id.user_name).text = MockDatabase.loggedInUser?.username
+        findViewById<TextView>(R.id.user_email).text = MockDatabase.loggedInUser?.email
+        setImageFromUrl(MockDatabase.loggedInUser?.picture.toString(), findViewById(R.id.profile_image))
+
+        val nameDateOfBirth = MockDatabase.loggedInUser?.fullname
+        if (nameDateOfBirth != null) {
+            findViewById<TextView>(R.id.user_name_date_birth).text = "${MockDatabase.loggedInUser?.fullname} ${MockDatabase.loggedInUser?.dateOfBirth}"
+        }
     }
 
     override fun onBackPressed() {
@@ -116,21 +129,79 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun setListeners () {
-        val edit = findViewById<Button>(R.id.edit_profile)
-        edit.setOnClickListener {
-            editProfile()
+        val editPicture = findViewById<ImageButton>(R.id.profile_edit_picture)
+        editPicture.setOnClickListener {
+            uploadPhoto(0)
         }
+
+        val editEmail = findViewById<ImageButton>(R.id.profile_edit_email)
+        editEmail.setOnClickListener { editEmail() }
+
+        val editFullNameDateOfBirth = findViewById<ImageButton>(R.id.profile_edit_full_name)
+        editFullNameDateOfBirth.setOnClickListener { editFullNameAndDateOfBirth() }
     }
 
-    private fun editProfile () {
-        uploadPhoto(0)
+    private fun editEmail () {
+        var newEmail = ""
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Email")
+
+        val input = EditText(this)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        input.setText(findViewById<TextView>(R.id.user_email).text.toString())
+        builder.setView(input)
+
+        builder.setPositiveButton("OK") {
+            _, _ ->
+            newEmail = input.text.toString()
+            MockDatabase.loggedInUser?.email = newEmail
+            findViewById<TextView>(R.id.user_email).text = MockDatabase.loggedInUser?.email
+            profile_navbar.getHeaderView(0)
+                    .findViewById<TextView>(R.id.common_header_user_email_address).text = MockDatabase.loggedInUser?.email
+        }
+
+        builder.setNegativeButton("Cancel") {
+            dialog, _ ->  dialog.cancel()
+        }
+
+        builder.show()
+    }
+
+    @SuppressLint("NewApi")
+    private fun editFullNameAndDateOfBirth () {
+        var newFullName = ""
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Full Name")
+
+        val input = EditText(this)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+
+        builder.setPositiveButton("NEXT") {
+            _, _ ->
+            newFullName = input.text.toString()
+            MockDatabase.loggedInUser?.fullname = newFullName
+
+            val datePickerDialog = DatePickerDialog(this)
+            datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
+                MockDatabase.loggedInUser?.dateOfBirth = year.toString() + "/" + month.toString() + "/" + dayOfMonth.toString()
+                findViewById<TextView>(R.id.user_name_date_birth).text = "${MockDatabase.loggedInUser?.fullname} ${MockDatabase.loggedInUser?.dateOfBirth}"
+            }
+            datePickerDialog.show()
+        }
+
+        builder.setNegativeButton("Cancel") {
+            dialog, _ ->  dialog.cancel()
+        }
+
+        builder.show()
     }
 
     private fun uploadPhoto (req_code: Int) {
         openGallery(req_code)
     }
 
-    fun openGallery(req_code: Int) {
+    private fun openGallery(req_code: Int) {
 
         val intent = Intent()
         intent.type = "image/*"
