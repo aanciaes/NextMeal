@@ -1,4 +1,4 @@
-# NextMeal
+# NextMeal [![CircleCI](https://circleci.com/gh/aanciaes/NextMeal/tree/master.svg?style=svg&circle-token=7d0ff97b08031d42cbadf3a97b6e7702aa65f8a5)](https://circleci.com/gh/aanciaes/NextMeal/tree/master) [![CircleCI](https://circleci.com/gh/aanciaes/NextMeal/tree/master.svg?style=shield&circle-token=7d0ff97b08031d42cbadf3a97b6e7702aa65f8a5)](https://circleci.com/gh/aanciaes/NextMeal/tree/master)
 
 ## 1. Project Description
 Android application that allows the user to get random or user targeted recipes suggestions based on the provided restrictions. 
