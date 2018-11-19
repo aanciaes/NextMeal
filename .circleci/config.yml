@@ -33,7 +33,7 @@ jobs:
 
     - run:
         name: Gradle Dependencies
-        command: gradlew dependencies
+        command: ./gradlew dependencies
 
     - save_cache:
         paths:
@@ -43,4 +43,4 @@ jobs:
     # run tests!
     - run:
         name: Build Project
-        command: gradlew build
+        command: ./gradlew build
