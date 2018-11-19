@@ -24,6 +24,14 @@ jobs:
     steps:
     - checkout
 
+    - run:
+        name: Update Packages
+        command: apt-get update
+
+    - run:
+        name: Install gradle
+        command: apt-get install -y gradle
+
     # Download and cache dependencies
     - restore_cache:
         keys:
@@ -33,7 +41,7 @@ jobs:
 
     - run:
         name: Gradle Dependencies
-        command: ./gradlew dependencies
+        command: gradle dependencies
 
     - save_cache:
         paths:
@@ -43,4 +51,4 @@ jobs:
     # run tests!
     - run:
         name: Build Project
-        command: ./gradlew build
+        command: gradle build
