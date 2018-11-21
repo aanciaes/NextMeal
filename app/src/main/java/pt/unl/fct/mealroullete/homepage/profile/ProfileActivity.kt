@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -264,7 +263,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         } else{
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setTitle("Permission Request")
-            alertDialogBuilder.setMessage("NextMeal does not have permisisons to read/write from/to your gallery\n" +
+            alertDialogBuilder.setMessage("NextMeal does not have permissions to read/write from/to your gallery\n" +
                     "Please set the appropriate permissions")
 
             alertDialogBuilder.setPositiveButton("Ok") { interfaceDialog, _ ->
