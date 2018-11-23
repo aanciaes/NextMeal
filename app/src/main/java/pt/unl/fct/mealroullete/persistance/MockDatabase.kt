@@ -1,16 +1,20 @@
 package pt.unl.fct.mealroullete.persistance
 
-import pt.unl.fct.mealroullete.mealgenerator.customize.Ingredient
+import pt.unl.fct.mealroullete.R
 
 
 object MockDatabase {
 
     private val users = mutableListOf<User>()
-    val mainCourseItems = listOf("Atum", "Carne de Vaca", "Ricardo", "Carne de Porco",
-            "Manel", "Amaral", "Rodrigues")
+    val mainCourseItems = listOf(Ingredient(1, "Tuna", R.drawable.atum), Ingredient(2, "Duck", R.drawable.pato), Ingredient(3, "Turkey", R.drawable.peru), Ingredient(4, "Pork", R.drawable.porco)
+    ,Ingredient(5, "Sardine", R.drawable.sardinha), Ingredient(6, "Tofu", R.drawable.tofu))
 
-    val sideItems = listOf("arroz", "batata", "feijao verde", "feijao manteinga", "nabiças",
-            "funcho", "cenouras")
+    val sideItems = listOf(Ingredient(7, "Sweet Potato", R.drawable.batatadoce), Ingredient(8, "Carrot", R.drawable.cenoura)
+            , Ingredient(9, "Cabbage", R.drawable.couve), Ingredient(10, "Flower Cabbage", R.drawable.couveflor)
+            ,Ingredient(11, "Cranberry Beans", R.drawable.cranberry_bean), Ingredient(12, "Cowpeas", R.drawable.feijaofrade)
+            ,Ingredient(13, "Black Peas", R.drawable.feijaopreto), Ingredient(14, "Green Beans", R.drawable.feijaoverde)
+            ,Ingredient(15, "Turnip Sprout", R.drawable.grelos), Ingredient(16, "Potato", R.drawable.potato)
+            , Ingredient(17, "Rice", R.drawable.rice))
 
     val recipesList = mutableListOf<Recipe>().apply { add(Recipe(size+1, "", "Badjoraz a Ze do Pipo",
             listOf("2 pipos","3 bananas","1 ananas","10 frangos"),
@@ -76,6 +80,8 @@ class User (val id: Long,
     var dateOfBirth: String? = null
     val allergies = mutableListOf<String>()
 }
+
+data class Ingredient (val id: Int, val name: String, val image: Int)
 
 class Recipe( val id: Int,
               val image: String,
