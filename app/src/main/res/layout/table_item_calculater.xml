@@ -2,10 +2,12 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/table_item_favorite"
+    android:id="@+id/table_item_calculator"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_margin="9dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginStart="4dp"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal">
@@ -14,14 +16,14 @@
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_marginBottom="22dp"
-        android:layout_weight="0.20">
+        android:layout_weight="0.3">
 
         <TextView
             android:id="@+id/calculatorName"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:gravity="center"
-            android:text="Carrot" />
+            android:text="" />
 
         <TextView
 
@@ -36,7 +38,7 @@
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_marginBottom="22dp"
-        android:layout_weight="0.1">
+        android:layout_weight="0.15">
 
         <TextView
             android:layout_width="match_parent"
@@ -49,7 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:gravity="bottom|center"
-            android:text="52" />
+            android:id="@+id/calculatorCalories"
+            android:text="" />
 
     </RelativeLayout>
 
@@ -57,7 +60,7 @@
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_marginBottom="22dp"
-        android:layout_weight="0.1">
+        android:layout_weight="0.15">
 
         <TextView
             android:layout_width="match_parent"
@@ -70,7 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:gravity="bottom|center"
-            android:text="22" />
+            android:id="@+id/calculatorFats"
+            android:text="" />
 
     </RelativeLayout>
 
@@ -78,7 +82,7 @@
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_marginBottom="22dp"
-        android:layout_weight="0.1">
+        android:layout_weight="0.15">
 
         <TextView
             android:layout_width="match_parent"
@@ -91,7 +95,8 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:gravity="bottom|center"
-            android:text="25" />
+            android:id="@+id/calculatorProtein"
+            android:text="" />
 
     </RelativeLayout>
 
@@ -99,7 +104,7 @@
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_marginBottom="22dp"
-        android:layout_weight="0.1">
+        android:layout_weight="0.15">
 
         <TextView
             android:layout_width="match_parent"
@@ -112,7 +117,8 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:gravity="bottom|center"
-            android:text="12" />
+            android:id="@+id/calculatorCarbs"
+            android:text="" />
 
     </RelativeLayout>
 
@@ -122,6 +128,7 @@
         android:layout_weight="0.1">
 
         <ImageButton
+            android:id="@+id/add_ingredient_calc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"

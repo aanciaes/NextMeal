@@ -6,15 +6,15 @@ import pt.unl.fct.mealroullete.R
 object MockDatabase {
 
     private val users = mutableListOf<User>()
-    val mainCourseItems = listOf(Ingredient(1, "Tuna", R.drawable.atum), Ingredient(2, "Duck", R.drawable.pato), Ingredient(3, "Turkey", R.drawable.peru), Ingredient(4, "Pork", R.drawable.porco)
-    ,Ingredient(5, "Sardine", R.drawable.sardinha), Ingredient(6, "Tofu", R.drawable.tofu))
+    val mainCourseItems = listOf(Ingredient(1, "Tuna", R.drawable.atum, 20, 12, 34, 2), Ingredient(2, "Duck", R.drawable.pato, 30, 35, 12, 24), Ingredient(3, "Turkey", R.drawable.peru, 800, 24, 11,56), Ingredient(4, "Pork", R.drawable.porco, 39, 59, 2, 5)
+    ,Ingredient(5, "Sardine", R.drawable.sardinha, 26, 52, 34, 2), Ingredient(6, "Tofu", R.drawable.tofu, 7, 2, 3, 20))
 
-    val sideItems = listOf(Ingredient(7, "Sweet Potato", R.drawable.batatadoce), Ingredient(8, "Carrot", R.drawable.cenoura)
-            , Ingredient(9, "Cabbage", R.drawable.couve), Ingredient(10, "Flower Cabbage", R.drawable.couveflor)
-            ,Ingredient(11, "Cranberry Beans", R.drawable.cranberry_bean), Ingredient(12, "Cowpeas", R.drawable.feijaofrade)
-            ,Ingredient(13, "Black Peas", R.drawable.feijaopreto), Ingredient(14, "Green Beans", R.drawable.feijaoverde)
-            ,Ingredient(15, "Turnip Sprout", R.drawable.grelos), Ingredient(16, "Potato", R.drawable.potato)
-            , Ingredient(17, "Rice", R.drawable.rice))
+    val sideItems = listOf(Ingredient(7, "Sweet Potato", R.drawable.batatadoce, 30, 13, 32, 21), Ingredient(8, "Carrot", R.drawable.cenoura, 98, 21, 39, 21)
+            , Ingredient(9, "Cabbage", R.drawable.couve, 26, 16, 42, 27), Ingredient(10, "Flower Cabbage", R.drawable.couveflor, 20, 12, 34, 51)
+            ,Ingredient(11, "Cranberry Beans", R.drawable.cranberry_bean, 20, 28, 30, 6), Ingredient(12, "Cowpeas", R.drawable.feijaofrade, 42, 8, 14, 3)
+            ,Ingredient(13, "Black Peas", R.drawable.feijaopreto, 20, 12, 34, 2), Ingredient(14, "Green Beans", R.drawable.feijaoverde, 40, 2, 4, 2)
+            ,Ingredient(15, "Turnip Sprout", R.drawable.grelos, 20, 12, 34, 20), Ingredient(16, "Potato", R.drawable.potato, 100, 5, 2, 50)
+            , Ingredient(17, "Rice", R.drawable.rice, 20, 12, 9, 2))
 
     val recipesList = mutableListOf<Recipe>().apply { add(Recipe(size+1, "", "Badjoraz a Ze do Pipo",
             listOf("2 pipos","3 bananas","1 ananas","10 frangos"),
@@ -81,7 +81,7 @@ class User (val id: Long,
     val allergies = mutableListOf<String>()
 }
 
-data class Ingredient (val id: Int, val name: String, val image: Int)
+data class Ingredient (val id: Int, val name: String, val image: Int, val calories: Int, val fats: Int, val protein: Int, val carbs: Int )
 
 class Recipe( val id: Int,
               val image: String,
