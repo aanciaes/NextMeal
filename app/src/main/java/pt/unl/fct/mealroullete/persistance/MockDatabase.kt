@@ -34,7 +34,7 @@ object MockDatabase {
     var loggedInUser: User? = null
 
     init {
-        users.add(User(1, "root", "root", "root@nextmeal.com"))
+        users.add(User(1, "root", "root", "root@mealroullete.com"))
     }
 
     private fun count (): Int {
