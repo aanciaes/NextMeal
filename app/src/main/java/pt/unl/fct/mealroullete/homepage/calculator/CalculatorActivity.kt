@@ -39,7 +39,7 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         cachedIngredient.addAll(MockDatabase.mainCourseItems)
         cachedIngredient.addAll(MockDatabase.sideItems)
 
-        buildList(cachedIngredient)
+        buildList(listOf())
 
         val toggle = ActionBarDrawerToggle(this, calculator_drawer, calculator_toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         calculator_drawer.addDrawerListener(toggle)
@@ -56,10 +56,14 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s != null) {
-                    val items = cachedIngredient.filter { it.name.contains(s, true) }
-                    buildList(items)
+                    if (s.trim().isEmpty()) {
+                        buildList(listOf())
+                    } else {
+                        val items = cachedIngredient.filter { it.name.contains(s, true) }
+                        buildList(items)
+                    }
                 } else {
-                    buildList(cachedIngredient)
+                    buildList(listOf())
                 }
             }
 
