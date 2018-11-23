@@ -1,50 +1,45 @@
 package pt.unl.fct.mealroullete.homepage.calculator
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.media.Image
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View.inflate
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TableLayout
-import android.widget.TextView
+import android.widget.*
+import kotlinx.android.synthetic.main.activity_calculator.*
+import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.history.HistoryActivity
 import pt.unl.fct.mealroullete.homepage.poll.PollActivity
 import pt.unl.fct.mealroullete.homepage.profile.ProfileActivity
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
-import kotlinx.android.synthetic.main.activity_calculator.*
-import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.logout.LogoutActivity
+import pt.unl.fct.mealroullete.persistance.Ingredient
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.persistance.User
 import java.io.File
-import android.view.LayoutInflater
-
 
 
 class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private val cachedIngredient = mutableListOf<Ingredient>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_calculator)
         setSupportActionBar(calculator_toolbar)
-        val container = findViewById<TableLayout>(R.id.ingredient_table)
-        val inflater = LayoutInflater.from(this)
-        var x = 1
-        while(x < 4){
-            val child = inflater.inflate(R.layout.table_item_calculater, container, false) as LinearLayout
-            child.findViewById<TextView>(R.id.calculatorName).text = "Ingredient Name" + x
 
-            container.addView(child)
-            x++
-        }
+        cachedIngredient.addAll(MockDatabase.mainCourseItems)
+        cachedIngredient.addAll(MockDatabase.sideItems)
+
+        buildList(cachedIngredient)
 
         val toggle = ActionBarDrawerToggle(this, calculator_drawer, calculator_toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         calculator_drawer.addDrawerListener(toggle)
@@ -53,7 +48,23 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         calculator_navbar.setCheckedItem(R.id.common_drawer_item_calculator)
         calculator_navbar.setNavigationItemSelectedListener(this)
 
-        setCommonHeaderInformationForLoggedInUser (calculator_navbar, MockDatabase.loggedInUser)
+        setCommonHeaderInformationForLoggedInUser(calculator_navbar, MockDatabase.loggedInUser)
+
+        val search = findViewById<EditText>(R.id.search_field)
+        search.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s != null) {
+                    val items = cachedIngredient.filter { it.name.contains(s, true) }
+                    buildList(items)
+                } else {
+                    buildList(cachedIngredient)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable) {}
+        })
     }
 
     override fun onBackPressed() {
@@ -97,7 +108,7 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         return true
     }
 
-    private fun setCommonHeaderInformationForLoggedInUser (navigationView: NavigationView, user: User?) {
+    private fun setCommonHeaderInformationForLoggedInUser(navigationView: NavigationView, user: User?) {
         val header = navigationView.getHeaderView(0)
 
         header.findViewById<TextView>(R.id.common_header_user_full_name).text = user?.username
@@ -110,12 +121,26 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         }
     }
 
-    private fun setImageFromUrl (path: String, imageView: ImageView) {
+    private fun setImageFromUrl(path: String, imageView: ImageView) {
         val imgFile = File(path);
         if (imgFile.exists()) {
-            val myBitmap = BitmapFactory.decodeFile (imgFile.absolutePath);
+            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath);
 
             imageView.setImageBitmap(myBitmap);
+        }
+    }
+
+    private fun buildList(ingredients: List<Ingredient>) {
+        val container = findViewById<TableLayout>(R.id.ingredient_table)
+        container.removeAllViews()
+
+        val inflater = LayoutInflater.from(this)
+
+        for (ingredient in ingredients) {
+            val child = inflater.inflate(R.layout.table_item_calculater, container, false) as LinearLayout
+            child.findViewById<TextView>(R.id.calculatorName).text = ingredient.name
+
+            container.addView(child)
         }
     }
 }
