@@ -29,6 +29,7 @@
         <activity android:name=".mealgenerator.customize.RecipePresentation"/>
 
         <activity
+                android:windowSoftInputMode="adjustPan"
                 android:name=".homepage.calculator.CalculatorActivity"
                 android:label="@string/manifest_activity_calculator"
                 android:theme="@style/AppTheme.NoActionBar" />

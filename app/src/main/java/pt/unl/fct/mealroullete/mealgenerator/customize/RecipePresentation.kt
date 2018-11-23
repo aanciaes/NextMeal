@@ -41,6 +41,7 @@ class RecipePresentation : AppCompatActivity() {
 
     }
 
+    val index = -1
     class CardFrontFragment : Fragment() {
         val fullRecipeList = MockDatabase.recipesList
         var currentRecipe:Recipe? = null
@@ -49,7 +50,6 @@ class RecipePresentation : AppCompatActivity() {
                 container: ViewGroup?,
                 savedInstanceState: Bundle?
         ): View? {
-
             val random = Random().nextInt(fullRecipeList.size)
             currentRecipe = fullRecipeList.get(random)
             val view = inflater.inflate(R.layout.card_front, container, false)
@@ -60,6 +60,7 @@ class RecipePresentation : AppCompatActivity() {
         }
 
     }
+
 
     class CardBackFragment : Fragment() {
         override fun onCreateView(

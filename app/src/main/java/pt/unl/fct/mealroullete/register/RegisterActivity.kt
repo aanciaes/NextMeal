@@ -1,15 +1,20 @@
 package pt.unl.fct.mealroullete.register
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.IBinder
+import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.CardView
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.login.LoginActivity
@@ -24,6 +29,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun addListeners() {
+        setupHideKeyboard()
         checkUsername()
         registerListener()
         onClickShowPassword()
@@ -150,7 +156,7 @@ class RegisterActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val passwordField = findViewById<EditText>(R.id.register_password_field)
 
-                if (s.toString() != passwordField.text.toString()) {
+                if (s.isNullOrEmpty() || s.toString() != passwordField.text.toString()) {
                     repeatPasswordField.setBackgroundResource(R.drawable.password_matching_negative)
                 } else {
                     repeatPasswordField.setBackgroundResource(R.drawable.password_matching_positive)
@@ -166,5 +172,27 @@ class RegisterActivity : AppCompatActivity() {
         registerJump.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
+    }
+
+    private fun setupHideKeyboard() {
+        val constraintLayout = findViewById<TextView>(R.id.register_container) as? ConstraintLayout
+        constraintLayout?.setOnClickListener() {
+            defocusAndHideKeyboard(this)
+        }
+    }
+
+    fun defocusAndHideKeyboard(activity: Activity?) {
+        if (activity == null) return
+        val view = activity.currentFocus
+        if (view != null) {
+            view.clearFocus()
+            hideKeyboard(activity, view.windowToken)
+        }
+    }
+
+    fun hideKeyboard(activity: Activity?, windowToken: IBinder?) {
+        if (activity == null) return
+        val inputManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 }

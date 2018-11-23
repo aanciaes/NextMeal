@@ -16,6 +16,7 @@ class CreatePollFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_create_poll, container, false)
 
 
+
         val container = view.findViewById<TableLayout>(R.id.ingredient_table)
         var x = 1
         while (x < 8) {
@@ -24,6 +25,7 @@ class CreatePollFragment : Fragment() {
             container.addView(child)
             x++
         }
+
 
         return view
     }
