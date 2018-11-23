@@ -9,6 +9,8 @@ import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import pt.unl.fct.mealroullete.mealgenerator.customize.CustomizeGeneratorMainCourse
 import pt.unl.fct.mealroullete.mealgenerator.customize.RecipePresentation
+import pt.unl.fct.mealroullete.persistance.MockDatabase
+import java.io.Serializable
 
 class GeneratorHome : AppCompatActivity() {
 
@@ -27,7 +29,9 @@ class GeneratorHome : AppCompatActivity() {
 
         val randomGenerator = findViewById<Button>(R.id.random)
         randomGenerator.setOnClickListener {
-            startActivity(Intent(this, RecipePresentation::class.java))
+            val intent = Intent(this, RecipePresentation::class.java)
+            //intent.putExtra("recipeList", MockDatabase.recipesList.map { "${it.id};${it.name}" })
+            startActivity(intent)
         }
     }
 }

@@ -23,12 +23,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".register.RegisterActivity" />
-
+        <activity android:name=".mealgenerator.GeneratorHome"/>
         <activity android:name=".mealgenerator.customize.CustomizeGeneratorMainCourse"/>
         <activity android:name=".mealgenerator.customize.CustomizeGeneratorSides"/>
         <activity android:name=".mealgenerator.customize.RecipePresentation"/>
 
         <activity
+                android:windowSoftInputMode="adjustPan"
                 android:name=".homepage.calculator.CalculatorActivity"
                 android:label="@string/manifest_activity_calculator"
                 android:theme="@style/AppTheme.NoActionBar" />

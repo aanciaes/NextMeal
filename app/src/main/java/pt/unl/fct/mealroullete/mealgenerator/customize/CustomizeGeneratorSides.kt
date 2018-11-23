@@ -9,7 +9,9 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import de.hdodenhof.circleimageview.CircleImageView
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.persistance.Ingredient
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 
 class CustomizeGeneratorSides : AppCompatActivity() {
@@ -29,7 +31,7 @@ class CustomizeGeneratorSides : AppCompatActivity() {
         buildList(cachedItems)
     }
 
-    private fun buildList (items: List<String>) {
+    private fun buildList (items: List<Ingredient>) {
         val tl = findViewById<TableLayout>(R.id.ingredient_table)
         tl.removeAllViews()
 
@@ -47,20 +49,31 @@ class CustomizeGeneratorSides : AppCompatActivity() {
                 childLayout.id = View.generateViewId()
 
                 val item = items[index]
-                childLayout.findViewById<TextView>(R.id.ingredient_name).text = item
+                childLayout.findViewById<TextView>(R.id.ingredient_name).text = item.name
 
-                if (selectedItems.contains(item)) {
+                childLayout.findViewById<CircleImageView>(R.id.ingredient_image).setImageResource(item.image)
+
+                if (selectedItems.contains(item.name)) {
                     childLayout.findViewById<CheckBox>(R.id.ingredient_check_box).isChecked = true
+                    childLayout.findViewById<CircleImageView>(R.id.ingredient_image).borderColor =
+                            resources.getColor(R.color.greendark, null)
+                    childLayout.findViewById<CircleImageView>(R.id.ingredient_image).borderWidth = 10
                 }
 
                 childLayout.findViewById<CheckBox>(R.id.ingredient_check_box)
                         .setOnCheckedChangeListener { buttonView, isChecked ->
                             val parent = buttonView.parent.parent as View
                             val name = parent.findViewById<TextView>(R.id.ingredient_name).text.toString()
+
+                            val image = parent.findViewById<CircleImageView>(R.id.ingredient_image)
                             if (isChecked) {
                                 selectedItems.add(name)
+                                image.borderColor = resources.getColor(R.color.greendark, null)
+                                image.borderWidth = 10
                             } else {
                                 selectedItems.remove(name)
+                                image.borderColor = resources.getColor(R.color.white, null)
+                                image.borderWidth = 2
                             }
                         }
 
@@ -92,7 +105,7 @@ class CustomizeGeneratorSides : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s != null) {
-                    val items = cachedItems.filter { it.contains(s, true) }
+                    val items = cachedItems.filter { it.name.contains(s, true) }
                     buildList(items)
                 }else{
                     buildList(cachedItems)

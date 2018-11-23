@@ -1,10 +1,12 @@
 package pt.unl.fct.mealroullete.homepage.profile
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaScannerConnection
@@ -13,6 +15,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.design.widget.NavigationView
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -40,6 +44,8 @@ import java.util.*
 class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val IMAGES_DIRECTORY = "/profile_pictures"
+    private val OPEN_GALLERY_REQ_CODE = 0
+    private val PERMISSIONS_REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,7 +136,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private fun setListeners() {
         val editPicture = findViewById<ImageButton>(R.id.profile_edit_picture)
         editPicture.setOnClickListener {
-            uploadPhoto(0)
+            uploadPhoto(OPEN_GALLERY_REQ_CODE)
         }
 
         val editEmail = findViewById<ImageButton>(R.id.profile_edit_email)
@@ -197,16 +203,75 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun uploadPhoto(req_code: Int) {
-        openGallery(req_code)
+
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)) {
+
+            requestPermissions()
+        } else{
+            openGallery(req_code)
+        }
+    }
+
+    private fun requestPermissions () {
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                            Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                explainPermission()
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                        PERMISSIONS_REQUEST_CODE)
+            }
+        } else {
+            openGallery(OPEN_GALLERY_REQ_CODE)
+        }
+    }
+
+    private fun explainPermission () {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle("Permission Request")
+        alertDialogBuilder.setMessage("Next meal needs permission to access your gallery")
+
+        alertDialogBuilder.setPositiveButton("Ok") { interfaceDialog, _ ->
+            interfaceDialog.cancel()
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    PERMISSIONS_REQUEST_CODE)
+        }
+
+        alertDialogBuilder.show()
     }
 
     private fun openGallery(req_code: Int) {
 
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent,
-                "Select file to upload "), req_code)
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED)) {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent,
+                    "Select file to upload "), req_code)
+        } else{
+            val alertDialogBuilder = AlertDialog.Builder(this)
+            alertDialogBuilder.setTitle("Permission Request")
+            alertDialogBuilder.setMessage("NextMeal does not have permissions to read/write from/to your gallery\n" +
+                    "Please set the appropriate permissions")
+
+            alertDialogBuilder.setPositiveButton("Ok") { interfaceDialog, _ ->
+                interfaceDialog.cancel()
+            }
+
+            alertDialogBuilder.show()
+        }
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -214,13 +279,23 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         if (resultCode == Activity.RESULT_OK) {
             val selectedImageUri = data!!.data
 
-            if (requestCode == 0) {
+            if (requestCode == OPEN_GALLERY_REQ_CODE) {
                 val imagePath = getPath(selectedImageUri)
                 MockDatabase.loggedInUser?.picture = imagePath
 
                 val imageView = findViewById<ImageView>(R.id.profile_image)
                 setImageFromUrl(imagePath, imageView)
                 setCommonHeaderInformationForLoggedInUser(profile_navbar, MockDatabase.loggedInUser)
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            PERMISSIONS_REQUEST_CODE -> {
+                openGallery(OPEN_GALLERY_REQ_CODE)
+                return
             }
         }
     }

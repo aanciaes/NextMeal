@@ -11,6 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
+import pt.unl.fct.mealroullete.persistance.MockDatabase
+import pt.unl.fct.mealroullete.persistance.Recipe
+import java.util.*
 
 
 class RecipePresentation : AppCompatActivity() {
@@ -18,6 +21,8 @@ class RecipePresentation : AppCompatActivity() {
     private var x2: Float = 0.toFloat()
     val MIN_DISTANCE = 150
     private var mShowingBack:Boolean = false
+    val fullRecipeList = MockDatabase.recipesList
+    var currentRecipe:Recipe? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,14 +41,26 @@ class RecipePresentation : AppCompatActivity() {
 
     }
 
+    val index = -1
     class CardFrontFragment : Fragment() {
-
+        val fullRecipeList = MockDatabase.recipesList
+        var currentRecipe:Recipe? = null
         override fun onCreateView(
                 inflater: LayoutInflater,
                 container: ViewGroup?,
                 savedInstanceState: Bundle?
-        ): View = inflater.inflate(R.layout.card_front, container, false)
+        ): View? {
+            val random = Random().nextInt(fullRecipeList.size)
+            currentRecipe = fullRecipeList.get(random)
+            val view = inflater.inflate(R.layout.card_front, container, false)
+            val recipeName = view.findViewById<TextView>(R.id.recipeName)
+            recipeName.text = currentRecipe!!.name
+
+            return view
+        }
+
     }
+
 
     class CardBackFragment : Fragment() {
         override fun onCreateView(

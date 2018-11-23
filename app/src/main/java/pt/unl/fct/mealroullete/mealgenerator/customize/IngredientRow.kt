@@ -1,5 +1,7 @@
 package pt.unl.fct.mealroullete.mealgenerator.customize
 
+import pt.unl.fct.mealroullete.persistance.Ingredient
+
 class IngredientRow(ingredient: Ingredient? = null,
                     ingredient1: Ingredient? = null,
                     ingredient2: Ingredient?=null,

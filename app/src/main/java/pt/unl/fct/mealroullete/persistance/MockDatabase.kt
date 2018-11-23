@@ -1,17 +1,36 @@
 package pt.unl.fct.mealroullete.persistance
 
-import pt.unl.fct.mealroullete.mealgenerator.customize.Ingredient
+import pt.unl.fct.mealroullete.R
 
 
 object MockDatabase {
 
     private val users = mutableListOf<User>()
-    val mainCourseItems = listOf("Atum", "Carne de Vaca", "Ricardo", "Carne de Porco",
-            "Manel", "Amaral", "Rodrigues")
+    val mainCourseItems = listOf(Ingredient(1, "Tuna", R.drawable.atum, 20, 12, 34, 2), Ingredient(2, "Duck", R.drawable.pato, 30, 35, 12, 24), Ingredient(3, "Turkey", R.drawable.peru, 800, 24, 11,56), Ingredient(4, "Pork", R.drawable.porco, 39, 59, 2, 5)
+    ,Ingredient(5, "Sardine", R.drawable.sardinha, 26, 52, 34, 2), Ingredient(6, "Tofu", R.drawable.tofu, 7, 2, 3, 20))
 
-    val sideItems = listOf("arroz", "batata", "feijao verde", "feijao manteinga", "nabiças",
-            "funcho", "cenouras")
+    val sideItems = listOf(Ingredient(7, "Sweet Potato", R.drawable.batatadoce, 30, 13, 32, 21), Ingredient(8, "Carrot", R.drawable.cenoura, 98, 21, 39, 21)
+            , Ingredient(9, "Cabbage", R.drawable.couve, 26, 16, 42, 27), Ingredient(10, "Flower Cabbage", R.drawable.couveflor, 20, 12, 34, 51)
+            ,Ingredient(11, "Cranberry Beans", R.drawable.cranberry_bean, 20, 28, 30, 6), Ingredient(12, "Cowpeas", R.drawable.feijaofrade, 42, 8, 14, 3)
+            ,Ingredient(13, "Black Peas", R.drawable.feijaopreto, 20, 12, 34, 2), Ingredient(14, "Green Beans", R.drawable.feijaoverde, 40, 2, 4, 2)
+            ,Ingredient(15, "Turnip Sprout", R.drawable.grelos, 20, 12, 34, 20), Ingredient(16, "Potato", R.drawable.potato, 100, 5, 2, 50)
+            , Ingredient(17, "Rice", R.drawable.rice, 20, 12, 9, 2))
 
+    val recipesList = mutableListOf<Recipe>().apply { add(Recipe(size+1, "", "Badjoraz a Ze do Pipo",
+            listOf("2 pipos","3 bananas","1 ananas","10 frangos"),
+            listOf("20g proteina","10g sal","4g hidratos de carbono","1g ferro"),
+            listOf("1º Cozer a Banana","2º Juntar os pipos","3º Comer os frangos","4º Vomitar O ananas"),
+            2000))
+        add(Recipe(size+1, "", "Fni a Ze da Pipa",
+            listOf("10 pipas","4 caes","1 penis","1/2 vagina"),
+            listOf("10g proteina","1g sal","400g hidratos de carbono","10g ferro"),
+            listOf("1º Cozer o cao","2º Juntar as pipas","3º Fritar a vagina","4º Vomitar o penis"),
+            3400))
+        add(Recipe(size+1, "", "Bibis assados",
+                listOf("10 putos","4 carros","1 dente","2 ovelhas"),
+                listOf("10000g proteina","1g sal","0g hidratos de carbono","0g ferro"),
+                listOf("1º Cozer o puto","2º Juntar o bibi","3º Fritar um carro","4º Vomitar o bibi"),
+                3400))}
     var loggedInUser: User? = null
 
     init {
@@ -52,7 +71,7 @@ object MockDatabase {
 
 
 class User (val id: Long,
-            var username: String,
+            val username: String,
             var password: String,
             var email: String) {
 
@@ -61,3 +80,13 @@ class User (val id: Long,
     var dateOfBirth: String? = null
     val allergies = mutableListOf<String>()
 }
+
+data class Ingredient (val id: Int, val name: String, val image: Int, val calories: Int, val fats: Int, val protein: Int, val carbs: Int )
+
+class Recipe( val id: Int,
+              val image: String,
+              val name: String,
+              val ingredients: List<String>,
+              val nutrients: List<String>,
+              val instructions: List<String>,
+              val calories: Int)
