@@ -70,7 +70,11 @@ class CreateRecipeFragment : Fragment() {
                 recipe.name = view.findViewById<EditText>(R.id.recipeName).text.toString()
                 MockDatabase.recipesList.add(recipe)
                 text.text = text.text.toString()
-                startActivity(Intent(context, RecipeCard::class.java))
+                val intent = Intent(context, RecipeCard::class.java)
+                val b = Bundle()
+                b.putString("name", recipe.name) //Your id
+                intent.putExtras(b)
+                startActivity(intent)
             }
 
             builder.setNegativeButton("No") { dialog, which -> dialog.cancel() }

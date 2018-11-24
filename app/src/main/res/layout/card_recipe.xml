@@ -69,11 +69,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/recipeName"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:gravity="center"
-                android:text="Recipe Name"
+                android:text=""
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +89,7 @@
                     android:orientation="vertical">
 
                     <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/recipeImage"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginStart="1dp"
@@ -124,49 +124,11 @@
                             app:layout_constraintTop_toBottomOf="@+id/instructions" />
 
                         <LinearLayout
+                            android:id="@+id/ingredientContainer"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/ingredient1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="left"
-                                android:text="100g Couves" />
-
-                            <TextView
-                                android:id="@+id/ingredient2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="left"
-                                android:text="300g batatas" />
-
-                            <TextView
-                                android:id="@+id/ingredient3"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="left"
-                                android:text="600g cenouras" />
-
-                            <TextView
-                                android:id="@+id/ingredient4"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="left"
-                                android:text="1200g ficus benjamina" />
-
-                            <TextView
-                                android:id="@+id/ingredient5"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="left"
-                                android:text="1g coca" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -188,49 +150,11 @@
                             android:text="INSTRUCTIONS:" />
 
                         <LinearLayout
+                            android:id="@+id/instructionContainer"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/instructions1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="left"
-                                android:text="STEP1" />
-
-                            <TextView
-                                android:id="@+id/instructions2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="left"
-                                android:text="STEP2" />
-
-                            <TextView
-                                android:id="@+id/instructions3"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="left"
-                                android:text="STEP3" />
-
-                            <TextView
-                                android:id="@+id/instructions4"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="left"
-                                android:text="STEP4" />
-
-                            <TextView
-                                android:id="@+id/instructions5"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="left"
-                                android:text="STEP5" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -267,7 +191,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:gravity="left"
-                                android:text="200kcal" />
+                                android:text="0 kcal" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -300,36 +224,28 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/nutrient1"
+                                android:id="@+id/nutrientProtein"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:gravity="left"
-                                android:text="200g protein" />
+                                android:text="0 Proteins" />
 
                             <TextView
-                                android:id="@+id/nutrient2"
+                                android:id="@+id/nutrientFats"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:gravity="left"
-                                android:text="10g salt" />
+                                android:text="0 Fats" />
 
                             <TextView
-                                android:id="@+id/nutrient3"
+                                android:id="@+id/nutrientCarbs"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:gravity="left"
-                                android:text="20g cona" />
-
-                            <TextView
-                                android:id="@+id/nutrient4"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:gravity="left"
-                                android:text="1g coco" />
+                                android:text="0 Carbs" />
 
                         </LinearLayout>
                     </LinearLayout>
