@@ -36,6 +36,7 @@
                     android:textSize="20sp"/>
 
                 <TextView
+                    android:id="@+id/history_total_calories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="200kcal" />
@@ -61,7 +62,9 @@
                     android:layout_height="wrap_content"
                     android:text="Proteins"
                     android:textSize="20sp"/>
+
                 <TextView
+                    android:id="@+id/history_total_proteins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="200g" />
@@ -86,7 +89,9 @@
                     android:layout_height="wrap_content"
                     android:text="Fats"
                     android:textSize="20sp"/>
+
                 <TextView
+                    android:id="@+id/history_total_fats"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="200g" />
@@ -112,6 +117,7 @@
                     android:textSize="20sp"/>
 
                 <TextView
+                    android:id="@+id/history_total_carbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="200g" />
