@@ -190,21 +190,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/calories"
                         app:layout_constraintVertical_bias="0.212" />
 
-                    <LinearLayout
-                        android:id="@+id/nutrientContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/add_nutrient"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="200dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="30dp"
-                            android:background="@drawable/add_icon" />
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

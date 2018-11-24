@@ -12,6 +12,7 @@ import android.widget.TableLayout
 import android.widget.TextView
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.persistance.MockDatabase
+import pt.unl.fct.mealroullete.persistance.Poll
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
@@ -25,23 +26,28 @@ class ActivePollFragment : Fragment() {
         val container = view.findViewById<TableLayout>(R.id.ingredient_table)
 
         val polls = MockDatabase.polls
-
-        for(p in polls){
+        var counter = polls.size - 1
+        while(counter >= 0){
+            val p = polls[counter]
             if(p.owner == MockDatabase.loggedInUser!!.username){
-                if(p.active){
+                val allMinutes = Duration.between(LocalDateTime.now(), p.endTimestamp).toMinutes()
+                val hours = Math.floor((allMinutes/60).toDouble()).toInt()
+                val minutes = allMinutes - hours*60
+                if(p.active && minutes > 0){
                     val child = inflater.inflate(R.layout.table_item_pollactive, container, false) as LinearLayout
                     child.findViewById<TextView>(R.id.pollAuthor).text = p.owner
 
-                    val allMinutes = Duration.between(LocalDateTime.now(), p.endTimestamp).toMinutes()
-                    val hours = Math.floor((allMinutes/60).toDouble()).toInt()
-                    val minutes = allMinutes - hours*60
-                    
+
+
                     child.findViewById<TextView>(R.id.pollexpiration).text = hours.toString() + "h" + minutes + "m"
                     child.findViewById<TextView>(R.id.pollName).text = p.name
                     container.addView(child)
                 }
+                else{
+                   p.active = false
+                }
             }
-
+            counter--;
         }
 
         return view

@@ -55,8 +55,7 @@ class CreateRecipeFragment : Fragment() {
                 val id = MockDatabase.polls.size
 
                 text.text = text.text.toString()
-                val refresh = Intent(this.context, RecipeActivity::class.java)
-                startActivity(refresh)
+                startActivity(Intent(context, RecipeCard::class.java))
             }
 
             builder.setNegativeButton("No") { dialog, which -> dialog.cancel() }
@@ -125,38 +124,6 @@ class CreateRecipeFragment : Fragment() {
             }
 
             builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
-
-            builder.show()
-        }
-        val addNutrient = view.findViewById<ImageButton>(R.id.add_nutrient)
-        addNutrient.setOnClickListener {
-
-            var nutrientName = ""
-            val builder = AlertDialog.Builder(this.context)
-            builder.setTitle("NUTRIENT")
-
-            val input = EditText(this.context)
-            input.inputType = InputType.TYPE_CLASS_TEXT
-            builder.setView(input)
-
-            // Set up the buttons
-            builder.setPositiveButton("Add") { dialog, which ->
-                nutrientName = input.text.toString()
-                if (nutrientName != "") {
-                    val container = view.findViewById<LinearLayout>(R.id.nutrientContainer)
-                    val nutrient = TextView(this.context)
-                    val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    params.setMargins(0, 25, 0, 0)
-                    nutrient.layoutParams = params
-                    nutrient.text = nutrientName
-                    val id = View.generateViewId()
-                    nutrient.id = id
-                    val index = container.indexOfChild(addNutrient)
-                    container.addView(nutrient, index)
-                }
-
-            }
-            builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
 
             builder.show()
         }

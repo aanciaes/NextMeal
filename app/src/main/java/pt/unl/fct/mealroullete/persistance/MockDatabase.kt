@@ -135,4 +135,4 @@ class Recipe( val id: Int,
               val instructions: List<String>,
               val calories: Int)
 
-class Poll(val id: Int, val name: String, val users : List<String>, val owner: String, val recipes: List<Recipe>, val winner: Recipe, val endTimestamp: LocalDateTime, val active: Boolean)
+class Poll(val id: Int, val name: String, val users : List<String>, val owner: String, val recipes: List<Recipe>, val winner: Recipe, val endTimestamp: LocalDateTime, var active: Boolean)

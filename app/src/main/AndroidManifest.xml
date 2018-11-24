@@ -41,6 +41,10 @@
             android:name=".homepage.recipe.RecipeActivity"
             android:label="@string/manifest_activity_recipe"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".homepage.recipe.RecipeCard"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
                 android:name=".homepage.poll.PollActivity"
                 android:label="@string/manifest_activity_poll"
