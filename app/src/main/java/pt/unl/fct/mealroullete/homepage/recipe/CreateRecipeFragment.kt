@@ -123,6 +123,40 @@ class CreateRecipeFragment : Fragment() {
 
             }
 
+            builder.setNegativeButton("Cancel", { dialog, which -> dialog.cancel() })
+
+            builder.show()
+        }
+
+        val addNutrient = view.findViewById<ImageButton>(R.id.add_nutrient)
+        addNutrient.setOnClickListener {
+
+            var nutrientName = ""
+            val builder = AlertDialog.Builder(this.context)
+            builder.setTitle("NUTRIENT")
+
+            val input = EditText(this.context)
+            input.inputType = InputType.TYPE_CLASS_TEXT
+            builder.setView(input)
+
+            // Set up the buttons
+            builder.setPositiveButton("Add") { dialog, which ->
+                nutrientName = input.text.toString()
+                if (nutrientName != "") {
+                    val container = view.findViewById<LinearLayout>(R.id.nutrient_container)
+                    val nutrient = TextView(this.context)
+                    val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    params.setMargins(0, 25, 0, 0)
+                    nutrient.layoutParams = params
+                    nutrient.text = nutrientName
+                    val id = View.generateViewId()
+                    nutrient.id = id
+                    val index = container.indexOfChild(addNutrient)
+                    container.addView(nutrient, index)
+                }
+
+            }
+
             builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
 
             builder.show()
@@ -163,7 +197,7 @@ class CreateRecipeFragment : Fragment() {
         } else{
             val alertDialogBuilder = AlertDialog.Builder(this.requireActivity())
             alertDialogBuilder.setTitle("Permission Request")
-            alertDialogBuilder.setMessage("NextMeal does not have permissions to read/write from/to your gallery\n" +
+            alertDialogBuilder.setMessage("Meal roulette does not have permissions to read/write from/to your gallery\n" +
                     "Please set the appropriate permissions")
 
             alertDialogBuilder.setPositiveButton("Ok") { interfaceDialog, _ ->
@@ -263,7 +297,7 @@ class CreateRecipeFragment : Fragment() {
     private fun explainPermission () {
         val alertDialogBuilder = AlertDialog.Builder(this.requireActivity())
         alertDialogBuilder.setTitle("Permission Request")
-        alertDialogBuilder.setMessage("Next meal needs permission to access your gallery")
+        alertDialogBuilder.setMessage("Meal roulette needs permission to access your gallery")
 
         alertDialogBuilder.setPositiveButton("Ok") { interfaceDialog, _ ->
             interfaceDialog.cancel()

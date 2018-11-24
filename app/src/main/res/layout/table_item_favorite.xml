@@ -10,6 +10,7 @@
     android:orientation="horizontal">
 
     <ImageView
+        android:id="@+id/favoriteImage"
         android:layout_width="134dp"
         android:layout_height="match_parent"
         android:src="@drawable/meal_highlight_example" />
