@@ -2,7 +2,6 @@ package pt.unl.fct.mealroullete.homepage.calculator
 
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.media.Image
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -14,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_calculator.*
-import kotlinx.android.synthetic.main.activity_login.*
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.history.HistoryActivity
 import pt.unl.fct.mealroullete.homepage.poll.PollActivity
@@ -150,7 +148,7 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             child.findViewById<TextView>(R.id.calculatorCarbs).text = ingredient.carbs.toString()
             child.findViewById<TextView>(R.id.calculatorFats).text = ingredient.fats.toString()
 
-            child.findViewById<ImageButton>(R.id.add_ingredient_calc).setOnClickListener({
+            child.findViewById<ImageButton>(R.id.add_ingredient_calc).setOnClickListener {
 
                 val contain = findViewById<TableLayout>(R.id.ingredient_table_calc)
 
@@ -161,21 +159,21 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 //params.height = 50
                 //wrapper.setLayoutParams(params)
 
-                val calories =findViewById<TextView>(R.id.caloriesTotal)
+                val calories = findViewById<TextView>(R.id.caloriesTotal)
                 val newCal = (Integer.parseInt(calories.text.toString()) + ingredient.calories).toString()
-                calories.text= newCal
+                calories.text = newCal
 
-                val fats =findViewById<TextView>(R.id.fatsTotal)
+                val fats = findViewById<TextView>(R.id.fatsTotal)
                 val newFats = (Integer.parseInt(fats.text.toString()) + ingredient.fats).toString()
-                fats.text= newFats
+                fats.text = newFats
 
-                val protein =findViewById<TextView>(R.id.proteinTotal)
+                val protein = findViewById<TextView>(R.id.proteinTotal)
                 val newProtein = (Integer.parseInt(protein.text.toString()) + ingredient.protein).toString()
-                protein.text= newProtein
+                protein.text = newProtein
 
-                val carbs =findViewById<TextView>(R.id.carbsTotal)
+                val carbs = findViewById<TextView>(R.id.carbsTotal)
                 val newCarbs = (Integer.parseInt(carbs.text.toString()) + ingredient.carbs).toString()
-                carbs.text= newCarbs
+                carbs.text = newCarbs
 
                 row.findViewById<TextView>(R.id.calculatorName).text = ingredient.name
                 row.findViewById<TextView>(R.id.calculatorCalories).text = ingredient.calories.toString()
@@ -185,27 +183,27 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
                 row.findViewById<ImageButton>(R.id.add_ingredient_calc).setImageResource(R.drawable.remove_icon)
 
-                row.findViewById<ImageButton>(R.id.add_ingredient_calc).setOnClickListener({
-                    val calories =findViewById<TextView>(R.id.caloriesTotal)
+                row.findViewById<ImageButton>(R.id.add_ingredient_calc).setOnClickListener {
+                    val calories = findViewById<TextView>(R.id.caloriesTotal)
                     val newCal = (Integer.parseInt(calories.text.toString()) - ingredient.calories).toString()
-                    calories.text= newCal
+                    calories.text = newCal
 
-                    val fats =findViewById<TextView>(R.id.fatsTotal)
+                    val fats = findViewById<TextView>(R.id.fatsTotal)
                     val newFats = (Integer.parseInt(fats.text.toString()) - ingredient.fats).toString()
-                    fats.text= newFats
+                    fats.text = newFats
 
-                    val protein =findViewById<TextView>(R.id.proteinTotal)
+                    val protein = findViewById<TextView>(R.id.proteinTotal)
                     val newProtein = (Integer.parseInt(protein.text.toString()) - ingredient.protein).toString()
-                    protein.text= newProtein
+                    protein.text = newProtein
 
-                    val carbs =findViewById<TextView>(R.id.carbsTotal)
+                    val carbs = findViewById<TextView>(R.id.carbsTotal)
                     val newCarbs = (Integer.parseInt(carbs.text.toString()) - ingredient.carbs).toString()
-                    carbs.text= newCarbs
+                    carbs.text = newCarbs
 
                     contain.removeView(row)
-                })
+                }
                 contain.addView(row)
-            })
+            }
             container.addView(child)
         }
     }

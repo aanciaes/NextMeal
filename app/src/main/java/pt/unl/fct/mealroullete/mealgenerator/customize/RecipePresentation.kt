@@ -1,15 +1,17 @@
 package pt.unl.fct.mealroullete.mealgenerator.customize
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
-import pt.unl.fct.mealroullete.R
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
+import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.persistance.Recipe
@@ -19,10 +21,12 @@ import java.util.*
 class RecipePresentation : AppCompatActivity() {
     private var x1: Float = 0.toFloat()
     private var x2: Float = 0.toFloat()
+
     val MIN_DISTANCE = 150
-    private var mShowingBack:Boolean = false
-    val fullRecipeList = MockDatabase.recipesList
-    var currentRecipe:Recipe? = null
+    private var mShowingBack: Boolean = false
+
+    val recipesChoosen = MockDatabase.recipesList.shuffled().take(5)
+    var currentRecipe: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,23 +46,25 @@ class RecipePresentation : AppCompatActivity() {
     }
 
     val index = -1
+
     class CardFrontFragment : Fragment() {
-        val fullRecipeList = MockDatabase.recipesList
-        var currentRecipe:Recipe? = null
         override fun onCreateView(
                 inflater: LayoutInflater,
                 container: ViewGroup?,
                 savedInstanceState: Bundle?
         ): View? {
-            val random = Random().nextInt(fullRecipeList.size)
-            currentRecipe = fullRecipeList.get(random)
+
+            val act = activity as RecipePresentation
+
+            val recipes = act.recipesChoosen
+            val currentPos = act.currentRecipe
+
             val view = inflater.inflate(R.layout.card_front, container, false)
             val recipeName = view.findViewById<TextView>(R.id.recipeName)
-            recipeName.text = currentRecipe!!.name
+            recipeName.text = recipes[currentPos].name
 
             return view
         }
-
     }
 
 
@@ -72,11 +78,10 @@ class RecipePresentation : AppCompatActivity() {
             val view = inflater.inflate(R.layout.card_back, container, false)
             val fav = view.findViewById<ImageButton>(R.id.favorite_vote)
             fav.setOnClickListener {
-                if(view.findViewById<TextView>(R.id.check_fav).text.equals("full")){
+                if (view.findViewById<TextView>(R.id.check_fav).text.equals("full")) {
                     fav.setBackgroundResource(R.drawable.heart_favorite_empty)
                     view.findViewById<TextView>(R.id.check_fav).setText("empty")
-                }
-                else{
+                } else {
                     fav.setBackgroundResource(R.drawable.heart_favorite_full)
                     view.findViewById<TextView>(R.id.check_fav).setText("full")
                 }
@@ -85,12 +90,11 @@ class RecipePresentation : AppCompatActivity() {
             val upVote = view.findViewById<ImageButton>(R.id.upVote)
             val downVote = view.findViewById<ImageButton>(R.id.downVote)
             upVote.setOnClickListener {
-                if(view.findViewById<TextView>(R.id.upVoteState).text.equals("full")){
+                if (view.findViewById<TextView>(R.id.upVoteState).text.equals("full")) {
                     upVote.setBackgroundResource(R.drawable.vote_up_empty)
                     view.findViewById<TextView>(R.id.upVoteState).setText("empty")
-                }
-                else{
-                    if(view.findViewById<TextView>(R.id.downVoteState).text.equals("full")){
+                } else {
+                    if (view.findViewById<TextView>(R.id.downVoteState).text.equals("full")) {
                         downVote.setBackgroundResource(R.drawable.vote_down_empty)
                         view.findViewById<TextView>(R.id.downVoteState).setText("empty")
                     }
@@ -101,12 +105,11 @@ class RecipePresentation : AppCompatActivity() {
 
 
             downVote.setOnClickListener {
-                if(view.findViewById<TextView>(R.id.downVoteState).text.equals("full")){
+                if (view.findViewById<TextView>(R.id.downVoteState).text.equals("full")) {
                     downVote.setBackgroundResource(R.drawable.vote_down_empty)
                     view.findViewById<TextView>(R.id.downVoteState).setText("empty")
-                }
-                else{
-                    if(view.findViewById<TextView>(R.id.upVoteState).text.equals("full")){
+                } else {
+                    if (view.findViewById<TextView>(R.id.upVoteState).text.equals("full")) {
                         upVote.setBackgroundResource(R.drawable.vote_up_empty)
                         view.findViewById<TextView>(R.id.upVoteState).setText("empty")
                     }
@@ -145,20 +148,31 @@ class RecipePresentation : AppCompatActivity() {
                 x2 = event.x
                 val deltaX = x2 - x1
                 if (Math.abs(deltaX) > MIN_DISTANCE && x1 < x2) {
-                    //ON LOAD OF RECIPE PRESENTATION GO GET THE LIST OF RECIPES THAT MATCH CONSTRAINTS
-                    //THEN SHOW 1 TO USER
-                    //ON SWIPE LEFT DO NOTHING
-                    //ON SWIPE RIGHT SHOW NEXT RECIPE AND SAVE CURRENT RECIPE
-                    //ON SWIPE LEFT GET BACK TO PREVIOUS RECIPE
-                    Toast.makeText(this, "SHOW LAST RECIPE", Toast.LENGTH_SHORT).show()
+                    //left
+                    if(currentRecipe > 0) {
+                        currentRecipe--
+
+                        val transaction = supportFragmentManager.beginTransaction()
+                        transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                        transaction.replace(R.id.container, CardFrontFragment())
+                        transaction.addToBackStack(null)
+                        transaction.commit()
+                    }
                 } else if (Math.abs(deltaX) > MIN_DISTANCE && x2 < x1) {
-                    Toast.makeText(this, "GIVE ME ANOTHER RECIPE", Toast.LENGTH_SHORT).show()
-                }
-                else {
+                    //right
+                    if(currentRecipe < recipesChoosen.size - 1 ) {
+                        currentRecipe++
+                        val transaction = supportFragmentManager.beginTransaction()
+                        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+                        transaction.replace(R.id.container, CardFrontFragment())
+                        transaction.addToBackStack(null)
+                        transaction.commit()
+                    }
+                } else {
                     if (mShowingBack) {
                         supportFragmentManager.popBackStack()
                         mShowingBack = false
-                    }else {
+                    } else {
 
                         mShowingBack = true
 
