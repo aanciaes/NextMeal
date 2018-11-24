@@ -36,8 +36,10 @@ object MockDatabase {
     val recipe: Recipe = buildRecipe(1, "Filetes de Salmão", R.drawable.big_example_meal, ingredients, instructions)
     val recipe2: Recipe = buildRecipe(2, "Paletes de Batata", R.drawable.big_example_meal, listOf(mainCourseItems[2], sideItems[2], sideItems[4]), instructions)
     val recipe3: Recipe = buildRecipe(3, "Cascas de Peru", R.drawable.big_example_meal, listOf(mainCourseItems[3], sideItems[0], sideItems[4]), instructions)
+    val recipe4: Recipe = buildRecipe(4, "Coq au Vin", R.drawable.big_example_meal, listOf(mainCourseItems[2], sideItems[2], sideItems[4]), instructions)
+    val recipe5: Recipe = buildRecipe(5, "Baked Rattatouille", R.drawable.big_example_meal, listOf(mainCourseItems[3], sideItems[0], sideItems[4]), instructions)
 
-    val recipesList = mutableListOf(recipe, recipe2, recipe3)
+    val recipesList = mutableListOf(recipe, recipe2, recipe3, recipe4, recipe5)
 
     @RequiresApi(Build.VERSION_CODES.O)
     val polls = mutableListOf(Poll(1, "Party2017", listOf(users[0].username), "root", recipesList, recipesList[0], LocalDateTime.of(2017, 12, 24, 10, 30), false),

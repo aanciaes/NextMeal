@@ -16,6 +16,9 @@ import android.widget.TextView
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
 import pt.unl.fct.mealroullete.persistance.MockDatabase
+import android.support.design.widget.TabLayout
+
+
 
 
 class RecipePresentation : FragmentActivity() {
@@ -34,6 +37,9 @@ class RecipePresentation : FragmentActivity() {
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
         mPager.adapter = pagerAdapter
+
+        val tabLayout = findViewById<TabLayout>(R.id.slider_indicator)
+        tabLayout.setupWithViewPager(mPager, true)
 
         //Listeners
         setBackToGeneratorListener()
