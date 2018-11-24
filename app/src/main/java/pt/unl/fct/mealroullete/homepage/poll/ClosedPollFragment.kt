@@ -1,5 +1,6 @@
 package pt.unl.fct.mealroullete.homepage.poll
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TextView
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.homepage.recipe.RecipeCard
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
@@ -29,11 +31,19 @@ class ClosedPollFragment : Fragment() {
                     child.findViewById<TextView>(R.id.pollAuthor).text = p.owner
                     child.findViewById<TextView>(R.id.winnerName).text = p.winner.name
                     child.findViewById<ImageView>(R.id.pollImage).setImageResource(p.winner.image)
-
+                    child.setOnClickListener {
+                        val intent = Intent(this.context, RecipeCard::class.java)
+                        val b = Bundle()
+                        b.putString("name", p.winner.name) //Your id
+                        intent.putExtras(b)
+                        startActivity(intent)
+                    }
                     container.addView(child)
                 }
             }
         }
+
+
         return view
     }
 }
