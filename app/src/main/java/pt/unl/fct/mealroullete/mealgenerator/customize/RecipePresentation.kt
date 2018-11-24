@@ -23,7 +23,6 @@ class RecipePresentation : FragmentActivity() {
     private lateinit var mPager: ViewPager
 
     val generatedRecipes = MockDatabase.recipesList.shuffled().take(5)
-    var isShowingBack = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
