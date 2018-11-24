@@ -28,4 +28,11 @@
         <item name="colorPrimaryDark">#000</item>
         <item name="colorAccent">#000</item>
     </style>
+
+    <style name="editRecipeName" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorControlNormal">#e3e3e3</item>
+        <item name="colorControlActivated">#e3e3e3</item>
+        <item name="colorAccent">#e3e3e3</item>
+        <item name="android:textCursorDrawable">@android:color/black</item>
+    </style>
 </resources>

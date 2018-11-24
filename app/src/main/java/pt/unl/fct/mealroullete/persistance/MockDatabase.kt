@@ -25,8 +25,8 @@ object MockDatabase {
             , Ingredient(15, "Turnip Sprout", R.drawable.grelos, 20, 12, 34, 20), Ingredient(16, "Potato", R.drawable.potato, 100, 5, 2, 50)
             , Ingredient(17, "Rice", R.drawable.rice, 20, 12, 9, 2))
 
-    val ingredients = listOf(mainCourseItems[0], sideItems[0], sideItems[2])
-    val instructions = listOf("Pré-aquece o forno a 190ºC.",
+    val ingredients = mutableListOf(mainCourseItems[0], sideItems[0], sideItems[2])
+    val instructions = mutableListOf("Pré-aquece o forno a 190ºC.",
             "Começa por lavar, descascar e preparar os vegetais",
             "depois deita na travessa de levar ao forno.",
             "Juntar as Batatas e adiciona também á travessa.",
@@ -34,10 +34,10 @@ object MockDatabase {
             "Retira do forno e está pronto a servir!")
 
     val recipe: Recipe = buildRecipe(1, "Filetes de Salmão", R.drawable.big_example_meal, ingredients, instructions)
-    val recipe2: Recipe = buildRecipe(2, "Paletes de Batata", R.drawable.big_example_meal, listOf(mainCourseItems[2], sideItems[2], sideItems[4]), instructions)
-    val recipe3: Recipe = buildRecipe(3, "Cascas de Peru", R.drawable.big_example_meal, listOf(mainCourseItems[3], sideItems[0], sideItems[4]), instructions)
-    val recipe4: Recipe = buildRecipe(4, "Coq au Vin", R.drawable.big_example_meal, listOf(mainCourseItems[2], sideItems[2], sideItems[4]), instructions)
-    val recipe5: Recipe = buildRecipe(5, "Baked Rattatouille", R.drawable.big_example_meal, listOf(mainCourseItems[3], sideItems[0], sideItems[4]), instructions)
+    val recipe2: Recipe = buildRecipe(2, "Paletes de Batata", R.drawable.big_example_meal, mutableListOf(mainCourseItems[2], sideItems[2], sideItems[4]), instructions)
+    val recipe3: Recipe = buildRecipe(3, "Cascas de Peru", R.drawable.big_example_meal, mutableListOf(mainCourseItems[3], sideItems[0], sideItems[4]), instructions)
+    val recipe4: Recipe = buildRecipe(4, "Coq au Vin", R.drawable.big_example_meal, mutableListOf(mainCourseItems[2], sideItems[2], sideItems[4]), instructions)
+    val recipe5: Recipe = buildRecipe(5, "Baked Rattatouille", R.drawable.big_example_meal, mutableListOf(mainCourseItems[3], sideItems[0], sideItems[4]), instructions)
 
     val recipesList = mutableListOf(recipe, recipe2, recipe3, recipe4, recipe5)
 
@@ -80,7 +80,7 @@ object MockDatabase {
         recipesList.add(recipe)
     }
 
-    fun buildRecipe(id: Int, name: String, image: Int, ingredients: List<Ingredient>, instructions: List<String>): Recipe {
+    fun buildRecipe(id: Int, name: String, image: Int, ingredients: MutableList<Ingredient>, instructions: MutableList<String>): Recipe {
 
         val nutrients = mutableListOf(0, 0, 0, 0)
         for (i in ingredients) {
@@ -112,10 +112,10 @@ data class Ingredient(val id: Int, val name: String, val image: Int, val calorie
 
 class Recipe(val id: Int,
              val image: Int,
-             val name: String,
-             val ingredients: List<Ingredient>,
-             val nutrients: List<Int>,
-             val instructions: List<String>,
-             val calories: Int)
+             var name: String,
+             val ingredients: MutableList<Ingredient>,
+             val nutrients: MutableList<Int>,
+             val instructions: MutableList<String>,
+             var calories: Int)
 
 class Poll(val id: Int, val name: String, val users: List<String>, val owner: String, val recipes: List<Recipe>, val winner: Recipe, val endTimestamp: LocalDateTime, var active: Boolean)

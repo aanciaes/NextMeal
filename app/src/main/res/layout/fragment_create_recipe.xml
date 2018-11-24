@@ -6,44 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayoutBackToHome"
-            android:layout_width="0dp"
-            android:layout_height="63dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/linear_layout_border"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:id="@+id/back"
-                android:layout_width="47dp"
-                android:layout_height="47dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="0dp"
-                android:background="@android:color/transparent"
-                app:srcCompat="@drawable/back" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="0dp"
-                android:clickable="false"
-                android:gravity="center"
-                android:text="Back"
-                android:textSize="18dp"></TextView>
-        </LinearLayout>
-
     <android.support.v7.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="20dp"
         android:orientation="vertical"
@@ -54,7 +21,7 @@
         app:layout_constraintBottom_toTopOf="@+id/addRecipe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutBackToHome">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,13 +43,14 @@
                 android:layout_marginBottom="-1dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView"
+                <EditText
+                    android:id="@+id/recipeName"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:gravity="center"
+                    android:text="Set Recipe Name"
+                    android:theme="@style/editRecipeName"
                     android:textSize="20sp"
-                    android:text="Recipe Name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -97,21 +65,26 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/recipe_image"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginStart="1dp"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginEnd="-1dp"
-                            android:layout_marginBottom="0dp"
-                            android:padding="40dp"
-                            android:scaleType="fitCenter"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:srcCompat="@drawable/empty_image_recipe" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/recipe_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="30dp"
+                        android:padding="0dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/empty_image_recipe"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:riv_border_color="#e3e3e3"
+                        app:riv_border_width="2dip"
+                        app:riv_corner_radius="10dip" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -152,7 +125,7 @@
                                     layout="@layout/dropdown"
                                     android:layout_width="wrap_content"
                                     android:layout_height="35dp"
-                                    android:layout_marginStart="8dp"
+                                    android:layout_marginStart="0dp"
                                     android:layout_marginTop="8dp"
                                     android:layout_marginEnd="8dp"
                                     android:layout_marginBottom="8dp" />
@@ -165,6 +138,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
+
                         <RelativeLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -181,24 +155,26 @@
                                 android:gravity="left"
                                 android:text="INSTRUCTIONS:" />
                         </RelativeLayout>
+
                         <RelativeLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.6">
-                        <LinearLayout
-                            android:id="@+id/instructionContainer"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
 
-                            <ImageButton
-                                android:id="@+id/add_instruction"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_marginStart="0dp"
-                                android:layout_marginTop="8dp"
-                                android:background="@drawable/add_icon" />
-                        </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/instructionContainer"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <ImageButton
+                                    android:id="@+id/add_instruction"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:layout_marginStart="0dp"
+                                    android:layout_marginTop="8dp"
+                                    android:background="@drawable/add_icon" />
+                            </LinearLayout>
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -235,7 +211,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:gravity="left"
-                                android:text="0kcal" />
+                                android:text="0 kcal" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -262,6 +238,37 @@
                             app:layout_constraintTop_toBottomOf="@+id/calories"
                             app:layout_constraintVertical_bias="0.212" />
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/nutrientsProtein"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="left"
+                                android:text="0 Protein" />
+
+                            <TextView
+                                android:id="@+id/nutrientFats"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="left"
+                                android:text="0 Fats" />
+
+                            <TextView
+                                android:id="@+id/nutrientsCarbs"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:gravity="left"
+                                android:text="0 Carbs" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
@@ -271,13 +278,13 @@
 
     <Button
         android:id="@+id/addRecipe"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
         android:layout_marginBottom="16dp"
-        android:text="Add Recipe"
         android:background="@color/colorPrimary"
+        android:text="Add Recipe"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
