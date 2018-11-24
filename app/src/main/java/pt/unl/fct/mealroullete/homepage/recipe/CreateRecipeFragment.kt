@@ -23,8 +23,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
 import kotlinx.android.synthetic.main.fragment_create_recipe.view.*
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.persistance.Ingredient
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.persistance.Poll
 import java.io.ByteArrayOutputStream
@@ -39,6 +41,14 @@ class CreateRecipeFragment : Fragment() {
     private val IMAGES_DIRECTORY = "/profile_pictures"
     private val OPEN_GALLERY_REQ_CODE = 0
     private val PERMISSIONS_REQUEST_CODE = 1
+
+    val items = mutableListOf<String>()
+
+    init {
+        items.addAll(MockDatabase.mainCourseItems.map { it.name })
+        items.addAll(MockDatabase.sideItems.map { ingredient ->  ingredient.name })
+        items.sort()
+    }
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -67,18 +77,13 @@ class CreateRecipeFragment : Fragment() {
 
         //get the spinner from the xml.
         val dropdown = view.findViewById(R.id.spinner1) as Spinner
-        val items = mutableListOf<String>()
-        for (i in MockDatabase.mainCourseItems){
-            items.add(i.name)
-        }
-        for (i in MockDatabase.sideItems){
-            items.add(i.name)
-        }
-
-        items.sort()
         val adapter = ArrayAdapter<String>(this.context, R.layout.simple_spinner_dropdown_item, items)
         dropdown.adapter = adapter
-        
+
+        dropdown.onItemSelectedListener = SpinnerListener()
+
+
+
 
 
         /*
@@ -298,5 +303,15 @@ class CreateRecipeFragment : Fragment() {
         }
 
         alertDialogBuilder.show()
+    }
+
+    inner class SpinnerListener : OnItemSelectedListener {
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            println (items.get(position))
+        }
     }
 }
