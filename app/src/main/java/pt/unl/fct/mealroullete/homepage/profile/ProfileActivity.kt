@@ -193,7 +193,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             newFullName = input.text.toString()
             MockDatabase.loggedInUser?.fullName = newFullName
 
-            val datePickerDialog = DatePickerDialog(this)
+            val datePickerDialog = DatePickerDialog(this, R.style.datepicker)
             datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
                 MockDatabase.loggedInUser?.dateOfBirth = year.toString() + "/" + month.toString() + "/" + dayOfMonth.toString()
                 findViewById<TextView>(R.id.user_name_date_birth).text = "${MockDatabase.loggedInUser?.fullName} ${MockDatabase.loggedInUser?.dateOfBirth}"
