@@ -4,7 +4,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/table_item_pollactive"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="80dp"
     android:layout_margin="9dp"
     android:layout_marginStart="0dp"
     android:layout_marginEnd="0dp"
@@ -16,24 +16,13 @@
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_marginBottom="0dp"
-        android:layout_weight="0.33">
+        android:layout_weight="0.3">
 
-        <TextView
-
-            android:id="@+id/pollName"
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:text="" />
+            android:id="@+id/pollImage"
+            android:scaleType="centerCrop" />
 
     </RelativeLayout>
 
@@ -41,7 +30,7 @@
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_marginBottom="0dp"
-        android:layout_weight="0.33">
+        android:layout_weight="0.4">
 
         <TextView
 
@@ -59,18 +48,17 @@
             android:gravity="center"
             android:textSize="18sp"
             android:text="" />
-
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_marginBottom="0dp"
-        android:layout_weight="0.33">
+        android:layout_weight="0.3">
 
         <TextView
 
-            android:id="@+id/pollexpiration"
+            android:id="@+id/winnerName"
             android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
