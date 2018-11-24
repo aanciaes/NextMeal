@@ -18,10 +18,12 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import kotlinx.android.synthetic.main.fragment_create_recipe.view.*
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.persistance.Poll
@@ -62,6 +64,24 @@ class CreateRecipeFragment : Fragment() {
             builder.show()
         }
 
+
+        //get the spinner from the xml.
+        val dropdown = view.findViewById(R.id.spinner1) as Spinner
+        val items = mutableListOf<String>()
+        for (i in MockDatabase.mainCourseItems){
+            items.add(i.name)
+        }
+        for (i in MockDatabase.sideItems){
+            items.add(i.name)
+        }
+
+        items.sort()
+        val adapter = ArrayAdapter<String>(this.context, R.layout.simple_spinner_dropdown_item, items)
+        dropdown.adapter = adapter
+        
+
+
+        /*
         val addIngredient = view.findViewById<ImageButton>(R.id.add_ingredient)
         addIngredient.setOnClickListener {
             var ingredientName = ""
@@ -93,7 +113,7 @@ class CreateRecipeFragment : Fragment() {
 
             builder.show()
         }
-
+*/
         val addInstruction = view.findViewById<ImageButton>(R.id.add_instruction)
         addInstruction.setOnClickListener {
 
@@ -135,6 +155,11 @@ class CreateRecipeFragment : Fragment() {
 
         return view
     }
+
+    fun onItemSelected(parent: AdapterView<Adapter>, v: View, position: Int, id: Long) {
+            println("OLA");
+
+        }
 
     private fun uploadPhoto(req_code: Int) {
 
@@ -233,11 +258,11 @@ class CreateRecipeFragment : Fragment() {
     }
 
     private fun setImageFromUrl(path: String, imageView: ImageView) {
-        val imgFile = File(path);
+        val imgFile = File(path)
         if (imgFile.exists()) {
 
-            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath);
-            imageView.setImageBitmap(myBitmap);
+            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
+            imageView.setImageBitmap(myBitmap)
         }
     }
 
