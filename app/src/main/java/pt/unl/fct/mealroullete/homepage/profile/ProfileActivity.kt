@@ -21,6 +21,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -153,10 +154,13 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Email")
 
-        val input = EditText(this)
-        input.inputType = InputType.TYPE_CLASS_TEXT
+        val viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_input, null, false);
+
+        // Set up the input
+        val input = viewInflated.findViewById(R.id.input) as EditText
         input.setText(findViewById<TextView>(R.id.user_email).text.toString())
-        builder.setView(input)
+
+        builder.setView(viewInflated)
 
         builder.setPositiveButton("OK") { _, _ ->
             newEmail = input.text.toString()
@@ -179,9 +183,11 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Full Name")
 
-        val input = EditText(this)
-        input.inputType = InputType.TYPE_CLASS_TEXT
-        builder.setView(input)
+        val viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_input, null, false);
+
+        // Set up the input
+        val input = viewInflated.findViewById(R.id.input) as EditText
+        builder.setView(viewInflated)
 
         builder.setPositiveButton("NEXT") { _, _ ->
             newFullName = input.text.toString()
@@ -341,6 +347,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun addAllergies() {
         val addAllergies = findViewById<ImageButton>(R.id.add_allergies)
         addAllergies.setOnClickListener {
@@ -349,9 +356,11 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Allergy")
 
-            val input = EditText(this)
-            input.inputType = InputType.TYPE_CLASS_TEXT
-            builder.setView(input)
+            val viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_input, null, false);
+
+            // Set up the input
+            val input = viewInflated.findViewById(R.id.input) as EditText
+            builder.setView(viewInflated)
 
             // Set up the buttons
             builder.setPositiveButton("Add") { _, _ ->
@@ -363,7 +372,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     params.setMargins(35, 25, 0, 0)
 
-                    allergy.setTextColor(resources.getColor(R.color.colorAccent, null))
+                    allergy.setTextColor(resources.getColor(android.R.color.black, null))
                     allergy.layoutParams = params
                     allergy.text = allergyName
 
