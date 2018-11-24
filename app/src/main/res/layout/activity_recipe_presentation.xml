@@ -39,15 +39,26 @@
 
 
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/recipe_viewer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutBackToHome" />
+                                       android:id="@+id/recipe_viewer"
+                                       android:layout_width="0dp"
+                                       android:layout_height="0dp"
+                                       android:layout_marginTop="20dp"
+                                       android:layout_marginBottom="80dp"
+                                       app:layout_constraintBottom_toBottomOf="parent"
+                                       app:layout_constraintEnd_toEndOf="parent"
+                                       app:layout_constraintStart_toStartOf="parent"
+                                       app:layout_constraintTop_toBottomOf="@+id/linearLayoutBackToHome"/>
+
+    <android.support.design.widget.TabLayout
+            android:id="@+id/slider_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_viewer" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            app:tabBackground="@drawable/recipe_slider_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"/>
 
 
 </android.support.constraint.ConstraintLayout>
