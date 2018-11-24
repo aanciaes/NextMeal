@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
 
 class FavoriteRecipeFragment : Fragment() {
 
@@ -27,6 +28,9 @@ class FavoriteRecipeFragment : Fragment() {
             val lp = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT)
             row.layoutParams = lp
             val child = inflater.inflate(R.layout.table_item_favorite, row, false) as LinearLayout
+            child.setOnClickListener {
+                startActivity(Intent(this.context, RecipeCard::class.java))
+            }
             child.findViewById<TextView>(R.id.favoriteName).text = "Recipe Name" + x
             val removeFavorite = child.findViewById<ImageButton>(R.id.removeFavorite)
 

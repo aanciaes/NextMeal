@@ -1,5 +1,6 @@
 package pt.unl.fct.mealroullete.homepage.history
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TextView
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.homepage.recipe.RecipeCard
 
 class MonthlyHistoryFragment : Fragment() {
 
@@ -20,6 +22,9 @@ class MonthlyHistoryFragment : Fragment() {
         while(x < 15){
             val child = inflater.inflate(R.layout.table_item_history, container, false) as LinearLayout
             child.findViewById<TextView>(R.id.historyName).text = "Dish Name" + x
+            child.setOnClickListener {
+                startActivity(Intent(context, RecipeCard::class.java))
+            }
             container.addView(child)
             x++
         }
