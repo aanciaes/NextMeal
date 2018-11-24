@@ -17,8 +17,8 @@ import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import android.support.design.widget.TabLayout
-
-
+import android.view.Gravity
+import android.widget.LinearLayout
 
 
 class RecipePresentation : FragmentActivity() {
@@ -155,8 +155,59 @@ class CardBackFragment : Fragment() {
     ): View {
 
         val currentPos = arguments?.getInt("currentItem")!!
+        val act = activity as RecipePresentation
+        val recipes = act.generatedRecipes
 
         val view = inflater.inflate(R.layout.card_back, container, false)
+        val recipeName = recipes[currentPos].name
+
+        val recipe = MockDatabase.recipesList.find { it.name == recipeName }
+        
+        val image = view.findViewById<ImageButton>(R.id.recipeImage)
+        //TODO
+
+        val ingredientContainer = view.findViewById<LinearLayout>(R.id.ingredientContainer)
+        for(i in recipe!!.ingredients){
+            val ingredientView = TextView(ingredientContainer.context)
+            ingredientView.text = i.name
+            val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            params.setMargins(10, 35, 0, 0)
+            ingredientView.layoutParams = params
+            ingredientView.gravity = Gravity.CENTER or Gravity.LEFT
+            ingredientContainer.addView(ingredientView)
+
+            val calories = view.findViewById<TextView>(R.id.caloriesValue)
+            val caloriesOldValue = calories?.text.toString().split(" ")[0].toInt()
+            val caloriesValue = caloriesOldValue + i!!.calories
+            calories?.text = caloriesValue.toString() + " kcal"
+
+            val proteins = view.findViewById<TextView>(R.id.nutrientProtein)
+            val proteinOldValue = proteins?.text.toString().split(" ")[0].toInt()
+            val proteinValue = proteinOldValue + i!!.protein
+            proteins?.text = proteinValue.toString() + " Proteins"
+
+            val fats = view.findViewById<TextView>(R.id.nutrientFats)
+            val fatsOldValue = fats?.text.toString().split(" ")[0].toInt()
+            val fatsValue = fatsOldValue + i!!.fats
+            fats?.text = fatsValue.toString() + " Fats"
+
+            val carbs = view.findViewById<TextView>(R.id.nutrientCarbs)
+            val carbsOldValue = carbs?.text.toString().split(" ")[0].toInt()
+            val carbsValue = carbsOldValue + i!!.carbs
+            carbs?.text = carbsValue.toString() + " Carbs"
+        }
+        val instructionContainer = view.findViewById<LinearLayout>(R.id.instructionContainer)
+        for(ins in recipe!!.instructions){
+            val instructionView = TextView(instructionContainer.context)
+            instructionView.text = ins
+            val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            params.setMargins(10, 35, 0, 0)
+            instructionView.layoutParams = params
+            instructionView.gravity = Gravity.CENTER or Gravity.LEFT
+            instructionContainer.addView(instructionView)
+        }
+
+
         val fav = view.findViewById<ImageButton>(R.id.favorite_vote)
         fav.setOnClickListener {
             if (view.findViewById<TextView>(R.id.check_fav).text.equals("full")) {

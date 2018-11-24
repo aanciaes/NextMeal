@@ -42,7 +42,11 @@ class MonthlyHistoryFragment : Fragment() {
             child.findViewById<TextView>(R.id.historyName).text = recipe.name
             child.findViewById<TextView>(R.id.historyCalories).text = recipe.calories.toString()
             child.setOnClickListener {
-                startActivity(Intent(context, RecipeCard::class.java))
+                val intent = Intent(context, RecipeCard::class.java)
+                val b = Bundle()
+                b.putString("name", recipe.name) //Your id
+                intent.putExtras(b)
+                startActivity(intent)
             }
             container.addView(child)
             x++
