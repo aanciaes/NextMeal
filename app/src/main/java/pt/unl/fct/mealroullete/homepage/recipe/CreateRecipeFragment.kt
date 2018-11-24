@@ -18,13 +18,18 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
+import kotlinx.android.synthetic.main.fragment_create_recipe.view.*
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.persistance.Ingredient
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.persistance.Poll
+import pt.unl.fct.mealroullete.persistance.Recipe
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -37,6 +42,16 @@ class CreateRecipeFragment : Fragment() {
     private val IMAGES_DIRECTORY = "/profile_pictures"
     private val OPEN_GALLERY_REQ_CODE = 0
     private val PERMISSIONS_REQUEST_CODE = 1
+
+    val items = mutableListOf<Ingredient>()
+    var recipe = Recipe(2, R.drawable.empty_image_recipe, "", mutableListOf(), mutableListOf(0,0,0,0), mutableListOf(), 0)
+    var firstInit = true
+
+    init {
+        items.addAll(MockDatabase.mainCourseItems)
+        items.addAll(MockDatabase.sideItems)
+        items.sortBy{it.name}
+    }
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,8 +67,8 @@ class CreateRecipeFragment : Fragment() {
             text.setPadding(40, 60, 40, 60)
             builder.setView(text)
             builder.setPositiveButton("Yes") { dialog, which ->
-                val id = MockDatabase.polls.size
-
+                recipe.name = view.findViewById<EditText>(R.id.recipeName).text.toString()
+                MockDatabase.recipesList.add(recipe)
                 text.text = text.text.toString()
                 startActivity(Intent(context, RecipeCard::class.java))
             }
@@ -62,37 +77,15 @@ class CreateRecipeFragment : Fragment() {
             builder.show()
         }
 
-        val addIngredient = view.findViewById<ImageButton>(R.id.add_ingredient)
-        addIngredient.setOnClickListener {
-            var ingredientName = ""
-            val builder = AlertDialog.Builder(this.context)
-            builder.setTitle("INGREDIENT")
 
-            val input = EditText(this.context)
-            input.inputType = InputType.TYPE_CLASS_TEXT
-            builder.setView(input)
+        //get the spinner from the xml.
+        val dropdown = view.findViewById(R.id.spinner1) as Spinner
+        val list = items.map{it.name} as MutableList
+        list.sort()
+        val adapter = ArrayAdapter<String>(this.context, R.layout.simple_spinner_dropdown_item, list)
+        dropdown.adapter = adapter
 
-            // Set up the buttons
-            builder.setPositiveButton("Add") { dialog, which ->
-                ingredientName = input.text.toString()
-                if (ingredientName != "") {
-                    val container = view.findViewById<LinearLayout>(R.id.ingredientContainer)
-                    val ingredient = TextView(this.context)
-                    val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    params.setMargins(0, 25, 0, 0)
-                    ingredient.layoutParams = params
-                    ingredient.text = ingredientName
-                    val id = View.generateViewId()
-                    ingredient.id = id
-                    val index = container.indexOfChild(addIngredient)
-                    container.addView(ingredient, index)
-                }
-
-            }
-            builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
-
-            builder.show()
-        }
+        dropdown.onItemSelectedListener = SpinnerListener()
 
         val addInstruction = view.findViewById<ImageButton>(R.id.add_instruction)
         addInstruction.setOnClickListener {
@@ -101,9 +94,11 @@ class CreateRecipeFragment : Fragment() {
             val builder = AlertDialog.Builder(this.context)
             builder.setTitle("INSTRUCTION")
 
-            val input = EditText(this.context)
-            input.inputType = InputType.TYPE_CLASS_TEXT
-            builder.setView(input)
+            val viewInflated = LayoutInflater.from(context).inflate(R.layout.dialog_input, null, false);
+
+            // Set up the input
+            val input = viewInflated.findViewById(R.id.input) as EditText
+            builder.setView(viewInflated)
 
             // Set up the buttons
             builder.setPositiveButton("Add") { dialog, which ->
@@ -119,6 +114,7 @@ class CreateRecipeFragment : Fragment() {
                     instruction.id = id
                     val index = container.indexOfChild(addInstruction)
                     container.addView(instruction, index)
+                    recipe.instructions.add(instructionName)
                 }
 
             }
@@ -169,6 +165,7 @@ class CreateRecipeFragment : Fragment() {
 
         return view
     }
+
 
     private fun uploadPhoto(req_code: Int) {
 
@@ -267,11 +264,11 @@ class CreateRecipeFragment : Fragment() {
     }
 
     private fun setImageFromUrl(path: String, imageView: ImageView) {
-        val imgFile = File(path);
+        val imgFile = File(path)
         if (imgFile.exists()) {
 
-            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath);
-            imageView.setImageBitmap(myBitmap);
+            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
+            imageView.setImageBitmap(myBitmap)
         }
     }
 
@@ -307,5 +304,59 @@ class CreateRecipeFragment : Fragment() {
         }
 
         alertDialogBuilder.show()
+    }
+
+    inner class SpinnerListener : OnItemSelectedListener {
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            val ingredientSelected = items.find{it.name == items.get(position).name}
+            if(!firstInit){
+                val outerView = activity
+                val container = outerView?.findViewById<LinearLayout>(R.id.ingredientContainer)
+                val ingredient = TextView(context)
+                val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                params.setMargins(0, 25, 0, 0)
+                ingredient.layoutParams = params
+                ingredient.text = ingredientSelected?.name
+                val id = View.generateViewId()
+                ingredient.id = id
+                //val button =  view?.findViewById<ImageButton>(R.id.spinner1)
+                //val index = container?.indexOfChild(button)
+                container?.addView(ingredient)
+
+                val calories = outerView?.findViewById<TextView>(R.id.caloriesValue)
+                val caloriesOldValue = calories?.text.toString().split(" ")[0].toInt()
+                val caloriesValue = caloriesOldValue + ingredientSelected!!.calories
+                calories?.text = caloriesValue.toString() + " kcal"
+
+                val proteins = outerView?.findViewById<TextView>(R.id.nutrientsProtein)
+                val proteinOldValue = proteins?.text.toString().split(" ")[0].toInt()
+                val proteinValue = proteinOldValue + ingredientSelected!!.protein
+                proteins?.text = proteinValue.toString() + " Proteins"
+
+                val fats = outerView?.findViewById<TextView>(R.id.nutrientFats)
+                val fatsOldValue = fats?.text.toString().split(" ")[0].toInt()
+                val fatsValue = fatsOldValue + ingredientSelected!!.fats
+                fats?.text = fatsValue.toString() + " Fats"
+
+                val carbs = outerView?.findViewById<TextView>(R.id.nutrientsCarbs)
+                val carbsOldValue = carbs?.text.toString().split(" ")[0].toInt()
+                val carbsValue = carbsOldValue + ingredientSelected!!.carbs
+                carbs?.text = carbsValue.toString() + " Carbs"
+
+                recipe.calories += caloriesValue
+                recipe.nutrients[1] += proteinValue
+                recipe.nutrients[2] += fatsValue
+                recipe.nutrients[3] += carbsValue
+
+                recipe.ingredients.add(ingredientSelected)
+            }
+            else{
+                firstInit = false
+            }
+        }
     }
 }
