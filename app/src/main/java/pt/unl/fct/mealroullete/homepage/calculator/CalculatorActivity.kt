@@ -140,7 +140,7 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         val inflater = LayoutInflater.from(this)
 
         for (ingredient in ingredients) {
-            val child = inflater.inflate(R.layout.table_item_calculater, container, false) as LinearLayout
+            val child = inflater.inflate(R.layout.table_item_calculator, container, false) as LinearLayout
 
             child.findViewById<TextView>(R.id.calculatorName).text = ingredient.name
             child.findViewById<TextView>(R.id.calculatorCalories).text = ingredient.calories.toString()
@@ -152,7 +152,7 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
                 val contain = findViewById<TableLayout>(R.id.ingredient_table_calc)
 
-                val row = inflater.inflate(R.layout.table_item_calculater, contain, false) as LinearLayout
+                val row = inflater.inflate(R.layout.table_item_calculator, contain, false) as LinearLayout
 
                 val wrapper = row.findViewById<LinearLayout>(R.id.table_item_calculator)
                 //val params = wrapper.getLayoutParams()
