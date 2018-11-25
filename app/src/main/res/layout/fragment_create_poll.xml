@@ -134,14 +134,17 @@
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" android:id="@+id/linearLayout5"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp">
-        <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/create_poll"
-                android:layout_alignParentStart="true"
-                android:background="@null"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="5dp"/>
+
+        <Button
+                android:id="@+id/createPoll"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="90dp"
+                android:text="Create Poll"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+
+        />
     </LinearLayout>
 
 
