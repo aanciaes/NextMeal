@@ -18,11 +18,18 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
+import kotlinx.android.synthetic.main.fragment_create_recipe.view.*
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.persistance.Ingredient
+import pt.unl.fct.mealroullete.persistance.MockDatabase
+import pt.unl.fct.mealroullete.persistance.Poll
+import pt.unl.fct.mealroullete.persistance.Recipe
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -32,9 +39,18 @@ import java.util.*
 
 class CreateRecipeFragment : Fragment() {
 
-    private val IMAGES_DIRECTORY = "/profile_pictures"
     private val OPEN_GALLERY_REQ_CODE = 0
     private val PERMISSIONS_REQUEST_CODE = 1
+
+    val items = mutableListOf<Ingredient>()
+    var recipe = Recipe(2, R.drawable.empty_image_recipe, "", mutableListOf(), mutableListOf(0,0,0,0), mutableListOf(), 0)
+    var firstInit = true
+
+    init {
+        items.addAll(MockDatabase.mainCourseItems)
+        items.addAll(MockDatabase.sideItems)
+        items.sortBy{it.name}
+    }
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,46 +66,29 @@ class CreateRecipeFragment : Fragment() {
             text.setPadding(40, 60, 40, 60)
             builder.setView(text)
             builder.setPositiveButton("Yes") { dialog, which ->
+                recipe.name = view.findViewById<EditText>(R.id.recipeName).text.toString()
+                MockDatabase.recipesList.add(recipe)
                 text.text = text.text.toString()
-                val refresh = Intent(this.context, RecipeActivity::class.java)
-                startActivity(refresh)
+                val intent = Intent(context, RecipeCard::class.java)
+                val b = Bundle()
+                b.putString("name", recipe.name) //Your id
+                intent.putExtras(b)
+                startActivity(intent)
             }
 
             builder.setNegativeButton("No") { dialog, which -> dialog.cancel() }
             builder.show()
         }
 
-        val addIngredient = view.findViewById<ImageButton>(R.id.add_ingredient)
-        addIngredient.setOnClickListener {
-            var ingredientName = ""
-            val builder = AlertDialog.Builder(this.context)
-            builder.setTitle("INGREDIENT")
 
-            val input = EditText(this.context)
-            input.inputType = InputType.TYPE_CLASS_TEXT
-            builder.setView(input)
+        //get the spinner from the xml.
+        val dropdown = view.findViewById(R.id.spinner1) as Spinner
+        val list = items.map{it.name} as MutableList
+        list.sort()
+        val adapter = ArrayAdapter<String>(this.context, R.layout.simple_spinner_dropdown_item, list)
+        dropdown.adapter = adapter
 
-            // Set up the buttons
-            builder.setPositiveButton("Add") { dialog, which ->
-                ingredientName = input.text.toString()
-                if (ingredientName != "") {
-                    val container = view.findViewById<LinearLayout>(R.id.ingredientContainer)
-                    val ingredient = TextView(this.context)
-                    val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    params.setMargins(0, 25, 0, 0)
-                    ingredient.layoutParams = params
-                    ingredient.text = ingredientName
-                    val id = View.generateViewId()
-                    ingredient.id = id
-                    val index = container.indexOfChild(addIngredient)
-                    container.addView(ingredient, index)
-                }
-
-            }
-            builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
-
-            builder.show()
-        }
+        dropdown.onItemSelectedListener = SpinnerListener()
 
         val addInstruction = view.findViewById<ImageButton>(R.id.add_instruction)
         addInstruction.setOnClickListener {
@@ -98,9 +97,11 @@ class CreateRecipeFragment : Fragment() {
             val builder = AlertDialog.Builder(this.context)
             builder.setTitle("INSTRUCTION")
 
-            val input = EditText(this.context)
-            input.inputType = InputType.TYPE_CLASS_TEXT
-            builder.setView(input)
+            val viewInflated = LayoutInflater.from(context).inflate(R.layout.dialog_input, null, false);
+
+            // Set up the input
+            val input = viewInflated.findViewById(R.id.input) as EditText
+            builder.setView(viewInflated)
 
             // Set up the buttons
             builder.setPositiveButton("Add") { dialog, which ->
@@ -116,43 +117,12 @@ class CreateRecipeFragment : Fragment() {
                     instruction.id = id
                     val index = container.indexOfChild(addInstruction)
                     container.addView(instruction, index)
+                    recipe.instructions.add(instructionName)
                 }
 
             }
 
-            builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
-
-            builder.show()
-        }
-        val addNutrient = view.findViewById<ImageButton>(R.id.add_nutrient)
-        addNutrient.setOnClickListener {
-
-            var nutrientName = ""
-            val builder = AlertDialog.Builder(this.context)
-            builder.setTitle("NUTRIENT")
-
-            val input = EditText(this.context)
-            input.inputType = InputType.TYPE_CLASS_TEXT
-            builder.setView(input)
-
-            // Set up the buttons
-            builder.setPositiveButton("Add") { dialog, which ->
-                nutrientName = input.text.toString()
-                if (nutrientName != "") {
-                    val container = view.findViewById<LinearLayout>(R.id.nutrientContainer)
-                    val nutrient = TextView(this.context)
-                    val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    params.setMargins(0, 25, 0, 0)
-                    nutrient.layoutParams = params
-                    nutrient.text = nutrientName
-                    val id = View.generateViewId()
-                    nutrient.id = id
-                    val index = container.indexOfChild(addNutrient)
-                    container.addView(nutrient, index)
-                }
-
-            }
-            builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+            builder.setNegativeButton("Cancel", { dialog, which -> dialog.cancel() })
 
             builder.show()
         }
@@ -164,6 +134,7 @@ class CreateRecipeFragment : Fragment() {
 
         return view
     }
+
 
     private fun uploadPhoto(req_code: Int) {
 
@@ -186,13 +157,13 @@ class CreateRecipeFragment : Fragment() {
                         == PackageManager.PERMISSION_GRANTED)) {
             val intent = Intent()
             intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
+            intent.action = Intent.ACTION_OPEN_DOCUMENT
             startActivityForResult(Intent.createChooser(intent,
                     "Select file to upload "), req_code)
         } else{
             val alertDialogBuilder = AlertDialog.Builder(this.requireActivity())
             alertDialogBuilder.setTitle("Permission Request")
-            alertDialogBuilder.setMessage("NextMeal does not have permissions to read/write from/to your gallery\n" +
+            alertDialogBuilder.setMessage("Meal roulette does not have permissions to read/write from/to your gallery\n" +
                     "Please set the appropriate permissions")
 
             alertDialogBuilder.setPositiveButton("Ok") { interfaceDialog, _ ->
@@ -209,10 +180,11 @@ class CreateRecipeFragment : Fragment() {
             val selectedImageUri = data!!.data
 
             if (requestCode == OPEN_GALLERY_REQ_CODE) {
-                val imagePath = getPath(selectedImageUri)
+                activity!!.contentResolver.takePersistableUriPermission(selectedImageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 val view = this.view?.findViewById<ImageView>(R.id.recipe_image)
                 view!!.scaleType = ImageView.ScaleType.CENTER_CROP
-                setImageFromUrl(imagePath, view)
+                setImageFromUri(selectedImageUri.toString(), view)
+                recipe.image = selectedImageUri.toString()
             }
         }
     }
@@ -222,52 +194,14 @@ class CreateRecipeFragment : Fragment() {
 
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE -> {
-                println("on reqeuest permission result2")
                 openGallery(OPEN_GALLERY_REQ_CODE)
                 return
             }
         }
     }
 
-    private fun getPath(uri: Uri?): String {
-        val bitmap = MediaStore.Images.Media.getBitmap(this.context?.contentResolver, uri)
-        return saveImage(bitmap)
-    }
-
-    private fun saveImage(myBitmap: Bitmap): String {
-        val bytes = ByteArrayOutputStream()
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-        val wallpaperDirectory = File(
-                (Environment.getExternalStorageDirectory()).toString() + IMAGES_DIRECTORY)
-
-        if (!wallpaperDirectory.exists()) {
-            wallpaperDirectory.mkdirs()
-        }
-
-        try {
-            val f = File(wallpaperDirectory.absolutePath + "/" + Calendar.getInstance().timeInMillis.toString() + ".jpg")
-            f.createNewFile()
-            val fo = FileOutputStream(f)
-            fo.write(bytes.toByteArray())
-
-            MediaScannerConnection.scanFile(this.context, arrayOf(f.path), arrayOf("image/jpeg"), null)
-            fo.close()
-
-            return f.absolutePath
-        } catch (e1: IOException) {
-            e1.printStackTrace()
-        }
-
-        return ""
-    }
-
-    private fun setImageFromUrl(path: String, imageView: ImageView) {
-        val imgFile = File(path);
-        if (imgFile.exists()) {
-
-            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath);
-            imageView.setImageBitmap(myBitmap);
-        }
+    private fun setImageFromUri(uri: String, imageView: ImageView) {
+        imageView.setImageURI(Uri.parse(uri))
     }
 
     private fun requestPermissions () {
@@ -292,7 +226,7 @@ class CreateRecipeFragment : Fragment() {
     private fun explainPermission () {
         val alertDialogBuilder = AlertDialog.Builder(this.requireActivity())
         alertDialogBuilder.setTitle("Permission Request")
-        alertDialogBuilder.setMessage("Next meal needs permission to access your gallery")
+        alertDialogBuilder.setMessage("Meal roulette needs permission to access your gallery")
 
         alertDialogBuilder.setPositiveButton("Ok") { interfaceDialog, _ ->
             interfaceDialog.cancel()
@@ -302,5 +236,59 @@ class CreateRecipeFragment : Fragment() {
         }
 
         alertDialogBuilder.show()
+    }
+
+    inner class SpinnerListener : OnItemSelectedListener {
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            val ingredientSelected = items.find{it.name == items.get(position).name}
+            if(!firstInit){
+                val outerView = activity
+                val container = outerView?.findViewById<LinearLayout>(R.id.ingredientContainer)
+                val ingredient = TextView(context)
+                val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                params.setMargins(0, 25, 0, 0)
+                ingredient.layoutParams = params
+                ingredient.text = ingredientSelected?.name
+                val id = View.generateViewId()
+                ingredient.id = id
+                //val button =  view?.findViewById<ImageButton>(R.id.spinner1)
+                //val index = container?.indexOfChild(button)
+                container?.addView(ingredient)
+
+                val calories = outerView?.findViewById<TextView>(R.id.caloriesValue)
+                val caloriesOldValue = calories?.text.toString().split(" ")[0].toInt()
+                val caloriesValue = caloriesOldValue + ingredientSelected!!.calories
+                calories?.text = caloriesValue.toString() + " kcal"
+
+                val proteins = outerView?.findViewById<TextView>(R.id.nutrientsProtein)
+                val proteinOldValue = proteins?.text.toString().split(" ")[0].toInt()
+                val proteinValue = proteinOldValue + ingredientSelected!!.protein
+                proteins?.text = proteinValue.toString() + " Proteins"
+
+                val fats = outerView?.findViewById<TextView>(R.id.nutrientFats)
+                val fatsOldValue = fats?.text.toString().split(" ")[0].toInt()
+                val fatsValue = fatsOldValue + ingredientSelected!!.fats
+                fats?.text = fatsValue.toString() + " Fats"
+
+                val carbs = outerView?.findViewById<TextView>(R.id.nutrientsCarbs)
+                val carbsOldValue = carbs?.text.toString().split(" ")[0].toInt()
+                val carbsValue = carbsOldValue + ingredientSelected!!.carbs
+                carbs?.text = carbsValue.toString() + " Carbs"
+
+                recipe.calories += caloriesValue
+                recipe.nutrients[1] += proteinValue
+                recipe.nutrients[2] += fatsValue
+                recipe.nutrients[3] += carbsValue
+
+                recipe.ingredients.add(ingredientSelected)
+            }
+            else{
+                firstInit = false
+            }
+        }
     }
 }

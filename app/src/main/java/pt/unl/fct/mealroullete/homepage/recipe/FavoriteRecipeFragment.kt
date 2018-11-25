@@ -12,6 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
+import pt.unl.fct.mealroullete.persistance.MockDatabase
+import pt.unl.fct.mealroullete.persistance.Recipe
 
 class FavoriteRecipeFragment : Fragment() {
 
@@ -20,14 +23,24 @@ class FavoriteRecipeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_favorite_recipe, container, false)
         val container = view.findViewById<TableLayout>(R.id.ingredient_table)
 
-        var x = 10
+        var x = 5
         while(x > 0){
 
             val row = TableRow(this.context)
             val lp = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT)
             row.layoutParams = lp
+            val recipe = MockDatabase.getRecipe(x - 1)
             val child = inflater.inflate(R.layout.table_item_favorite, row, false) as LinearLayout
-            child.findViewById<TextView>(R.id.favoriteName).text = "Recipe Name" + x
+            child.setOnClickListener {
+                val intent = Intent(this.context, RecipeCard::class.java)
+                val b = Bundle()
+                b.putString("name", recipe.name) //Your id
+                intent.putExtras(b)
+                startActivity(intent)
+            }
+
+            child.findViewById<TextView>(R.id.favoriteName).text = recipe.name
+            child.findViewById<ImageView>(R.id.favoriteImage).setImageResource((recipe.image as Int))
             val removeFavorite = child.findViewById<ImageButton>(R.id.removeFavorite)
 
             removeFavorite.setOnClickListener {

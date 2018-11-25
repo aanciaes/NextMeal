@@ -5,7 +5,7 @@
     <string name="password">Password</string>
     <string name="show_hide_password_content">Show/Hide Password</string>
     <string name="login_button_text">Login</string>
-    <string name="register_text">No account yet? Register here</string>
+    <string name="register_text">No account yet? Register <u>here</u></string>
     <string name="fingerprint_description">Login with fingerprint</string>
     <string name="fingerprint_hint">Touch sensor</string>
     <string name="description_fingerprint_icon">Fingerprint icon</string>
@@ -13,7 +13,7 @@
     <string name="choose_an_username">Choose Username</string>
     <string name="repeat_password_text">Repeat Password</string>
     <string name="register_button_text">Register</string>
-    <string name="back_to_login_text">Already have an account? Log in here</string>
+    <string name="back_to_login_text">Already have an account? Log in <u>here</u></string>
     <string name="title_activity_home_page">HomePage</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -33,4 +33,5 @@
     <string name="manifest_activity_recipe">Recipe</string>
     <string name="common_header_user_full_name">Android Studio</string>
     <string name="common_header_user_email_address">android.studio@android.com</string>
+    <string name="back_to_generator">Back To Generator</string>
 </resources>

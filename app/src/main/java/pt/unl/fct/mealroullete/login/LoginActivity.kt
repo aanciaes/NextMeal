@@ -12,6 +12,12 @@ import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.register.RegisterActivity
+import android.app.Activity
+import android.content.Context
+import android.os.IBinder
+import android.support.constraint.ConstraintLayout
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 
 class LoginActivity : AppCompatActivity() {
 
@@ -24,8 +30,9 @@ class LoginActivity : AppCompatActivity() {
 
     // Set all listeners for this activity
     private fun setMainListeners() {
+        setupHideKeyboard()
         onClickShowPassword()
-        loginWithFingerprint();
+        loginWithFingerprint()
         noAccountYetRegister()
         login()
     }
@@ -56,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
     // Shows fingerprint dialog
     private fun showFingerprintLogin() {
         val dialog = Dialog(this);
-        dialog.setContentView(R.layout.fingerprint_dialog_content);
+        dialog.setContentView(R.layout.fingerprint_dialog_content)
 
         val usePassword = dialog.findViewById<Button>(R.id.use_password_button)
         usePassword.setOnClickListener {
@@ -92,12 +99,34 @@ class LoginActivity : AppCompatActivity() {
             if (MockDatabase.login(username.text.toString(), password.text.toString())) {
                 startActivity(Intent(this, RecipeActivity::class.java))
             } else {
-                Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Wrong username or password", Toast.LENGTH_LONG).show()
             }
+        }
+    }
+
+    private fun setupHideKeyboard() {
+        val constraintLayout = findViewById<TextView>(R.id.login_container) as? ConstraintLayout
+        constraintLayout?.setOnClickListener() {
+            defocusAndHideKeyboard(this)
         }
     }
 
     override fun onBackPressed() {
         //Do nothing
+    }
+
+    fun defocusAndHideKeyboard(activity: Activity?) {
+        if (activity == null) return
+        val view = activity.currentFocus
+        if (view != null) {
+            view.clearFocus()
+            hideKeyboard(activity, view.windowToken)
+        }
+    }
+
+    fun hideKeyboard(activity: Activity?, windowToken: IBinder?) {
+        if (activity == null) return
+        val inputManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 }

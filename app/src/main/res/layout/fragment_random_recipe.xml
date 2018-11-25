@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TableRow android:layout_weight="0.5">
+        <TableRow android:layout_weight="0.4">
 
             <ImageButton
                 android:id="@+id/breakfast"
@@ -30,7 +30,9 @@
                 android:layout_marginEnd="0dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:padding="16dp"
+                android:paddingTop="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/breakfast" />
 
@@ -40,13 +42,55 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:padding="16dp"
+                android:paddingTop="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/lunch" />
 
         </TableRow>
 
-        <TableRow android:layout_weight="0.5">
+        <TableRow android:layout_weight="0.1">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginEnd="0dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="BREAKFAST"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:paddingTop="30dp"
+                android:paddingStart="12dp" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:text="LUNCH"
+                android:textSize="30sp"
+                android:paddingTop="30dp"
+                android:paddingStart="45dp" />
+
+        </TableRow>
+
+        <TableRow android:layout_weight="0.4">
+
+            <ImageButton
+                android:id="@+id/brunch"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:paddingTop="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/brunch" />
 
             <ImageButton
                 android:id="@+id/dinner"
@@ -55,22 +99,39 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:padding="16dp"
+                android:background="@null"
+                android:paddingTop="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/dinner" />
 
+        </TableRow>
 
-            <ImageButton
-                android:id="@+id/brunch"
+        <TableRow android:layout_weight="0.1">
+
+            <TextView
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="BRUNCH"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:paddingTop="10dp"
+                android:paddingStart="30dp"/>
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="@null"
-                android:padding="16dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/brunch" />
+                android:textColor="@color/colorPrimary"
+                android:text="DINNER"
+                android:textSize="30sp"
+                android:paddingTop="10dp"
+                android:paddingStart="40dp"/>
 
         </TableRow>
 
