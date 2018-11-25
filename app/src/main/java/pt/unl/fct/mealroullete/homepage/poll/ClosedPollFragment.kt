@@ -30,7 +30,7 @@ class ClosedPollFragment : Fragment() {
                     val child = inflater.inflate(R.layout.table_item_pollclosed, container, false) as LinearLayout
                     child.findViewById<TextView>(R.id.pollAuthor).text = p.owner
                     child.findViewById<TextView>(R.id.winnerName).text = p.winner.name
-                    child.findViewById<ImageView>(R.id.pollImage).setImageResource(p.winner.image)
+                    child.findViewById<ImageView>(R.id.pollImage).setImageResource((p.winner.image as Int))
                     child.setOnClickListener {
                         val intent = Intent(this.context, RecipeCard::class.java)
                         val b = Bundle()

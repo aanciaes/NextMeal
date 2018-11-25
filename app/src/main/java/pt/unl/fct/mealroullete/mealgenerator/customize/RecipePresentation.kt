@@ -1,6 +1,7 @@
 package pt.unl.fct.mealroullete.mealgenerator.customize
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
@@ -19,6 +20,7 @@ import pt.unl.fct.mealroullete.persistance.MockDatabase
 import android.support.design.widget.TabLayout
 import android.view.Gravity
 import android.widget.LinearLayout
+import com.makeramen.roundedimageview.RoundedImageView
 
 
 class RecipePresentation : FragmentActivity() {
@@ -88,7 +90,6 @@ class Card : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
 
-
         val view = inflater.inflate(R.layout.card_default_layout, container, false)
 
         val currentPos = arguments?.getInt("currentItem")!!
@@ -121,6 +122,13 @@ class CardFrontFragment : Fragment() {
         val view = inflater.inflate(R.layout.card_front, container, false)
         val recipeName = view.findViewById<TextView>(R.id.recipeName)
         recipeName.text = recipes[currentPos].name
+
+        val recipeImage = view.findViewById<RoundedImageView>(R.id.recipe_image)
+        if (recipes[currentPos]!!.image is Int){
+            recipeImage.setImageResource((recipes[currentPos].image as Int))
+        } else {
+            recipeImage.setImageURI(Uri.parse((recipes[currentPos].image as String)))
+        }
 
         setFlipCardListener(view, currentPos)
         return view
@@ -162,9 +170,15 @@ class CardBackFragment : Fragment() {
         val recipeName = recipes[currentPos].name
 
         val recipe = MockDatabase.recipesList.find { it.name == recipeName }
-        
-        val image = view.findViewById<ImageButton>(R.id.recipeImage)
-        //TODO
+
+        val recipeImage = view.findViewById<RoundedImageView>(R.id.imageView4)
+        if (recipe!!.image is Int){
+            println ("int: ${recipe.image}")
+            recipeImage.setImageResource((recipe.image as Int))
+        } else {
+            println ("here: ${(recipe.image as String)}")
+            recipeImage.setImageURI(Uri.parse((recipe.image as String)))
+        }
 
         val ingredientContainer = view.findViewById<LinearLayout>(R.id.ingredientContainer)
         for(i in recipe!!.ingredients){

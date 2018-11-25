@@ -144,7 +144,7 @@ class User(val id: Long,
 data class Ingredient(val id: Int, val name: String, val image: Int, val calories: Int, val fats: Int, val protein: Int, val carbs: Int)
 
 class Recipe(val id: Int,
-             val image: Int,
+             var image: Any,
              var name: String,
              val ingredients: MutableList<Ingredient>,
              val nutrients: MutableList<Int>,

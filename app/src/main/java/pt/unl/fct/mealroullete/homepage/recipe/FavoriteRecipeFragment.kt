@@ -40,7 +40,7 @@ class FavoriteRecipeFragment : Fragment() {
             }
 
             child.findViewById<TextView>(R.id.favoriteName).text = recipe.name
-            child.findViewById<ImageView>(R.id.favoriteImage).setImageResource(recipe.image)
+            child.findViewById<ImageView>(R.id.favoriteImage).setImageResource((recipe.image as Int))
             val removeFavorite = child.findViewById<ImageButton>(R.id.removeFavorite)
 
             removeFavorite.setOnClickListener {
