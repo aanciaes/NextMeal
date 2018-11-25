@@ -39,7 +39,6 @@ import java.util.*
 
 class CreateRecipeFragment : Fragment() {
 
-    private val IMAGES_DIRECTORY = "/profile_pictures"
     private val OPEN_GALLERY_REQ_CODE = 0
     private val PERMISSIONS_REQUEST_CODE = 1
 
