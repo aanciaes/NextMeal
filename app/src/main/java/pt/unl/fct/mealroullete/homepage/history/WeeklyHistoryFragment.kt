@@ -38,7 +38,7 @@ class WeeklyHistoryFragment : Fragment() {
                 totalCalories += ingredient.calories
             }
 
-            child.findViewById<ImageView>(R.id.historyImage).setImageResource(recipe.image)
+            child.findViewById<ImageView>(R.id.historyImage).setImageResource((recipe.image as Int))
             child.findViewById<TextView>(R.id.historyName).text = recipe.name
             child.findViewById<TextView>(R.id.historyCalories).text = totalCalories.toString() + " kcal"
 

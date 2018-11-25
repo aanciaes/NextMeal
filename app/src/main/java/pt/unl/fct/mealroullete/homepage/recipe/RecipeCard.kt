@@ -1,14 +1,16 @@
 package pt.unl.fct.mealroullete.homepage.recipe
 
-import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Gravity.CENTER
+import android.view.Gravity.LEFT
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.makeramen.roundedimageview.RoundedImageView
 import pt.unl.fct.mealroullete.R
-import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import android.view.ViewGroup.LayoutParams.FILL_PARENT
 import android.view.Gravity
@@ -17,25 +19,29 @@ import android.view.Gravity.LEFT
 import android.widget.ImageView
 
 
-class RecipeCard : AppCompatActivity(){
+class RecipeCard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.card_recipe)
 
         val b = intent.extras
         var value = "" // or other values
-        if (b != null){
+        if (b != null) {
             value = b.getString("name")
             val recipe = MockDatabase.recipesList.find { it.name == value }
 
             val namespace = findViewById<TextView>(R.id.recipeName)
             namespace.text = recipe?.name
 
-            val image = findViewById<ImageView>(R.id.recipeImage)
-            image.setImageResource(recipe!!.image)
+            val image = findViewById<RoundedImageView>(R.id.recipeImage)
+            if (recipe!!.image is Int) {
+                image.setImageResource((recipe.image as Int))
+            } else {
+                image.setImageURI(Uri.parse((recipe.image as String)))
+            }
 
             val ingredientContainer = findViewById<LinearLayout>(R.id.ingredientContainer)
-            for(i in recipe!!.ingredients){
+            for (i in recipe.ingredients) {
                 val ingredientView = TextView(ingredientContainer.context)
                 ingredientView.text = i.name
                 val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -63,9 +69,9 @@ class RecipeCard : AppCompatActivity(){
                 val carbsOldValue = carbs?.text.toString().split(" ")[0].toInt()
                 val carbsValue = carbsOldValue + i!!.carbs
                 carbs?.text = carbsValue.toString() + " Carbs"
-                }
+            }
             val instructionContainer = findViewById<LinearLayout>(R.id.instructionContainer)
-            for(ins in recipe!!.instructions){
+            for (ins in recipe!!.instructions) {
                 val instructionView = TextView(instructionContainer.context)
                 instructionView.text = ins
                 val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)

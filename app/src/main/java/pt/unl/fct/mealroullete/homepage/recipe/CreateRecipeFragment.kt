@@ -158,7 +158,7 @@ class CreateRecipeFragment : Fragment() {
                         == PackageManager.PERMISSION_GRANTED)) {
             val intent = Intent()
             intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
+            intent.action = Intent.ACTION_OPEN_DOCUMENT
             startActivityForResult(Intent.createChooser(intent,
                     "Select file to upload "), req_code)
         } else{
@@ -181,10 +181,11 @@ class CreateRecipeFragment : Fragment() {
             val selectedImageUri = data!!.data
 
             if (requestCode == OPEN_GALLERY_REQ_CODE) {
-                val imagePath = getPath(selectedImageUri)
+                activity!!.contentResolver.takePersistableUriPermission(selectedImageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 val view = this.view?.findViewById<ImageView>(R.id.recipe_image)
                 view!!.scaleType = ImageView.ScaleType.CENTER_CROP
-                setImageFromUrl(imagePath, view)
+                setImageFromUri(selectedImageUri.toString(), view)
+                recipe.image = selectedImageUri.toString()
             }
         }
     }
@@ -194,52 +195,14 @@ class CreateRecipeFragment : Fragment() {
 
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE -> {
-                println("on reqeuest permission result2")
                 openGallery(OPEN_GALLERY_REQ_CODE)
                 return
             }
         }
     }
 
-    private fun getPath(uri: Uri?): String {
-        val bitmap = MediaStore.Images.Media.getBitmap(this.context?.contentResolver, uri)
-        return saveImage(bitmap)
-    }
-
-    private fun saveImage(myBitmap: Bitmap): String {
-        val bytes = ByteArrayOutputStream()
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-        val wallpaperDirectory = File(
-                (Environment.getExternalStorageDirectory()).toString() + IMAGES_DIRECTORY)
-
-        if (!wallpaperDirectory.exists()) {
-            wallpaperDirectory.mkdirs()
-        }
-
-        try {
-            val f = File(wallpaperDirectory.absolutePath + "/" + Calendar.getInstance().timeInMillis.toString() + ".jpg")
-            f.createNewFile()
-            val fo = FileOutputStream(f)
-            fo.write(bytes.toByteArray())
-
-            MediaScannerConnection.scanFile(this.context, arrayOf(f.path), arrayOf("image/jpeg"), null)
-            fo.close()
-
-            return f.absolutePath
-        } catch (e1: IOException) {
-            e1.printStackTrace()
-        }
-
-        return ""
-    }
-
-    private fun setImageFromUrl(path: String, imageView: ImageView) {
-        val imgFile = File(path)
-        if (imgFile.exists()) {
-
-            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
-            imageView.setImageBitmap(myBitmap)
-        }
+    private fun setImageFromUri(uri: String, imageView: ImageView) {
+        imageView.setImageURI(Uri.parse(uri))
     }
 
     private fun requestPermissions () {
