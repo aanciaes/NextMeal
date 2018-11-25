@@ -12,6 +12,11 @@ import android.widget.TextView
 import com.makeramen.roundedimageview.RoundedImageView
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.persistance.MockDatabase
+import android.view.ViewGroup.LayoutParams.FILL_PARENT
+import android.view.Gravity
+import android.view.Gravity.CENTER
+import android.view.Gravity.LEFT
+import android.widget.ImageView
 
 
 class RecipeCard : AppCompatActivity() {

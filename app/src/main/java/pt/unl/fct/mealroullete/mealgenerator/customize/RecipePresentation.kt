@@ -19,6 +19,7 @@ import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import android.support.design.widget.TabLayout
 import android.view.Gravity
+import android.widget.ImageView
 import android.widget.LinearLayout
 import com.makeramen.roundedimageview.RoundedImageView
 

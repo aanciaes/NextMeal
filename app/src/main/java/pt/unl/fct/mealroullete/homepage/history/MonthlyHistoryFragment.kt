@@ -40,7 +40,24 @@ class MonthlyHistoryFragment : Fragment() {
 
             child.findViewById<ImageView>(R.id.historyImage).setImageResource((recipe.image as Int))
             child.findViewById<TextView>(R.id.historyName).text = recipe.name
-            child.findViewById<TextView>(R.id.historyCalories).text = recipe.calories.toString()
+            child.findViewById<TextView>(R.id.historyCalories).text = totalCalories.toString() + " kcal"
+
+            val caloriesOldValue = view.findViewById<TextView>(R.id.history_total_calories).text.toString().split(" ")[0].toInt()
+            val caloriesValue = caloriesOldValue + totalCalories
+            view.findViewById<TextView>(R.id.history_total_calories).text = caloriesValue.toString() + " kcal"
+
+            val proteinOldValue = view.findViewById<TextView>(R.id.history_total_proteins).text.toString().split(" ")[0].toInt()
+            val proteinValue = proteinOldValue + totalProteins
+            view.findViewById<TextView>(R.id.history_total_proteins).text = proteinValue.toString() + " g"
+
+            val fatsOldValue = view.findViewById<TextView>(R.id.history_total_fats).text.toString().split(" ")[0].toInt()
+            val fatsValue = fatsOldValue + totalFats
+            view.findViewById<TextView>(R.id.history_total_fats)?.text = fatsValue.toString() + " g"
+
+            val carbsOldValue = view.findViewById<TextView>(R.id.history_total_carbs).text.toString().split(" ")[0].toInt()
+            val carbsValue = carbsOldValue + totalCarbs
+            view.findViewById<TextView>(R.id.history_total_carbs)?.text = carbsValue.toString() + " g"
+
             child.setOnClickListener {
                 val intent = Intent(context, RecipeCard::class.java)
                 val b = Bundle()

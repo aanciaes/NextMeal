@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:gravity="center"
-                    android:text="Set Recipe Name"
+                    android:hint="Recipe Name"
                     android:theme="@style/editRecipeName"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
