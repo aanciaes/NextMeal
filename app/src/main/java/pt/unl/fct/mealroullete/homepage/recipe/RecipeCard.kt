@@ -14,6 +14,7 @@ import android.view.ViewGroup.LayoutParams.FILL_PARENT
 import android.view.Gravity
 import android.view.Gravity.CENTER
 import android.view.Gravity.LEFT
+import android.widget.ImageView
 
 
 class RecipeCard : AppCompatActivity(){
@@ -30,8 +31,8 @@ class RecipeCard : AppCompatActivity(){
             val namespace = findViewById<TextView>(R.id.recipeName)
             namespace.text = recipe?.name
 
-            val image = findViewById<ImageButton>(R.id.recipeImage)
-            //TODO
+            val image = findViewById<ImageView>(R.id.recipeImage)
+            image.setImageResource(recipe!!.image)
 
             val ingredientContainer = findViewById<LinearLayout>(R.id.ingredientContainer)
             for(i in recipe!!.ingredients){

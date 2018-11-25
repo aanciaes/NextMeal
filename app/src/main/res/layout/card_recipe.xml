@@ -88,7 +88,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.makeramen.roundedimageview.RoundedImageView
+                    <ImageView
                         android:id="@+id/recipeImage"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
@@ -98,10 +98,7 @@
                         android:src="@drawable/meal_highlight_example"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView"
-                        app:riv_border_color="#e3e3e3"
-                        app:riv_border_width="2dip"
-                        app:riv_corner_radius="10dip" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -248,55 +245,6 @@
                                 android:text="0 Carbs" />
 
                         </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageButton
-                            android:id="@+id/favorite_vote"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/heart_favorite_empty" />
-
-                        <TextView
-                            android:id="@+id/check_fav"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:text="empty" />
-
-                        <ImageButton
-                            android:id="@+id/upVote"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_marginLeft="170dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/vote_up_empty" />
-
-                        <TextView
-                            android:id="@+id/upVoteState"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:text="empty" />
-
-                        <ImageButton
-                            android:id="@+id/downVote"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="20dp"
-                            android:background="@drawable/vote_down_empty" />
-
-                        <TextView
-                            android:id="@+id/downVoteState"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:text="empty" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

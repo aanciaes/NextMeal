@@ -18,6 +18,7 @@ import pt.unl.fct.mealroullete.mealgenerator.GeneratorHome
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import android.support.design.widget.TabLayout
 import android.view.Gravity
+import android.widget.ImageView
 import android.widget.LinearLayout
 
 
@@ -122,6 +123,9 @@ class CardFrontFragment : Fragment() {
         val recipeName = view.findViewById<TextView>(R.id.recipeName)
         recipeName.text = recipes[currentPos].name
 
+        val image = view.findViewById<ImageView>(R.id.recipe_image)
+        image.setImageResource(recipes[currentPos].image)
+
         setFlipCardListener(view, currentPos)
         return view
     }
@@ -162,9 +166,9 @@ class CardBackFragment : Fragment() {
         val recipeName = recipes[currentPos].name
 
         val recipe = MockDatabase.recipesList.find { it.name == recipeName }
-        
-        val image = view.findViewById<ImageButton>(R.id.recipeImage)
-        //TODO
+
+        val image = view.findViewById<ImageView>(R.id.imageView4)
+        image.setImageResource(recipes[currentPos].image)
 
         val ingredientContainer = view.findViewById<LinearLayout>(R.id.ingredientContainer)
         for(i in recipe!!.ingredients){

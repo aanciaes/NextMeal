@@ -15,18 +15,14 @@ class CreatePollFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_create_poll, container, false)
 
-
-
         val container = view.findViewById<TableLayout>(R.id.ingredient_table)
         var x = 1
         while (x < 8) {
             val child = inflater.inflate(R.layout.table_item_polluser, container, false) as LinearLayout
-            child.findViewById<TextView>(R.id.userEmail).text = "email@email.com " + x.toString()
+            child.findViewById<TextView>(R.id.userEmail).text = "email" + x.toString() + "@email.com"
             container.addView(child)
             x++
         }
-
-
         return view
     }
 }
