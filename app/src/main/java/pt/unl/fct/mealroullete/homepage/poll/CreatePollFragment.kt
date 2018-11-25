@@ -17,7 +17,7 @@ class CreatePollFragment : Fragment() {
 
         val container = view.findViewById<TableLayout>(R.id.ingredient_table)
         var x = 1
-        while (x < 8) {
+        while (x < 5) {
             val child = inflater.inflate(R.layout.table_item_polluser, container, false) as LinearLayout
             child.findViewById<TextView>(R.id.userEmail).text = "email" + x.toString() + "@email.com"
             container.addView(child)
