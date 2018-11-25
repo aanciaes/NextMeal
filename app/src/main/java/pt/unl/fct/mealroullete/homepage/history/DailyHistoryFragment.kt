@@ -37,7 +37,7 @@ class DailyHistoryFragment : Fragment() {
 
         child.findViewById<ImageView>(R.id.historyImage).setImageResource(recipe.image)
         child.findViewById<TextView>(R.id.historyName).text = recipe.name
-        child.findViewById<TextView>(R.id.historyCalories).text = totalCalories.toString()
+        child.findViewById<TextView>(R.id.historyCalories).text = totalCalories.toString() + " kcal"
 
         view.findViewById<TextView>(R.id.history_total_calories).text = totalCalories.toString() + " kcal"
         view.findViewById<TextView>(R.id.history_total_carbs).text = totalCarbs.toString() + " g"

@@ -40,7 +40,7 @@ class MonthlyHistoryFragment : Fragment() {
 
             child.findViewById<ImageView>(R.id.historyImage).setImageResource(recipe.image)
             child.findViewById<TextView>(R.id.historyName).text = recipe.name
-            child.findViewById<TextView>(R.id.historyCalories).text = totalCalories.toString()
+            child.findViewById<TextView>(R.id.historyCalories).text = totalCalories.toString() + " kcal"
 
             val caloriesOldValue = view.findViewById<TextView>(R.id.history_total_calories).text.toString().split(" ")[0].toInt()
             val caloriesValue = caloriesOldValue + totalCalories
