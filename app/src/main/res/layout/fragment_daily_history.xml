@@ -67,7 +67,7 @@
                     android:id="@+id/history_total_proteins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="200g" />
+                    android:text="0 g" />
 
             </LinearLayout>
         </RelativeLayout>
@@ -94,7 +94,7 @@
                     android:id="@+id/history_total_fats"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="200g" />
+                    android:text="0 g" />
 
             </LinearLayout>
         </RelativeLayout>
@@ -120,7 +120,7 @@
                     android:id="@+id/history_total_carbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="200g" />
+                    android:text="0 g" />
 
             </LinearLayout>
         </RelativeLayout>

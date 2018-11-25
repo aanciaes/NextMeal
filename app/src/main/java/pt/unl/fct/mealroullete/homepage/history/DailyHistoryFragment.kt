@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import kotlinx.android.synthetic.main.activity_calculator.*
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeCard
 import pt.unl.fct.mealroullete.persistance.MockDatabase
@@ -36,7 +37,13 @@ class DailyHistoryFragment : Fragment() {
 
         child.findViewById<ImageView>(R.id.historyImage).setImageResource(recipe.image)
         child.findViewById<TextView>(R.id.historyName).text = recipe.name
-        child.findViewById<TextView>(R.id.historyCalories).text = recipe.calories.toString()
+        child.findViewById<TextView>(R.id.historyCalories).text = totalCalories.toString()
+
+        view.findViewById<TextView>(R.id.history_total_calories).text = totalCalories.toString() + " kcal"
+        view.findViewById<TextView>(R.id.history_total_carbs).text = totalCarbs.toString() + " g"
+        view.findViewById<TextView>(R.id.history_total_proteins).text = totalProteins.toString() + " g"
+        view.findViewById<TextView>(R.id.history_total_fats).text = totalFats.toString() + " g"
+
         child.setOnClickListener {
             val intent = Intent(context, RecipeCard::class.java)
             val b = Bundle()
