@@ -151,9 +151,6 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 val row = inflater.inflate(R.layout.table_item_calculator, contain, false) as LinearLayout
 
                 val wrapper = row.findViewById<LinearLayout>(R.id.table_item_calculator)
-                //val params = wrapper.getLayoutParams()
-                //params.height = 50
-                //wrapper.setLayoutParams(params)
 
                 val calories = findViewById<TextView>(R.id.caloriesTotal)
                 val newCal = (Integer.parseInt(calories.text.toString()) + ingredient.calories).toString()
