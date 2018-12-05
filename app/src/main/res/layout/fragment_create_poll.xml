@@ -7,72 +7,108 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="100dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp"
-            app:layout_constraintHorizontal_bias="1.0" android:id="@+id/linearLayout3">
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <RelativeLayout
+            android:id="@+id/addRecipeWrappper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="0.32"
+            android:gravity="center">
+
+            <include
+                layout="@layout/dropdown"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.33"
-                android:gravity="center" android:layout_marginTop="5dp">
-            <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:src="@drawable/add_icon"
-                    android:layout_alignParentStart="true"
-                    android:scaleX="1.5"
-                    android:scaleY="1.5"
-                    android:background="@null"
-                    android:layout_alignParentBottom="true" android:layout_marginBottom="5dp"/>
+                android:layout_height="70dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@null"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:src="@drawable/add_icon" />
+
             <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Recipe 1"/>
+                android:id="@+id/recipeNamePoll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Recipe 1" />
+
         </RelativeLayout>
+
         <RelativeLayout
+            android:id="@+id/addRecipeWrappper2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="0.33"
+            android:gravity="center">
+
+            <include
+                layout="@layout/dropdown2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.33"
-                android:gravity="center" android:layout_marginTop="5dp">
-            <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:src="@drawable/add_icon"
-                    android:scaleX="1.5"
-                    android:scaleY="1.5"
-                    android:layout_alignParentStart="true"
-                    android:background="@null"
-                    android:layout_alignParentBottom="true" android:layout_marginBottom="5dp"/>
+                android:layout_height="70dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@null"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:src="@drawable/add_icon" />
+
             <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Recipe 2"/>
+                android:id="@+id/recipeNamePoll2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Recipe 2" />
         </RelativeLayout>
+
         <RelativeLayout
+            android:id="@+id/addRecipeWrappper3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="0.33"
+            android:gravity="center">
+
+            <include
+                layout="@layout/dropdown3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.33"
-                android:gravity="center" android:layout_marginTop="5dp">
-            <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:src="@drawable/add_icon"
-                    android:scaleX="1.5"
-                    android:scaleY="1.5"
-                    android:layout_alignParentStart="true"
-                    android:background="@null"
-                    android:layout_alignParentBottom="true" android:layout_marginBottom="5dp"/>
+                android:layout_height="70dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@null"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:src="@drawable/add_icon" />
+
             <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Recipe 3"/>
+                android:id="@+id/recipeNamePoll3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Recipe 3" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -86,11 +122,13 @@
             android:id="@+id/linearLayout4">
 
         <TextView
-                android:layout_marginTop="25dp"
-                android:layout_marginStart="25dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Users in poll:" android:layout_marginEnd="25dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/users_poll_underline"
+            android:textSize="26sp" />
 
         <include
                 android:id="@+id/include2"
@@ -115,6 +153,7 @@
                 android:gravity="center"
                 android:text="Invite user"/>
         <ImageButton
+                android:id="@+id/inviteUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
