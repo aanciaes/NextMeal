@@ -114,6 +114,14 @@ object MockDatabase {
        return recipesList[idx]
     }
 
+    fun getTotalRecipes() : Int {
+        return recipesList.size
+    }
+
+    fun findRecipe(name: String) : Recipe? {
+        return recipesList.find { it.name == name }
+    }
+
     fun buildRecipe(id: Int, name: String, image: Int, ingredients: MutableList<Ingredient>, instructions: MutableList<String>): Recipe {
         val nutrients = mutableListOf(0, 0, 0, 0)
         for (i in ingredients) {
@@ -125,7 +133,7 @@ object MockDatabase {
 
         return Recipe(id, image, name,
                 ingredients,
-                nutrients, instructions, nutrients[0])
+                nutrients, instructions, nutrients[0], false)
     }
 }
 
@@ -149,6 +157,7 @@ class Recipe(val id: Int,
              val ingredients: MutableList<Ingredient>,
              val nutrients: MutableList<Int>,
              val instructions: MutableList<String>,
-             var calories: Int)
+             var calories: Int,
+             var removed: Boolean)
 
 class Poll(val id: Int, val name: String, val users: List<String>, val owner: String, val recipes: List<Recipe>, val winner: Recipe, val endTimestamp: LocalDateTime, var active: Boolean)

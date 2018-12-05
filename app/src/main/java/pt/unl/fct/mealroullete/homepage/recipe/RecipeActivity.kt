@@ -47,7 +47,7 @@ class RecipeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         if (recipe_drawer.isDrawerOpen(GravityCompat.START)) {
             recipe_drawer.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            // Do nothing
         }
     }
 

@@ -170,7 +170,7 @@ class CardBackFragment : Fragment() {
         val view = inflater.inflate(R.layout.card_back, container, false)
         val recipeName = recipes[currentPos].name
 
-        val recipe = MockDatabase.recipesList.find { it.name == recipeName }
+        val recipe = MockDatabase.findRecipe(recipeName)
 
         val recipeImage = view.findViewById<RoundedImageView>(R.id.imageView4)
         if (recipe!!.image is Int){
@@ -199,17 +199,17 @@ class CardBackFragment : Fragment() {
             val proteins = view.findViewById<TextView>(R.id.nutrientProtein)
             val proteinOldValue = proteins?.text.toString().split(" ")[0].toInt()
             val proteinValue = proteinOldValue + i!!.protein
-            proteins?.text = proteinValue.toString() + " Proteins"
+            proteins?.text = proteinValue.toString() + " gr Proteins"
 
             val fats = view.findViewById<TextView>(R.id.nutrientFats)
             val fatsOldValue = fats?.text.toString().split(" ")[0].toInt()
             val fatsValue = fatsOldValue + i!!.fats
-            fats?.text = fatsValue.toString() + " Fats"
+            fats?.text = fatsValue.toString() + " gr Fats"
 
             val carbs = view.findViewById<TextView>(R.id.nutrientCarbs)
             val carbsOldValue = carbs?.text.toString().split(" ")[0].toInt()
             val carbsValue = carbsOldValue + i!!.carbs
-            carbs?.text = carbsValue.toString() + " Carbs"
+            carbs?.text = carbsValue.toString() + " gr Carbs"
         }
         val instructionContainer = view.findViewById<LinearLayout>(R.id.instructionContainer)
         for(ins in recipe!!.instructions){
@@ -222,13 +222,23 @@ class CardBackFragment : Fragment() {
             instructionContainer.addView(instructionView)
         }
 
-
         val fav = view.findViewById<ImageButton>(R.id.favorite_vote)
+
+        if (recipe.removed) {
+            fav.setBackgroundResource(R.drawable.heart_favorite_empty)
+            view.findViewById<TextView>(R.id.check_fav).setText("empty")
+        } else {
+            fav.setBackgroundResource(R.drawable.heart_favorite_full)
+            view.findViewById<TextView>(R.id.check_fav).setText("full")
+        }
+
         fav.setOnClickListener {
             if (view.findViewById<TextView>(R.id.check_fav).text.equals("full")) {
+                recipe.removed = true
                 fav.setBackgroundResource(R.drawable.heart_favorite_empty)
                 view.findViewById<TextView>(R.id.check_fav).setText("empty")
             } else {
+                recipe.removed = false
                 fav.setBackgroundResource(R.drawable.heart_favorite_full)
                 view.findViewById<TextView>(R.id.check_fav).setText("full")
             }
