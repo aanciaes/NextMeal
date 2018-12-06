@@ -4,6 +4,7 @@ import android.os.Build
 import android.support.annotation.RequiresApi
 import pt.unl.fct.mealroullete.R
 import java.time.LocalDateTime
+import java.util.*
 
 
 object MockDatabase {
@@ -124,6 +125,8 @@ object MockDatabase {
 
     fun buildRecipe(id: Int, name: String, image: Int, ingredients: MutableList<Ingredient>, instructions: MutableList<String>): Recipe {
         val nutrients = mutableListOf(0, 0, 0, 0)
+        val quantities = mutableListOf<Int>()
+
         for (i in ingredients) {
             nutrients[0] += i.calories
             nutrients[1] += i.protein
@@ -131,8 +134,14 @@ object MockDatabase {
             nutrients[3] += i.carbs
         }
 
+
+        for (i in ingredients.indices) {
+           quantities.add(i,Random().nextInt((500 + 1) - 100) +  100)
+        }
+
         return Recipe(id, image, name,
                 ingredients,
+                quantities,
                 nutrients, instructions, nutrients[0], false)
     }
 }
@@ -155,6 +164,7 @@ class Recipe(val id: Int,
              var image: Any,
              var name: String,
              val ingredients: MutableList<Ingredient>,
+             val quantities : MutableList<Int>,
              val nutrients: MutableList<Int>,
              val instructions: MutableList<String>,
              var calories: Int,

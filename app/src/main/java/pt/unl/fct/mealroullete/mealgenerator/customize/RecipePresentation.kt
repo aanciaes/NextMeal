@@ -181,10 +181,12 @@ class CardBackFragment : Fragment() {
             recipeImage.setImageURI(Uri.parse((recipe.image as String)))
         }
 
+        var j = 0
         val ingredientContainer = view.findViewById<LinearLayout>(R.id.ingredientContainer)
         for(i in recipe!!.ingredients){
             val ingredientView = TextView(ingredientContainer.context)
-            ingredientView.text = i.name
+            val txt = recipe.quantities[j].toString() + " gr " + i.name
+            ingredientView.text = txt
             val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             params.setMargins(10, 35, 0, 0)
             ingredientView.layoutParams = params
@@ -210,6 +212,7 @@ class CardBackFragment : Fragment() {
             val carbsOldValue = carbs?.text.toString().split(" ")[0].toInt()
             val carbsValue = carbsOldValue + i!!.carbs
             carbs?.text = carbsValue.toString() + " gr Carbs"
+            j++
         }
         val instructionContainer = view.findViewById<LinearLayout>(R.id.instructionContainer)
         for(ins in recipe!!.instructions){

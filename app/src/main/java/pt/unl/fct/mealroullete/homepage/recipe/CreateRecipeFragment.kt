@@ -43,7 +43,7 @@ class CreateRecipeFragment : Fragment() {
     private val PERMISSIONS_REQUEST_CODE = 1
 
     val items = mutableListOf<Ingredient>()
-    var recipe = Recipe(2, R.drawable.empty_image_recipe, "", mutableListOf(), mutableListOf(0,0,0,0), mutableListOf(), 0, false)
+    var recipe = Recipe(2, R.drawable.empty_image_recipe, "", mutableListOf(), mutableListOf(), mutableListOf(0,0,0,0), mutableListOf(), 0, false)
     var firstInit = true
 
     init {
@@ -247,13 +247,15 @@ class CreateRecipeFragment : Fragment() {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val ingredientSelected = items.find{it.name == items.get(position).name}
             if(!firstInit){
+                val quantity = Random().nextInt((500 + 1) - 100) +  100
                 val outerView = activity
                 val container = outerView?.findViewById<LinearLayout>(R.id.ingredientContainer)
                 val ingredient = TextView(context)
                 val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 params.setMargins(0, 25, 0, 0)
                 ingredient.layoutParams = params
-                ingredient.text = ingredientSelected?.name
+                val txt = quantity.toString() + " gr " + ingredientSelected?.name
+                ingredient.text = txt
                 val id = View.generateViewId()
                 ingredient.id = id
                 //val button =  view?.findViewById<ImageButton>(R.id.spinner1)
@@ -286,6 +288,7 @@ class CreateRecipeFragment : Fragment() {
                 recipe.nutrients[3] += carbsValue
 
                 recipe.ingredients.add(ingredientSelected)
+                recipe.quantities.add(quantity)
             }
             else{
                 firstInit = false
