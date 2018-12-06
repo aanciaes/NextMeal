@@ -1,5 +1,6 @@
 package pt.unl.fct.mealroullete.homepage.recipe
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -28,7 +29,7 @@ class RecipeCard : AppCompatActivity() {
         var value = "" // or other values
         if (b != null) {
             value = b.getString("name")
-            val recipe = MockDatabase.recipesList.find { it.name == value }
+            val recipe = MockDatabase.findRecipe(value)
 
             val namespace = findViewById<TextView>(R.id.recipeName)
             namespace.text = recipe?.name
@@ -58,17 +59,17 @@ class RecipeCard : AppCompatActivity() {
                 val proteins = findViewById<TextView>(R.id.nutrientProtein)
                 val proteinOldValue = proteins?.text.toString().split(" ")[0].toInt()
                 val proteinValue = proteinOldValue + i!!.protein
-                proteins?.text = proteinValue.toString() + " Proteins"
+                proteins?.text = proteinValue.toString() + " gr Proteins"
 
                 val fats = findViewById<TextView>(R.id.nutrientFats)
                 val fatsOldValue = fats?.text.toString().split(" ")[0].toInt()
                 val fatsValue = fatsOldValue + i!!.fats
-                fats?.text = fatsValue.toString() + " Fats"
+                fats?.text = fatsValue.toString() + " gr Fats"
 
                 val carbs = findViewById<TextView>(R.id.nutrientCarbs)
                 val carbsOldValue = carbs?.text.toString().split(" ")[0].toInt()
                 val carbsValue = carbsOldValue + i!!.carbs
-                carbs?.text = carbsValue.toString() + " Carbs"
+                carbs?.text = carbsValue.toString() + " gr Carbs"
             }
             val instructionContainer = findViewById<LinearLayout>(R.id.instructionContainer)
             for (ins in recipe!!.instructions) {
@@ -85,6 +86,14 @@ class RecipeCard : AppCompatActivity() {
 
         val back = findViewById<ImageButton>(R.id.back)
         back.setOnClickListener {
+            if (b != null) {
+                val previous = b.getBoolean("createRecipe")
+                if (previous) {
+                    val intent = Intent(this, RecipeActivity::class.java)
+                    startActivity(intent)
+                }
+                finish()
+            }
             finish()
         }
     }

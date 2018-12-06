@@ -13,6 +13,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Patterns
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import pt.unl.fct.mealroullete.R
@@ -30,6 +31,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun addListeners() {
         setupHideKeyboard()
         checkUsername()
+        checkEmailAddress()
         registerListener()
         onClickShowPassword()
         onClickShowRepeatPassword()
@@ -66,6 +68,33 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun checkUsernameAvailability(username: String): Boolean {
         return MockDatabase.userExists(username)
+    }
+
+    private fun checkEmailAddress() {
+        val availability = findViewById<TextView>(R.id.email_availability)
+        val emailaddress = findViewById<EditText>(R.id.register_email_field)
+        emailaddress.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val availabilityImage = findViewById<ImageView>(R.id.email_availability_image)
+
+                if (count == 0) { // If user deletes all text from username field
+                    availabilityImage.setImageResource(R.drawable.ic_action_check_username_negative)
+                    availability.text = "negative"
+                } else {
+                    if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                        availabilityImage.setImageResource(R.drawable.ic_action_check_username_negative)
+                        availability.text = "negative"
+                    } else {
+                        availabilityImage.setImageResource(R.drawable.ic_action_check_username_positive)
+                        availability.text = "positive"
+                    }
+                }
+            }
+
+            override fun afterTextChanged(s: Editable) {}
+        })
     }
 
     private fun registerListener() {

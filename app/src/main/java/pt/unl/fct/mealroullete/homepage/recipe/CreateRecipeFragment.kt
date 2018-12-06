@@ -43,7 +43,7 @@ class CreateRecipeFragment : Fragment() {
     private val PERMISSIONS_REQUEST_CODE = 1
 
     val items = mutableListOf<Ingredient>()
-    var recipe = Recipe(2, R.drawable.empty_image_recipe, "", mutableListOf(), mutableListOf(0,0,0,0), mutableListOf(), 0)
+    var recipe = Recipe(2, R.drawable.empty_image_recipe, "", mutableListOf(), mutableListOf(0,0,0,0), mutableListOf(), 0, false)
     var firstInit = true
 
     init {
@@ -67,11 +67,12 @@ class CreateRecipeFragment : Fragment() {
             builder.setView(text)
             builder.setPositiveButton("Yes") { dialog, which ->
                 recipe.name = view.findViewById<EditText>(R.id.recipeName).text.toString()
-                MockDatabase.recipesList.add(recipe)
+                MockDatabase.addRecipe(recipe)
                 text.text = text.text.toString()
                 val intent = Intent(context, RecipeCard::class.java)
                 val b = Bundle()
                 b.putString("name", recipe.name) //Your id
+                b.putBoolean("createRecipe", true)
                 intent.putExtras(b)
                 startActivity(intent)
             }
@@ -267,17 +268,17 @@ class CreateRecipeFragment : Fragment() {
                 val proteins = outerView?.findViewById<TextView>(R.id.nutrientsProtein)
                 val proteinOldValue = proteins?.text.toString().split(" ")[0].toInt()
                 val proteinValue = proteinOldValue + ingredientSelected!!.protein
-                proteins?.text = proteinValue.toString() + " Proteins"
+                proteins?.text = proteinValue.toString() + " gr Proteins"
 
                 val fats = outerView?.findViewById<TextView>(R.id.nutrientFats)
                 val fatsOldValue = fats?.text.toString().split(" ")[0].toInt()
                 val fatsValue = fatsOldValue + ingredientSelected!!.fats
-                fats?.text = fatsValue.toString() + " Fats"
+                fats?.text = fatsValue.toString() + " gr Fats"
 
                 val carbs = outerView?.findViewById<TextView>(R.id.nutrientsCarbs)
                 val carbsOldValue = carbs?.text.toString().split(" ")[0].toInt()
                 val carbsValue = carbsOldValue + ingredientSelected!!.carbs
-                carbs?.text = carbsValue.toString() + " Carbs"
+                carbs?.text = carbsValue.toString() + " gr Carbs"
 
                 recipe.calories += caloriesValue
                 recipe.nutrients[1] += proteinValue
