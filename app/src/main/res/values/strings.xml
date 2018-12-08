@@ -34,4 +34,5 @@
     <string name="common_header_user_full_name">Android Studio</string>
     <string name="common_header_user_email_address">android.studio@android.com</string>
     <string name="back_to_generator">Back To Generator</string>
+    <string name="selected_calculator"><b>SELECTED</b></string>
 </resources>
