@@ -59,7 +59,7 @@ class CreatePollFragment : Fragment() {
             builder.setView(viewInflated)
 
             // Set up the buttons
-            builder.setPositiveButton("Add") { dialog, which ->
+            builder.setPositiveButton("Add") { _, _ ->
                 userEmail = input.text.toString()
                 if (userEmail != "") {
                     val ingredientTable = view.findViewById<LinearLayout>(R.id.ingredient_table)
@@ -118,7 +118,7 @@ class CreatePollFragment : Fragment() {
 
     inner class SpinnerListener2 : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            // Do nothing
         }
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
