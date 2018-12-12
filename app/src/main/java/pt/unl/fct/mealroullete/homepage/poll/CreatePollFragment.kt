@@ -1,17 +1,20 @@
 package pt.unl.fct.mealroullete.homepage.poll
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import org.w3c.dom.Text
 import pt.unl.fct.mealroullete.R
-import pt.unl.fct.mealroullete.persistance.Ingredient
 import pt.unl.fct.mealroullete.persistance.MockDatabase
+import pt.unl.fct.mealroullete.persistance.Poll
 import pt.unl.fct.mealroullete.persistance.Recipe
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 class CreatePollFragment : Fragment() {
 
@@ -20,11 +23,15 @@ class CreatePollFragment : Fragment() {
     var firstInit2 = true
     var firstInit3 = true
 
+    val selectedRecipes = mutableListOf<Recipe?>(null, null,null)
+    var date: LocalDate? = null
+
     init {
         recipes.addAll(MockDatabase.recipesList)
         recipes.sortBy{it.name}
     }
 
+    @SuppressLint("NewApi")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_create_poll, container, false)
 
@@ -80,7 +87,39 @@ class CreatePollFragment : Fragment() {
             builder.show()
         }
 
+        val datepickerButton = view.findViewById<Button>(R.id.poll_date)
+
+        datepickerButton.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(context, R.style.datepicker)
+            datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
+                date = LocalDate.of(year, month, dayOfMonth)
+                val dateOfPoll = year.toString() + "/" + month.toString() + "/" + dayOfMonth.toString()
+                activity?.findViewById<Button>(R.id.poll_date)?.text = dateOfPoll
+            }
+            datePickerDialog.show()
+        }
+
+
+        val addpoll = view.findViewById<Button>(R.id.createPoll)
+        addpoll.setOnClickListener {
+            val pollName = view.findViewById<EditText>(R.id.pollName)
+            val users = mutableListOf<String>()
+            val wrapper = view.findViewById<TableLayout>(R.id.ingredient_table)
+
+            for(i in ( 0..wrapper.childCount)){
+                val child  = wrapper.getChildAt(i)
+                val email = child.findViewById<TextView>(R.id.userEmail)
+                users.add(i, email.text.toString())
+            }
+            val poll = Poll(5, pollName.text.toString(),users, MockDatabase.loggedInUser.toString(), recipes, null,date!!.toDateTime(), true)
+        }
+
         return view
+    }
+
+    @SuppressLint("NewApi")
+    fun LocalDate.toDateTime (): LocalDateTime {
+        return LocalDateTime.of(this.dayOfYear, this.month, this.dayOfMonth, 0, 0, 0)
     }
 
 
@@ -91,14 +130,15 @@ class CreatePollFragment : Fragment() {
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val recipeSelected = recipes.find { it.name == recipes.get(position).name }
-            if (!firstInit) {
+            if (!firstInit && view != null) {
+                selectedRecipes.add(0, recipeSelected!!)
                 val outerView = activity
                 val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper)
                 val recipeImage = container?.findViewById<Spinner>(R.id.spinner1)
                 val params = recipeImage?.getLayoutParams()
                 params?.width= ViewGroup.LayoutParams.MATCH_PARENT
                 params?.height= ViewGroup.LayoutParams.MATCH_PARENT
-                (view as TextView).text = null
+                (view as TextView).text = ""
                 recipeImage?.layoutParams = params
                 recipeImage?.setBackgroundResource(recipeSelected!!.image)
                 val recipeName = container?.findViewById<TextView>(R.id.recipeNamePoll)
@@ -116,7 +156,9 @@ class CreatePollFragment : Fragment() {
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val recipeSelected = recipes.find { it.name == recipes.get(position).name }
-            if (!firstInit2) {
+            if (!firstInit2 && view != null) {
+
+                selectedRecipes.add(1, recipeSelected!!)
                 val outerView = activity
                 val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper2)
 
@@ -124,7 +166,7 @@ class CreatePollFragment : Fragment() {
                 val params = recipeImage?.getLayoutParams()
                 params?.width= ViewGroup.LayoutParams.MATCH_PARENT
                 params?.height= ViewGroup.LayoutParams.MATCH_PARENT
-                (view as TextView).text = null
+                (view as TextView).text = ""
                 recipeImage?.layoutParams = params
                 recipeImage?.setBackgroundResource(recipeSelected!!.image)
                 val recipeName = container?.findViewById<TextView>(R.id.recipeNamePoll2)
@@ -142,14 +184,15 @@ class CreatePollFragment : Fragment() {
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val recipeSelected = recipes.find { it.name == recipes.get(position).name }
-            if (!firstInit3) {
+            if (!firstInit3 && view != null) {
+                selectedRecipes.add(2, recipeSelected!!)
                 val outerView = activity
                 val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper3)
                 val recipeImage = container?.findViewById<Spinner>(R.id.spinner3)
                 val params = recipeImage?.getLayoutParams()
                 params?.width= ViewGroup.LayoutParams.MATCH_PARENT
                 params?.height= ViewGroup.LayoutParams.MATCH_PARENT
-                (view as TextView).text = null
+                (view as TextView).text = ""
                 recipeImage?.layoutParams = params
                 recipeImage?.setBackgroundResource(recipeSelected!!.image)
                 val recipeName = container?.findViewById<TextView>(R.id.recipeNamePoll3)
