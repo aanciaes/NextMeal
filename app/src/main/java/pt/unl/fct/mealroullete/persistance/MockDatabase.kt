@@ -73,9 +73,7 @@ object MockDatabase {
     val recipesList = mutableListOf(recipe1, recipe2, recipe3, recipe4, recipe5)
 
     @RequiresApi(Build.VERSION_CODES.O)
-    val polls = mutableListOf(Poll(1, "Party2017", listOf(users[0].username), "root", recipesList, recipesList[0], LocalDateTime.of(2017, 12, 24, 10, 30), false),
-            Poll(2, "Party2018", listOf(users[0].username, "Marlene", "Teresa"), "root", recipesList, recipesList[1], LocalDateTime.of(2018, 11, 24, 3, 25), true),
-            Poll(3, "Carnaval", listOf(users[0].username, "Marlene"), "root", recipesList, recipesList[2], LocalDateTime.of(2018, 12, 24, 10, 30), true))
+    val polls = mutableListOf<Poll>()
 
     private fun count(): Int {
         return users.size
@@ -170,4 +168,4 @@ class Recipe(val id: Int,
              var calories: Int,
              var removed: Boolean)
 
-class Poll(val id: Int, val name: String, val users: List<String>, val owner: String, val recipes: List<Recipe>, val winner: Recipe, val endTimestamp: LocalDateTime, var active: Boolean)
+class Poll(val id: Int, val name: String, val users: List<String>, val owner: String, val recipes: Map<Recipe, Int>, val winner: Recipe, val endTimestamp: LocalDateTime, var active: Boolean)

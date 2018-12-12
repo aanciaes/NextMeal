@@ -23,7 +23,7 @@ class ActivePollFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_active_poll, container, false)
-        val container = view.findViewById<TableLayout>(R.id.ingredient_table)
+        val ingredientTable = view.findViewById<TableLayout>(R.id.ingredient_table)
 
         val polls = MockDatabase.polls
         var counter = polls.size - 1
@@ -41,7 +41,7 @@ class ActivePollFragment : Fragment() {
 
                     child.findViewById<TextView>(R.id.pollexpiration).text = hours.toString() + "h" + minutes + "m"
                     child.findViewById<TextView>(R.id.pollName).text = p.name
-                    container.addView(child)
+                    ingredientTable.addView(child)
                 }
                 else{
                    p.active = false
