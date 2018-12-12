@@ -2,6 +2,7 @@ package pt.unl.fct.mealroullete.homepage.recipe
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -46,7 +47,7 @@ class RecipeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         if (recipe_drawer.isDrawerOpen(GravityCompat.START)) {
             recipe_drawer.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            // Do nothing
         }
     }
 
@@ -94,16 +95,11 @@ class RecipeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val imageView = header.findViewById<ImageView>(R.id.common_header_user_profile_photo)
 
         if (MockDatabase.loggedInUser?.picture != null) {
-            setImageFromUrl(MockDatabase.loggedInUser?.picture.toString(), imageView)
+            setImageFromUri(MockDatabase.loggedInUser?.picture.toString(), imageView)
         }
     }
 
-    private fun setImageFromUrl (path: String, imageView: ImageView) {
-        val imgFile = File(path);
-        if (imgFile.exists()) {
-            val myBitmap = BitmapFactory.decodeFile (imgFile.absolutePath);
-
-            imageView.setImageBitmap(myBitmap);
-        }
+    private fun setImageFromUri(uri: String, imageView: ImageView) {
+        imageView.setImageURI(Uri.parse(uri))
     }
 }

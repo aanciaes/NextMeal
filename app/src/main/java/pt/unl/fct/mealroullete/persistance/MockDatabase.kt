@@ -4,6 +4,7 @@ import android.os.Build
 import android.support.annotation.RequiresApi
 import pt.unl.fct.mealroullete.R
 import java.time.LocalDateTime
+import java.util.*
 
 
 object MockDatabase {
@@ -72,9 +73,7 @@ object MockDatabase {
     val recipesList = mutableListOf(recipe1, recipe2, recipe3, recipe4, recipe5)
 
     @RequiresApi(Build.VERSION_CODES.O)
-    val polls = mutableListOf(Poll(1, "Party2017", listOf(users[0].username), "root", recipesList, recipesList[0], LocalDateTime.of(2017, 12, 24, 10, 30), false),
-            Poll(2, "Party2018", listOf(users[0].username, "Marlene", "Teresa"), "root", recipesList, recipesList[1], LocalDateTime.of(2018, 11, 24, 3, 25), true),
-            Poll(3, "Carnaval", listOf(users[0].username, "Marlene"), "root", recipesList, recipesList[2], LocalDateTime.of(2018, 12, 24, 10, 30), true))
+    val polls = mutableListOf<Poll>()
 
     private fun count(): Int {
         return users.size
@@ -114,8 +113,18 @@ object MockDatabase {
        return recipesList[idx]
     }
 
+    fun getTotalRecipes() : Int {
+        return recipesList.size
+    }
+
+    fun findRecipe(name: String) : Recipe? {
+        return recipesList.find { it.name == name }
+    }
+
     fun buildRecipe(id: Int, name: String, image: Int, ingredients: MutableList<Ingredient>, instructions: MutableList<String>): Recipe {
         val nutrients = mutableListOf(0, 0, 0, 0)
+        val quantities = mutableListOf<Int>()
+
         for (i in ingredients) {
             nutrients[0] += i.calories
             nutrients[1] += i.protein
@@ -123,9 +132,15 @@ object MockDatabase {
             nutrients[3] += i.carbs
         }
 
+
+        for (i in ingredients.indices) {
+           quantities.add(i,Random().nextInt((500 + 1) - 100) +  100)
+        }
+
         return Recipe(id, image, name,
                 ingredients,
-                nutrients, instructions, nutrients[0])
+                quantities,
+                nutrients, instructions, nutrients[0], false)
     }
 }
 
@@ -144,11 +159,17 @@ class User(val id: Long,
 data class Ingredient(val id: Int, val name: String, val image: Int, val calories: Int, val fats: Int, val protein: Int, val carbs: Int)
 
 class Recipe(val id: Int,
-             val image: Int,
+             var image: Any,
              var name: String,
              val ingredients: MutableList<Ingredient>,
+             val quantities : MutableList<Int>,
              val nutrients: MutableList<Int>,
              val instructions: MutableList<String>,
-             var calories: Int)
+             var calories: Int,
+             var removed: Boolean)
 
+<<<<<<< HEAD
 class Poll(val id: Int, val name: String, val users: List<String>, val owner: String, val recipes: List<Recipe>, val winner: Recipe?, val endTimestamp: LocalDateTime, var active: Boolean)
+=======
+class Poll(val id: Int, val name: String, val users: List<String>, val owner: String, val recipes: Map<Recipe, Int>, val winner: Recipe, val endTimestamp: LocalDateTime, var active: Boolean)
+>>>>>>> d874d567f8563173fcb81667952a00102a17b180

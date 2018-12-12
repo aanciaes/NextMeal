@@ -39,12 +39,11 @@ import java.util.*
 
 class CreateRecipeFragment : Fragment() {
 
-    private val IMAGES_DIRECTORY = "/profile_pictures"
     private val OPEN_GALLERY_REQ_CODE = 0
     private val PERMISSIONS_REQUEST_CODE = 1
 
     val items = mutableListOf<Ingredient>()
-    var recipe = Recipe(2, R.drawable.empty_image_recipe, "", mutableListOf(), mutableListOf(0,0,0,0), mutableListOf(), 0)
+    var recipe = Recipe(2, R.drawable.empty_image_recipe, "", mutableListOf(), mutableListOf(), mutableListOf(0,0,0,0), mutableListOf(), 0, false)
     var firstInit = true
 
     init {
@@ -68,11 +67,12 @@ class CreateRecipeFragment : Fragment() {
             builder.setView(text)
             builder.setPositiveButton("Yes") { dialog, which ->
                 recipe.name = view.findViewById<EditText>(R.id.recipeName).text.toString()
-                MockDatabase.recipesList.add(recipe)
+                MockDatabase.addRecipe(recipe)
                 text.text = text.text.toString()
                 val intent = Intent(context, RecipeCard::class.java)
                 val b = Bundle()
                 b.putString("name", recipe.name) //Your id
+                b.putBoolean("createRecipe", true)
                 intent.putExtras(b)
                 startActivity(intent)
             }
@@ -158,7 +158,7 @@ class CreateRecipeFragment : Fragment() {
                         == PackageManager.PERMISSION_GRANTED)) {
             val intent = Intent()
             intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
+            intent.action = Intent.ACTION_OPEN_DOCUMENT
             startActivityForResult(Intent.createChooser(intent,
                     "Select file to upload "), req_code)
         } else{
@@ -181,10 +181,11 @@ class CreateRecipeFragment : Fragment() {
             val selectedImageUri = data!!.data
 
             if (requestCode == OPEN_GALLERY_REQ_CODE) {
-                val imagePath = getPath(selectedImageUri)
+                activity!!.contentResolver.takePersistableUriPermission(selectedImageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 val view = this.view?.findViewById<ImageView>(R.id.recipe_image)
                 view!!.scaleType = ImageView.ScaleType.CENTER_CROP
-                setImageFromUrl(imagePath, view)
+                setImageFromUri(selectedImageUri.toString(), view)
+                recipe.image = selectedImageUri.toString()
             }
         }
     }
@@ -194,52 +195,14 @@ class CreateRecipeFragment : Fragment() {
 
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE -> {
-                println("on reqeuest permission result2")
                 openGallery(OPEN_GALLERY_REQ_CODE)
                 return
             }
         }
     }
 
-    private fun getPath(uri: Uri?): String {
-        val bitmap = MediaStore.Images.Media.getBitmap(this.context?.contentResolver, uri)
-        return saveImage(bitmap)
-    }
-
-    private fun saveImage(myBitmap: Bitmap): String {
-        val bytes = ByteArrayOutputStream()
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-        val wallpaperDirectory = File(
-                (Environment.getExternalStorageDirectory()).toString() + IMAGES_DIRECTORY)
-
-        if (!wallpaperDirectory.exists()) {
-            wallpaperDirectory.mkdirs()
-        }
-
-        try {
-            val f = File(wallpaperDirectory.absolutePath + "/" + Calendar.getInstance().timeInMillis.toString() + ".jpg")
-            f.createNewFile()
-            val fo = FileOutputStream(f)
-            fo.write(bytes.toByteArray())
-
-            MediaScannerConnection.scanFile(this.context, arrayOf(f.path), arrayOf("image/jpeg"), null)
-            fo.close()
-
-            return f.absolutePath
-        } catch (e1: IOException) {
-            e1.printStackTrace()
-        }
-
-        return ""
-    }
-
-    private fun setImageFromUrl(path: String, imageView: ImageView) {
-        val imgFile = File(path)
-        if (imgFile.exists()) {
-
-            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
-            imageView.setImageBitmap(myBitmap)
-        }
+    private fun setImageFromUri(uri: String, imageView: ImageView) {
+        imageView.setImageURI(Uri.parse(uri))
     }
 
     private fun requestPermissions () {
@@ -284,13 +247,15 @@ class CreateRecipeFragment : Fragment() {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val ingredientSelected = items.find{it.name == items.get(position).name}
             if(!firstInit){
+                val quantity = Random().nextInt((500 + 1) - 100) +  100
                 val outerView = activity
                 val container = outerView?.findViewById<LinearLayout>(R.id.ingredientContainer)
                 val ingredient = TextView(context)
                 val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 params.setMargins(0, 25, 0, 0)
                 ingredient.layoutParams = params
-                ingredient.text = ingredientSelected?.name
+                val txt = quantity.toString() + " gr " + ingredientSelected?.name
+                ingredient.text = txt
                 val id = View.generateViewId()
                 ingredient.id = id
                 //val button =  view?.findViewById<ImageButton>(R.id.spinner1)
@@ -305,17 +270,17 @@ class CreateRecipeFragment : Fragment() {
                 val proteins = outerView?.findViewById<TextView>(R.id.nutrientsProtein)
                 val proteinOldValue = proteins?.text.toString().split(" ")[0].toInt()
                 val proteinValue = proteinOldValue + ingredientSelected!!.protein
-                proteins?.text = proteinValue.toString() + " Proteins"
+                proteins?.text = proteinValue.toString() + " gr Proteins"
 
                 val fats = outerView?.findViewById<TextView>(R.id.nutrientFats)
                 val fatsOldValue = fats?.text.toString().split(" ")[0].toInt()
                 val fatsValue = fatsOldValue + ingredientSelected!!.fats
-                fats?.text = fatsValue.toString() + " Fats"
+                fats?.text = fatsValue.toString() + " gr Fats"
 
                 val carbs = outerView?.findViewById<TextView>(R.id.nutrientsCarbs)
                 val carbsOldValue = carbs?.text.toString().split(" ")[0].toInt()
                 val carbsValue = carbsOldValue + ingredientSelected!!.carbs
-                carbs?.text = carbsValue.toString() + " Carbs"
+                carbs?.text = carbsValue.toString() + " gr Carbs"
 
                 recipe.calories += caloriesValue
                 recipe.nutrients[1] += proteinValue
@@ -323,6 +288,7 @@ class CreateRecipeFragment : Fragment() {
                 recipe.nutrients[3] += carbsValue
 
                 recipe.ingredients.add(ingredientSelected)
+                recipe.quantities.add(quantity)
             }
             else{
                 firstInit = false

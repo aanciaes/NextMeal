@@ -20,8 +20,10 @@
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toTopOf="@+id/addRecipe"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,15 +44,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="-1dp"
                 android:orientation="horizontal">
-              
+
                 <EditText
                     android:id="@+id/recipeName"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:gravity="center"
-                    android:text="Set Recipe Name"
-                    android:theme="@style/editRecipeName"
+                    android:hint="Set Recipe Name"
+                    android:inputType="text"
                     android:textSize="20sp"
+                    android:theme="@style/editRecipeName"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -199,7 +202,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/instructions"
                             app:layout_constraintVertical_bias="0.212" />
-                      
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -249,7 +252,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:gravity="left"
-                                android:text="0 Protein" />
+                                android:text="0 gr Protein" />
 
                             <TextView
                                 android:id="@+id/nutrientFats"
@@ -257,7 +260,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:gravity="left"
-                                android:text="0 Fats" />
+                                android:text="0 gr Fats" />
 
                             <TextView
                                 android:id="@+id/nutrientsCarbs"
@@ -265,7 +268,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
                                 android:gravity="left"
-                                android:text="0 Carbs" />
+                                android:text="0 gr Carbs" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

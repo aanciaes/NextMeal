@@ -69,7 +69,10 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private fun setInfo() {
         findViewById<TextView>(R.id.user_name).text = MockDatabase.loggedInUser?.username
         findViewById<TextView>(R.id.user_email).text = MockDatabase.loggedInUser?.email
-        setImageFromUrl(MockDatabase.loggedInUser?.picture.toString(), findViewById(R.id.profile_image))
+
+        if (MockDatabase.loggedInUser?.picture != null) {
+            setImageFromUri(MockDatabase.loggedInUser?.picture.toString(), findViewById(R.id.profile_image))
+        }
 
         val nameDateOfBirth = MockDatabase.loggedInUser?.fullName
         if (nameDateOfBirth != null) {
@@ -130,7 +133,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val imageView = header.findViewById<ImageView>(R.id.common_header_user_profile_photo)
 
         if (MockDatabase.loggedInUser?.picture != null) {
-            setImageFromUrl(MockDatabase.loggedInUser?.picture.toString(), imageView)
+            setImageFromUri(MockDatabase.loggedInUser?.picture.toString(), imageView)
         }
     }
 
@@ -216,12 +219,12 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         != PackageManager.PERMISSION_GRANTED)) {
 
             requestPermissions()
-        } else{
+        } else {
             openGallery(req_code)
         }
     }
 
-    private fun requestPermissions () {
+    private fun requestPermissions() {
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) ||
                 (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -240,7 +243,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
     }
 
-    private fun explainPermission () {
+    private fun explainPermission() {
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.setTitle("Permission Request")
         alertDialogBuilder.setMessage("Next meal needs permission to access your gallery")
@@ -263,10 +266,10 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         == PackageManager.PERMISSION_GRANTED)) {
             val intent = Intent()
             intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
+            intent.action = Intent.ACTION_OPEN_DOCUMENT
             startActivityForResult(Intent.createChooser(intent,
                     "Select file to upload "), req_code)
-        } else{
+        } else {
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setTitle("Permission Request")
             alertDialogBuilder.setMessage("NextMeal does not have permissions to read/write from/to your gallery\n" +
@@ -284,13 +287,14 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         if (resultCode == Activity.RESULT_OK) {
             val selectedImageUri = data!!.data
+            println(selectedImageUri)
 
             if (requestCode == OPEN_GALLERY_REQ_CODE) {
-                val imagePath = getPath(selectedImageUri)
-                MockDatabase.loggedInUser?.picture = imagePath
+                contentResolver.takePersistableUriPermission(selectedImageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                MockDatabase.loggedInUser?.picture = selectedImageUri.toString()
 
                 val imageView = findViewById<ImageView>(R.id.profile_image)
-                setImageFromUrl(imagePath, imageView)
+                setImageFromUri(selectedImageUri.toString(), imageView)
                 setCommonHeaderInformationForLoggedInUser(profile_navbar, MockDatabase.loggedInUser)
             }
         }
@@ -306,45 +310,8 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
     }
 
-    private fun getPath(uri: Uri?): String {
-        val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
-        return saveImage(bitmap)
-    }
-
-    private fun saveImage(myBitmap: Bitmap): String {
-        val bytes = ByteArrayOutputStream()
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-        val wallpaperDirectory = File(
-                (Environment.getExternalStorageDirectory()).toString() + IMAGES_DIRECTORY)
-
-        if (!wallpaperDirectory.exists()) {
-            wallpaperDirectory.mkdirs()
-        }
-
-        try {
-            val f = File(wallpaperDirectory.absolutePath + "/" + Calendar.getInstance().timeInMillis.toString() + ".jpg")
-            f.createNewFile()
-            val fo = FileOutputStream(f)
-            fo.write(bytes.toByteArray())
-
-            MediaScannerConnection.scanFile(this, arrayOf(f.path), arrayOf("image/jpeg"), null)
-            fo.close()
-
-            return f.absolutePath
-        } catch (e1: IOException) {
-            e1.printStackTrace()
-        }
-
-        return ""
-    }
-
-    private fun setImageFromUrl(path: String, imageView: ImageView) {
-        val imgFile = File(path);
-        if (imgFile.exists()) {
-            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath);
-
-            imageView.setImageBitmap(myBitmap);
-        }
+    private fun setImageFromUri(uri: String, imageView: ImageView) {
+        imageView.setImageURI(Uri.parse(uri))
     }
 
     @SuppressLint("ResourceAsColor")

@@ -2,6 +2,7 @@ package pt.unl.fct.mealroullete.homepage.calculator
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -120,17 +121,12 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         val imageView = header.findViewById<ImageView>(R.id.common_header_user_profile_photo)
 
         if (MockDatabase.loggedInUser?.picture != null) {
-            setImageFromUrl(MockDatabase.loggedInUser?.picture.toString(), imageView)
+            setImageFromUri(MockDatabase.loggedInUser?.picture.toString(), imageView)
         }
     }
 
-    private fun setImageFromUrl(path: String, imageView: ImageView) {
-        val imgFile = File(path);
-        if (imgFile.exists()) {
-            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath);
-
-            imageView.setImageBitmap(myBitmap);
-        }
+    private fun setImageFromUri(uri: String, imageView: ImageView) {
+        imageView.setImageURI(Uri.parse(uri))
     }
 
     private fun buildList(ingredients: List<Ingredient>) {
@@ -155,9 +151,6 @@ class CalculatorActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 val row = inflater.inflate(R.layout.table_item_calculator, contain, false) as LinearLayout
 
                 val wrapper = row.findViewById<LinearLayout>(R.id.table_item_calculator)
-                //val params = wrapper.getLayoutParams()
-                //params.height = 50
-                //wrapper.setLayoutParams(params)
 
                 val calories = findViewById<TextView>(R.id.caloriesTotal)
                 val newCal = (Integer.parseInt(calories.text.toString()) + ingredient.calories).toString()

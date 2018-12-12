@@ -2,7 +2,11 @@ package pt.unl.fct.mealroullete.homepage.poll
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+<<<<<<< HEAD
 import android.app.DatePickerDialog
+=======
+import android.graphics.drawable.Drawable
+>>>>>>> d874d567f8563173fcb81667952a00102a17b180
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +20,7 @@ import pt.unl.fct.mealroullete.persistance.Recipe
 import java.time.LocalDate
 import java.time.LocalDateTime
 
+
 class CreatePollFragment : Fragment() {
 
     val recipes = mutableListOf<Recipe>()
@@ -28,7 +33,7 @@ class CreatePollFragment : Fragment() {
 
     init {
         recipes.addAll(MockDatabase.recipesList)
-        recipes.sortBy{it.name}
+        recipes.sortBy { it.name }
     }
 
     @SuppressLint("NewApi")
@@ -39,11 +44,11 @@ class CreatePollFragment : Fragment() {
         val dropdown = view.findViewById(R.id.spinner1) as Spinner
         val dropdown2 = view.findViewById(R.id.spinner2) as Spinner
         val dropdown3 = view.findViewById(R.id.spinner3) as Spinner
-        val list = recipes.map{it.name} as MutableList
+        val list = recipes.map { it.name } as MutableList
         list.sort()
-        val adapter = ArrayAdapter<String>(this.context, R.layout.simple_spinner_dropdown_item, list)
-        val adapter2 = ArrayAdapter<String>(this.context, R.layout.simple_spinner_dropdown_item, list)
-        val adapter3 = ArrayAdapter<String>(this.context, R.layout.simple_spinner_dropdown_item, list)
+        val adapter = ArrayAdapter<String>(this.context!!, R.layout.simple_spinner_dropdown_item, list)
+        val adapter2 = ArrayAdapter<String>(this.context!!, R.layout.simple_spinner_dropdown_item, list)
+        val adapter3 = ArrayAdapter<String>(this.context!!, R.layout.simple_spinner_dropdown_item, list)
         dropdown.adapter = adapter
         dropdown2.adapter = adapter2
         dropdown3.adapter = adapter3
@@ -66,23 +71,23 @@ class CreatePollFragment : Fragment() {
             builder.setView(viewInflated)
 
             // Set up the buttons
-            builder.setPositiveButton("Add") { dialog, which ->
+            builder.setPositiveButton("Add") { _, _ ->
                 userEmail = input.text.toString()
                 if (userEmail != "") {
-                    val container = view.findViewById<LinearLayout>(R.id.ingredient_table)
+                    val ingredientTable = view.findViewById<LinearLayout>(R.id.ingredient_table)
                     val child = inflater.inflate(R.layout.table_item_polluser, container, false) as LinearLayout
                     child.findViewById<TextView>(R.id.userEmail).text = userEmail
                     val remove = child.findViewById<ImageButton>(R.id.removeUserFromPoll)
                     remove.setOnClickListener {
-                        container.removeView(child)
+                        ingredientTable.removeView(child)
                     }
-                    val index = container.indexOfChild(inviteUser)
-                    container.addView(child, index)
+                    val index = ingredientTable.indexOfChild(inviteUser)
+                    ingredientTable.addView(child, index)
                 }
 
             }
 
-            builder.setNegativeButton("Cancel", { dialog, which -> dialog.cancel() })
+            builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
 
             builder.show()
         }
@@ -125,24 +130,42 @@ class CreatePollFragment : Fragment() {
 
     inner class SpinnerListener : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            // Do nothing
         }
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+<<<<<<< HEAD
             val recipeSelected = recipes.find { it.name == recipes.get(position).name }
             if (!firstInit && view != null) {
                 selectedRecipes.add(0, recipeSelected!!)
+=======
+            val recipeSelected = recipes.find { it.name == recipes[position].name }
+            if (!firstInit && view != null) {
+>>>>>>> d874d567f8563173fcb81667952a00102a17b180
                 val outerView = activity
                 val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper)
                 val recipeImage = container?.findViewById<Spinner>(R.id.spinner1)
                 val params = recipeImage?.getLayoutParams()
+<<<<<<< HEAD
                 params?.width= ViewGroup.LayoutParams.MATCH_PARENT
                 params?.height= ViewGroup.LayoutParams.MATCH_PARENT
                 (view as TextView).text = ""
+=======
+                params?.width = ViewGroup.LayoutParams.MATCH_PARENT
+                params?.height = ViewGroup.LayoutParams.MATCH_PARENT
+                (view as TextView).text = null
+>>>>>>> d874d567f8563173fcb81667952a00102a17b180
                 recipeImage?.layoutParams = params
-                recipeImage?.setBackgroundResource(recipeSelected!!.image)
+
+                if (recipeSelected!!.image is Int) {
+                    recipeImage!!.setBackgroundResource(recipeSelected.image as Int)
+                } else {
+                    val d = Drawable.createFromPath(recipeSelected.image as String)
+                    recipeImage?.background = d
+                }
+
                 val recipeName = container?.findViewById<TextView>(R.id.recipeNamePoll)
-                recipeName?.text = recipeSelected?.name
+                recipeName?.text = recipeSelected.name
             } else {
                 firstInit = false
             }
@@ -151,26 +174,42 @@ class CreatePollFragment : Fragment() {
 
     inner class SpinnerListener2 : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            // Do nothing
         }
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val recipeSelected = recipes.find { it.name == recipes.get(position).name }
             if (!firstInit2 && view != null) {
+<<<<<<< HEAD
 
                 selectedRecipes.add(1, recipeSelected!!)
+=======
+>>>>>>> d874d567f8563173fcb81667952a00102a17b180
                 val outerView = activity
                 val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper2)
 
                 val recipeImage = container?.findViewById<Spinner>(R.id.spinner2)
                 val params = recipeImage?.getLayoutParams()
+<<<<<<< HEAD
                 params?.width= ViewGroup.LayoutParams.MATCH_PARENT
                 params?.height= ViewGroup.LayoutParams.MATCH_PARENT
                 (view as TextView).text = ""
+=======
+                params?.width = ViewGroup.LayoutParams.MATCH_PARENT
+                params?.height = ViewGroup.LayoutParams.MATCH_PARENT
+                (view as TextView).text = null
+>>>>>>> d874d567f8563173fcb81667952a00102a17b180
                 recipeImage?.layoutParams = params
-                recipeImage?.setBackgroundResource(recipeSelected!!.image)
+
+                if (recipeSelected!!.image is Int) {
+                    recipeImage!!.setBackgroundResource(recipeSelected.image as Int)
+                } else {
+                    val d = Drawable.createFromPath(recipeSelected.image as String)
+                    recipeImage?.background = d
+                }
+
                 val recipeName = container?.findViewById<TextView>(R.id.recipeNamePoll2)
-                recipeName?.text = recipeSelected?.name
+                recipeName?.text = recipeSelected.name
             } else {
                 firstInit2 = false
             }
@@ -179,24 +218,40 @@ class CreatePollFragment : Fragment() {
 
     inner class SpinnerListener3 : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            // Do nothing
         }
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val recipeSelected = recipes.find { it.name == recipes.get(position).name }
             if (!firstInit3 && view != null) {
+<<<<<<< HEAD
                 selectedRecipes.add(2, recipeSelected!!)
+=======
+>>>>>>> d874d567f8563173fcb81667952a00102a17b180
                 val outerView = activity
                 val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper3)
                 val recipeImage = container?.findViewById<Spinner>(R.id.spinner3)
                 val params = recipeImage?.getLayoutParams()
+<<<<<<< HEAD
                 params?.width= ViewGroup.LayoutParams.MATCH_PARENT
                 params?.height= ViewGroup.LayoutParams.MATCH_PARENT
                 (view as TextView).text = ""
+=======
+                params?.width = ViewGroup.LayoutParams.MATCH_PARENT
+                params?.height = ViewGroup.LayoutParams.MATCH_PARENT
+                (view as TextView).text = null
+>>>>>>> d874d567f8563173fcb81667952a00102a17b180
                 recipeImage?.layoutParams = params
-                recipeImage?.setBackgroundResource(recipeSelected!!.image)
+
+                if (recipeSelected!!.image is Int) {
+                    recipeImage!!.setBackgroundResource(recipeSelected.image as Int)
+                } else {
+                    val d = Drawable.createFromPath(recipeSelected.image as String)
+                    recipeImage?.background = d
+                }
+
                 val recipeName = container?.findViewById<TextView>(R.id.recipeNamePoll3)
-                recipeName?.text = recipeSelected?.name
+                recipeName?.text = recipeSelected.name
             } else {
                 firstInit3 = false
             }
