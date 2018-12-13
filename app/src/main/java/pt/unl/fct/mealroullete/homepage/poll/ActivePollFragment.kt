@@ -29,7 +29,7 @@ class ActivePollFragment : Fragment() {
         var counter = polls.size - 1
         while(counter >= 0){
             val p = polls[counter]
-            if(p.owner == MockDatabase.loggedInUser!!.username){
+            if(p.owner == MockDatabase.loggedInUser!!.username || p.users.contains(MockDatabase.loggedInUser!!.username)){
                 val allMinutes = Duration.between(LocalDateTime.now(), p.endTimestamp).toMinutes()
                 val hours = Math.floor((allMinutes/60).toDouble()).toInt()
                 val minutes = allMinutes - hours*60

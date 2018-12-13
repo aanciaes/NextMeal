@@ -13,6 +13,7 @@ import android.widget.TextView
 import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeCard
 import pt.unl.fct.mealroullete.persistance.MockDatabase
+import pt.unl.fct.mealroullete.persistance.Poll
 
 class ClosedPollFragment : Fragment() {
 
@@ -20,7 +21,7 @@ class ClosedPollFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_closed_poll, container, false)
         val ingredientTableLayout = view.findViewById<TableLayout>(R.id.ingredient_table)
 
-        /*val polls = MockDatabase.polls
+        val polls = MockDatabase.polls
 
         for (p in polls) {
             if (p.owner == MockDatabase.loggedInUser!!.username) {
@@ -28,13 +29,18 @@ class ClosedPollFragment : Fragment() {
                     val child = inflater.inflate(R.layout.table_item_pollclosed, container, false) as LinearLayout
                     child.findViewById<TextView>(R.id.pollAuthor).text = p.owner
 
+
+                    if (p.winner == null){
+                        chooseWinner (p)
+                    }
+
                     child.findViewById<TextView>(R.id.winnerName).text = p.winner!!.name
-                    child.findViewById<ImageView>(R.id.pollImage).setImageResource((p.winner.image as Int))
+                    child.findViewById<ImageView>(R.id.pollImage).setImageResource((p.winner!!.image as Int))
 
                     child.setOnClickListener {
                         val intent = Intent(this.context, RecipeCard::class.java)
                         val b = Bundle()
-                        b.putString("name", p.winner.name) //Your id
+                        b.putString("name", p.winner!!.name) //Your id
                         intent.putExtras(b)
                         startActivity(intent)
                     }
@@ -42,8 +48,10 @@ class ClosedPollFragment : Fragment() {
                 }
             }
         }
-*/
-
         return view
+    }
+
+    private fun chooseWinner (p: Poll) {
+        p.winner = p.recipes.maxBy { it.value }!!.key
     }
 }
