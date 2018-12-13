@@ -20,7 +20,7 @@ class ClosedPollFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_closed_poll, container, false)
         val ingredientTableLayout = view.findViewById<TableLayout>(R.id.ingredient_table)
 
-        val polls = MockDatabase.polls
+        /*val polls = MockDatabase.polls
 
         for (p in polls) {
             if (p.owner == MockDatabase.loggedInUser!!.username) {
@@ -42,7 +42,7 @@ class ClosedPollFragment : Fragment() {
                 }
             }
         }
-
+*/
 
         return view
     }

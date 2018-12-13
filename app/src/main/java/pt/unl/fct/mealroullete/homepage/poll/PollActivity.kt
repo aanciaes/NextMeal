@@ -39,6 +39,9 @@ class PollActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         poll_pager.adapter = PollPagerAdapter(supportFragmentManager)
         poll_tab.setupWithViewPager(poll_pager)
 
+        val page = intent.getIntExtra("selectedPage", 0)
+        poll_pager.currentItem = page
+
         setCommonHeaderInformationForLoggedInUser(poll_navbar, MockDatabase.loggedInUser)
     }
 

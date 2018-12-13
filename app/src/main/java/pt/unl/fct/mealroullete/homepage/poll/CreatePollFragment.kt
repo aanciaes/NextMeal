@@ -15,11 +15,9 @@ import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.persistance.Poll
 import pt.unl.fct.mealroullete.persistance.Recipe
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
-import android.support.v4.app.FragmentActivity
-import kotlinx.android.synthetic.main.activity_poll.*
-
 
 class CreatePollFragment : Fragment() {
 
@@ -29,7 +27,7 @@ class CreatePollFragment : Fragment() {
     var firstInit3 = true
 
     val selectedRecipes = mutableListOf<Recipe?>(null, null, null)
-    var date: LocalDate? = null
+    var date: LocalDateTime? = null
 
     init {
         recipes.addAll(MockDatabase.recipesList)
@@ -97,8 +95,8 @@ class CreatePollFragment : Fragment() {
         datepickerButton.setOnClickListener {
             val datePickerDialog = DatePickerDialog(context, R.style.datepicker)
             datePickerDialog.setOnDateSetListener { _, year, month, dayOfMonth ->
-                date = LocalDate.of(year, month, dayOfMonth)
-                val dateOfPoll = year.toString() + "/" + month.toString() + "/" + dayOfMonth.toString()
+                date = LocalDateTime.of(year, month+1, dayOfMonth, 23, 59, 59, 0)
+                val dateOfPoll = year.toString() + "/" + (month+1).toString() + "/" + dayOfMonth.toString()
                 activity?.findViewById<Button>(R.id.poll_date)?.text = dateOfPoll
             }
             datePickerDialog.show()
@@ -117,22 +115,55 @@ class CreatePollFragment : Fragment() {
                 users.add(i, email.text.toString())
             }
 
-            val recipesWithVotes = mutableMapOf<Recipe, Int>().apply { recipes.forEach { put(it, 0) } }
-            val poll = Poll(5, pollName.text.toString(), users, MockDatabase.loggedInUser.toString(), recipesWithVotes, null, date!!.toDateTime(), true)
+            if(pollName.text.toString() == "" || date == null || users.size < 1 || selectedRecipes.filterNotNull().isEmpty()){
+                val builder = AlertDialog.Builder(this.context)
+                builder.setTitle("Failure")
+                builder.setMessage("A poll must have at least one recipe, one user, a name, and a end date")
+                builder.apply {
+                    setPositiveButton("OK") { _, _ ->
+                        // nothing
+                    }
+                }
 
-            MockDatabase.polls.add(poll)
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+            } else {
 
-            val builder = AlertDialog.Builder(this.context)
-            builder.setTitle("Success")
-            builder.setMessage("Your Poll has just started. Go ahead and start voting")
-            builder.apply {
-                setPositiveButton("OK") { _, _ ->
-                    activity?.poll_pager?.currentItem = 1
+                if (Duration.between(LocalDateTime.now(), date).toNanos() < 0) {
+                    val builder = AlertDialog.Builder(this.context)
+                    builder.setTitle("Failure")
+                    builder.setMessage("End date must be later than today")
+                    builder.apply {
+                        setPositiveButton("OK") { _, _ ->
+                            // nothing
+                        }
+                    }
+
+                    val dialog: AlertDialog = builder.create()
+                    dialog.show()
+                } else {
+
+                    val recipesWithVotes = mutableMapOf<Recipe, Int>().apply { recipes.forEach { put(it, 0) } }
+                    val poll = Poll(5, pollName.text.toString(), users, MockDatabase.loggedInUser?.username.toString(), recipesWithVotes, null, date!!, true)
+
+                    MockDatabase.polls.add(poll)
+
+                    val builder = AlertDialog.Builder(this.context)
+                    builder.setTitle("Success")
+                    builder.setMessage("Your Poll has just started. Go ahead and start voting")
+                    builder.apply {
+                        setPositiveButton("OK") { _, _ ->
+                            val intent = Intent(activity, PollActivity::class.java)
+                            intent.putExtra("selectedPage", 1)
+
+                            startActivity(intent)
+                        }
+                    }
+
+                    val dialog: AlertDialog = builder.create()
+                    dialog.show()
                 }
             }
-
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
         }
 
         return view
