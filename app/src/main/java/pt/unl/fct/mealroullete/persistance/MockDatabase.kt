@@ -1,8 +1,10 @@
 package pt.unl.fct.mealroullete.persistance
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.support.annotation.RequiresApi
 import pt.unl.fct.mealroullete.R
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
@@ -72,10 +74,18 @@ object MockDatabase {
 
     val recipesList = mutableListOf(recipe1, recipe2, recipe3, recipe4, recipe5)
 
+    @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.O)
-    val polls = mutableListOf(Poll(1, "Party2017", listOf(users[0].username), "root", recipesList, recipesList[0], LocalDateTime.of(2017, 12, 24, 10, 30), false),
-            Poll(2, "Party2018", listOf(users[0].username, "Marlene", "Teresa"), "root", recipesList, recipesList[1], LocalDateTime.of(2018, 11, 24, 3, 25), true),
-            Poll(3, "Carnaval", listOf(users[0].username, "Marlene"), "root", recipesList, recipesList[2], LocalDateTime.of(2018, 12, 24, 10, 30), true))
+    val poll1 = Poll(5, "Jantar de Novembro", mutableMapOf(Pair("badjoraz@gmail.com", "Herb Roasted Pork"), Pair("miguel@hotmail.com", "Herb Roasted Pork"))
+            , "root", listOf(recipe5, recipe3, recipe1), recipe5, LocalDate.of(2018, 11, 22).atStartOfDay(), false)
+    @SuppressLint("NewApi")
+    val poll2 = Poll(5, "Jantar de Outubro", mutableMapOf(Pair("badjoraz@gmail.com", "Tofu Salad"), Pair("miguel@hotmail.com", "Tofu Salad"))
+            , "root", listOf(recipe5, recipe3, recipe1), recipe3, LocalDate.of(2018, 10, 22).atStartOfDay(), false)
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    val polls = mutableListOf<Poll>(poll1, poll2)
+
 
     private fun count(): Int {
         return users.size
@@ -121,6 +131,10 @@ object MockDatabase {
 
     fun findRecipe(name: String) : Recipe? {
         return recipesList.find { it.name == name }
+    }
+
+    fun findPoll(name: String) : Poll? {
+        return polls.find { it.name == name }
     }
 
     fun buildRecipe(id: Int, name: String, image: Int, ingredients: MutableList<Ingredient>, instructions: MutableList<String>): Recipe {
@@ -170,4 +184,4 @@ class Recipe(val id: Int,
              var calories: Int,
              var removed: Boolean)
 
-class Poll(val id: Int, val name: String, val users: List<String>, val owner: String, val recipes: List<Recipe>, val winner: Recipe, val endTimestamp: LocalDateTime, var active: Boolean)
+class Poll(val id: Int, val name: String, val users: MutableMap<String, String>, val owner: String, val recipes: List<Recipe>, var winner: Recipe?, val endTimestamp: LocalDateTime, var active: Boolean)

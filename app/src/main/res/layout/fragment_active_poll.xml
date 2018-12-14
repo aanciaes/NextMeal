@@ -38,8 +38,8 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp"
                 android:gravity="center"
-                android:textSize="22sp"
-                android:text="NAME" />
+                android:textSize="20sp"
+                android:text="Name" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -60,8 +60,8 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp"
                 android:gravity="center"
-                android:textSize="22sp"
-                android:text="AUTHOR" />
+                android:textSize="20sp"
+                android:text="Author" />
 
         </RelativeLayout>
 
@@ -83,8 +83,8 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp"
                 android:gravity="center"
-                android:textSize="22sp"
-                android:text="EXPIRE IN" />
+                android:textSize="20sp"
+                android:text="Expire In" />
 
         </RelativeLayout>
 
