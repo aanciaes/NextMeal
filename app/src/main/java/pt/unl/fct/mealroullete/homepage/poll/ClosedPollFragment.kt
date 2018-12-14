@@ -52,6 +52,15 @@ class ClosedPollFragment : Fragment() {
     }
 
     private fun chooseWinner (p: Poll) {
-        p.winner = p.recipes.maxBy { it.value }!!.key
+        val map = mutableMapOf<String, Int>()
+
+        map[p.recipes[0].name] = 0
+        map[p.recipes[1].name] = 0
+        map[p.recipes[2].name] = 0
+        for (u in p.users){
+            map[u.key] = map[u.key]!! + 1
+        }
+        val winnerName = map.maxBy { it.value }!!.key
+        p.winner = MockDatabase.findRecipe(winnerName)
     }
 }

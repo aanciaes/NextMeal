@@ -1,5 +1,6 @@
 package pt.unl.fct.mealroullete.homepage.poll
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -11,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TextView
 import pt.unl.fct.mealroullete.R
+import pt.unl.fct.mealroullete.homepage.recipe.RecipeCard
 import pt.unl.fct.mealroullete.persistance.MockDatabase
 import pt.unl.fct.mealroullete.persistance.Poll
 import java.time.Duration
@@ -37,7 +39,13 @@ class ActivePollFragment : Fragment() {
                     val child = inflater.inflate(R.layout.table_item_pollactive, container, false) as LinearLayout
                     child.findViewById<TextView>(R.id.pollAuthor).text = p.owner
 
-
+                    child.setOnClickListener {
+                        val intent = Intent(context, PollVoteActivity::class.java)
+                        val b = Bundle()
+                        b.putString("name", p.name) //Your id
+                        intent.putExtras(b)
+                        startActivity(intent)
+                    }
 
                     child.findViewById<TextView>(R.id.pollexpiration).text = hours.toString() + "h" + minutes + "m"
                     child.findViewById<TextView>(R.id.pollName).text = p.name

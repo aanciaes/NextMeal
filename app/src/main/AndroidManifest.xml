@@ -45,10 +45,15 @@
         <activity
             android:name=".homepage.recipe.RecipeCard"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
                 android:name=".homepage.poll.PollActivity"
                 android:label="@string/manifest_activity_poll"
                 android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".homepage.poll.PollVoteActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
                 android:name=".homepage.profile.ProfileActivity"
                 android:label="@string/manifest_activity_profile"

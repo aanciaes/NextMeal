@@ -106,19 +106,19 @@ class CreatePollFragment : Fragment() {
         val addPoll = view.findViewById<Button>(R.id.createPoll)
         addPoll.setOnClickListener {
             val pollName = view.findViewById<EditText>(R.id.pollName)
-            val users = mutableListOf<String>()
+            val users = mutableMapOf<String, String>()
             val wrapper = view.findViewById<TableLayout>(R.id.ingredient_table)
 
             for (i in (0 until wrapper.childCount)) {
                 val child = wrapper.getChildAt(i)
                 val email = child.findViewById<TextView>(R.id.userEmail)
-                users.add(i, email.text.toString())
+                users.put(email.text.toString(), "")
             }
 
-            if(pollName.text.toString() == "" || date == null || users.size < 1 || selectedRecipes.filterNotNull().isEmpty()){
+            if(pollName.text.toString() == "" || date == null || users.size < 1 || selectedRecipes.filterNotNull().size < 3){
                 val builder = AlertDialog.Builder(this.context)
                 builder.setTitle("Failure")
-                builder.setMessage("A poll must have at least one recipe, one user, a name, and a end date")
+                builder.setMessage("A poll must have 3 recipes, one user, a name, and a end date")
                 builder.apply {
                     setPositiveButton("OK") { _, _ ->
                         // nothing
@@ -143,8 +143,7 @@ class CreatePollFragment : Fragment() {
                     dialog.show()
                 } else {
 
-                    val recipesWithVotes = mutableMapOf<Recipe, Int>().apply { recipes.forEach { put(it, 0) } }
-                    val poll = Poll(5, pollName.text.toString(), users, MockDatabase.loggedInUser?.username.toString(), recipesWithVotes, null, date!!, true)
+                    val poll = Poll(5, pollName.text.toString(), users, MockDatabase.loggedInUser?.username.toString(), recipes, null, date!!, true)
 
                     MockDatabase.polls.add(poll)
 
