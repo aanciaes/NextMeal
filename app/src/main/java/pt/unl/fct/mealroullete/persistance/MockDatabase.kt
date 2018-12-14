@@ -1,8 +1,10 @@
 package pt.unl.fct.mealroullete.persistance
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.support.annotation.RequiresApi
 import pt.unl.fct.mealroullete.R
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
@@ -72,8 +74,18 @@ object MockDatabase {
 
     val recipesList = mutableListOf(recipe1, recipe2, recipe3, recipe4, recipe5)
 
+    @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.O)
-    val polls = mutableListOf<Poll>()
+    val poll1 = Poll(5, "Jantar de Novembro", mutableMapOf(Pair("badjoraz@gmail.com", "Herb Roasted Pork"), Pair("miguel@hotmail.com", "Herb Roasted Pork"))
+            , "root", listOf(recipe5, recipe3, recipe1), recipe5, LocalDate.of(2018, 11, 22).atStartOfDay(), false)
+    @SuppressLint("NewApi")
+    val poll2 = Poll(5, "Jantar de Outubro", mutableMapOf(Pair("badjoraz@gmail.com", "Tofu Salad"), Pair("miguel@hotmail.com", "Tofu Salad"))
+            , "root", listOf(recipe5, recipe3, recipe1), recipe3, LocalDate.of(2018, 10, 22).atStartOfDay(), false)
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    val polls = mutableListOf<Poll>(poll1, poll2)
+
 
     private fun count(): Int {
         return users.size

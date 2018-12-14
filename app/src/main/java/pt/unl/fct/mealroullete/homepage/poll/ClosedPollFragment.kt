@@ -24,9 +24,10 @@ class ClosedPollFragment : Fragment() {
         val polls = MockDatabase.polls
 
         for (p in polls) {
-            if (p.owner == MockDatabase.loggedInUser!!.username) {
+            if (p.owner == MockDatabase.loggedInUser!!.username || p.users.containsKey(MockDatabase.loggedInUser!!.email)) {
                 if (!p.active) {
-                    val child = inflater.inflate(R.layout.table_item_pollclosed, container, false) as LinearLayout
+                    val childParent = inflater.inflate(R.layout.table_item_pollclosed, container, false) as LinearLayout
+                    val child = childParent.findViewById<LinearLayout>(R.id.table_item_pollclosed_child)
                     child.findViewById<TextView>(R.id.pollAuthor).text = p.owner
 
 
@@ -44,7 +45,7 @@ class ClosedPollFragment : Fragment() {
                         intent.putExtras(b)
                         startActivity(intent)
                     }
-                    ingredientTableLayout.addView(child)
+                    ingredientTableLayout.addView(childParent)
                 }
             }
         }

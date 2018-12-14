@@ -31,12 +31,13 @@ class ActivePollFragment : Fragment() {
         var counter = polls.size - 1
         while(counter >= 0){
             val p = polls[counter]
-            if(p.owner == MockDatabase.loggedInUser!!.username || p.users.contains(MockDatabase.loggedInUser!!.username)){
+            if(p.owner == MockDatabase.loggedInUser!!.username || p.users.containsKey(MockDatabase.loggedInUser!!.email)){
                 val allMinutes = Duration.between(LocalDateTime.now(), p.endTimestamp).toMinutes()
                 val hours = Math.floor((allMinutes/60).toDouble()).toInt()
                 val minutes = allMinutes - hours*60
                 if(p.active && minutes > 0){
-                    val child = inflater.inflate(R.layout.table_item_pollactive, container, false) as LinearLayout
+                    val childParent = inflater.inflate(R.layout.table_item_pollactive, container, false) as LinearLayout
+                    val child = childParent.findViewById<LinearLayout>(R.id.table_item_pollactive_child)
                     child.findViewById<TextView>(R.id.pollAuthor).text = p.owner
 
                     child.setOnClickListener {
@@ -49,7 +50,7 @@ class ActivePollFragment : Fragment() {
 
                     child.findViewById<TextView>(R.id.pollexpiration).text = hours.toString() + "h" + minutes + "m"
                     child.findViewById<TextView>(R.id.pollName).text = p.name
-                    ingredientTable.addView(child)
+                    ingredientTable.addView(childParent)
                 }
                 else{
                    p.active = false
