@@ -55,9 +55,9 @@ class ClosedPollFragment : Fragment() {
     private fun chooseWinner (p: Poll) {
         val map = mutableMapOf<String, Int>()
 
-        map[p.recipes[0].name] = 0
-        map[p.recipes[1].name] = 0
-        map[p.recipes[2].name] = 0
+        map[p.recipes[0]!!.name] = 0
+        map[p.recipes[1]!!.name] = 0
+        map[p.recipes[2]!!.name] = 0
         for (u in p.users){
             map[u.key] = map[u.key]!! + 1
         }
