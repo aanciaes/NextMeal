@@ -36,4 +36,5 @@
     <string name="back_to_generator">Back To Generator</string>
     <string name="selected_calculator"><b>SELECTED</b></string>
     <string name="users_poll_underline"><u>Users in poll</u>:</string>
+    <string name="set_recipe_name"><b>Set Recipe Name</b></string>
 </resources>

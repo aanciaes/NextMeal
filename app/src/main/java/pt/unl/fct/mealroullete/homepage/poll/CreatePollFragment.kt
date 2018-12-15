@@ -24,7 +24,7 @@ class CreatePollFragment : Fragment() {
 
     val recipes = mutableListOf<Recipe>()
 
-    val selectedRecipes = mutableListOf<Recipe>()
+    val selectedRecipes = mutableListOf<Recipe?>(null, null, null)
     var date: LocalDateTime? = null
 
     init {
@@ -42,7 +42,7 @@ class CreatePollFragment : Fragment() {
         val dropdown3 = view.findViewById(R.id.spinner3) as Spinner
         val tmp = recipes.map { it.name } as MutableList
         val list = mutableListOf<String>()
-        list.add("Choose a recipe")
+        list.add("Choose a recipe:")
         tmp.sort()
         list.addAll(tmp)
 
@@ -184,7 +184,7 @@ class CreatePollFragment : Fragment() {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             if (view != null && position > 0) {
                 val recipeSelected = recipes.find { it.name == recipes[position - 1].name }
-                selectedRecipes.add(0, recipeSelected!!)
+                selectedRecipes.set(0, recipeSelected!!)
 
                     val outerView = activity
                     val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper)
@@ -223,7 +223,7 @@ class CreatePollFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (view != null && position > 0) {
                     val recipeSelected = recipes.find { it.name == recipes[position - 1].name }
-                    selectedRecipes.add(1, recipeSelected!!)
+                    selectedRecipes.set(1, recipeSelected!!)
 
                     val outerView = activity
                     val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper2)
@@ -263,7 +263,7 @@ class CreatePollFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (view != null && position > 0) {
                     val recipeSelected = recipes.find { it.name == recipes[position - 1].name }
-                    selectedRecipes.add(2, recipeSelected!!)
+                    selectedRecipes.set(2, recipeSelected!!)
 
                     val outerView = activity
                     val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper3)
