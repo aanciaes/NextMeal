@@ -77,10 +77,10 @@ object MockDatabase {
     @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.O)
     val poll1 = Poll(5, "Jantar de Novembro", mutableMapOf(Pair("badjoraz@gmail.com", "Herb Roasted Pork"), Pair("miguel@hotmail.com", "Herb Roasted Pork"))
-            , "root", listOf(recipe5, recipe3, recipe1), recipe5, LocalDate.of(2018, 11, 22).atStartOfDay(), false)
+            , "root", mutableListOf(recipe5, recipe3, recipe1), recipe5, LocalDate.of(2018, 11, 22).atStartOfDay(), false)
     @SuppressLint("NewApi")
     val poll2 = Poll(5, "Jantar de Outubro", mutableMapOf(Pair("badjoraz@gmail.com", "Tofu Salad"), Pair("miguel@hotmail.com", "Tofu Salad"))
-            , "root", listOf(recipe5, recipe3, recipe1), recipe3, LocalDate.of(2018, 10, 22).atStartOfDay(), false)
+            , "root", mutableListOf(recipe5, recipe3, recipe1), recipe3, LocalDate.of(2018, 10, 22).atStartOfDay(), false)
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -184,4 +184,4 @@ class Recipe(val id: Int,
              var calories: Int,
              var removed: Boolean)
 
-class Poll(val id: Int, val name: String, val users: MutableMap<String, String>, val owner: String, val recipes: List<Recipe>, var winner: Recipe?, val endTimestamp: LocalDateTime, var active: Boolean)
+class Poll(val id: Int, val name: String, val users: MutableMap<String, String>, val owner: String, val recipes: MutableList<Recipe?>, var winner: Recipe?, val endTimestamp: LocalDateTime, var active: Boolean)

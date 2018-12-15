@@ -31,17 +31,17 @@ class PollVoteActivity : AppCompatActivity() {
             var counter = 0
             for (r in poll!!.recipes ){
                 if(counter == 0){
-                    findViewById<TextView>(R.id.firstRecipeName).text = r.name
-                    if (r.image is Int) {
-                        findViewById<ImageView>(R.id.firstRecipeImage).setImageResource(r.image as Int)
+                    findViewById<TextView>(R.id.firstRecipeName).text = r?.name
+                    if (r?.image is Int) {
+                        findViewById<ImageView>(R.id.firstRecipeImage).setImageResource(r?.image as Int)
                     } else {
-                        findViewById<ImageView>(R.id.firstRecipeImage).setImageURI(Uri.parse(r.image as String))
+                        findViewById<ImageView>(R.id.firstRecipeImage).setImageURI(Uri.parse(r?.image as String))
                     }
                     val openRecipe = findViewById<RelativeLayout>(R.id.recipeNav1)
                     openRecipe.setOnClickListener{
                         val intent = Intent(this, RecipeCard::class.java)
                         val b = Bundle()
-                        b.putString("name", r.name) //Your id
+                        b.putString("name", r?.name) //Your id
                         intent.putExtras(b)
                         startActivity(intent)
                     }
@@ -65,11 +65,11 @@ class PollVoteActivity : AppCompatActivity() {
                     }
                 }
                 else if(counter == 1){
-                    findViewById<TextView>(R.id.secondRecipeName).text = r.name
-                    if (r.image is Int) {
-                        findViewById<ImageView>(R.id.secondRecipeImage).setImageResource(r.image as Int)
+                    findViewById<TextView>(R.id.secondRecipeName).text = r?.name
+                    if (r?.image is Int) {
+                        findViewById<ImageView>(R.id.secondRecipeImage).setImageResource(r?.image as Int)
                     } else {
-                        findViewById<ImageView>(R.id.secondRecipeImage).setImageURI(Uri.parse(r.image as String))
+                        findViewById<ImageView>(R.id.secondRecipeImage).setImageURI(Uri.parse(r?.image as String))
                     }
                     val openRecipe = findViewById<RelativeLayout>(R.id.recipeNav2)
                     openRecipe.setOnClickListener{
@@ -98,12 +98,12 @@ class PollVoteActivity : AppCompatActivity() {
                     }
 
                 }else{
-                    findViewById<TextView>(R.id.thirdRecipeName).text = r.name
+                    findViewById<TextView>(R.id.thirdRecipeName).text = r?.name
 
-                    if (r.image is Int) {
+                    if (r?.image is Int) {
                         findViewById<ImageView>(R.id.thirdRecipeImage).setImageResource(r.image as Int)
                     } else {
-                        findViewById<ImageView>(R.id.thirdRecipeImage).setImageURI(Uri.parse(r.image as String))
+                        findViewById<ImageView>(R.id.thirdRecipeImage).setImageURI(Uri.parse(r?.image as String))
                     }
                     val openRecipe = findViewById<RelativeLayout>(R.id.recipeNav3)
                     openRecipe.setOnClickListener{

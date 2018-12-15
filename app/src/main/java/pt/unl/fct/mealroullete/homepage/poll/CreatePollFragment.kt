@@ -142,8 +142,8 @@ class CreatePollFragment : Fragment() {
                     val dialog: AlertDialog = builder.create()
                     dialog.show()
                 } else {
-
-                    val poll = Poll(5, pollName.text.toString(), users, MockDatabase.loggedInUser?.username.toString(), recipes, null, date!!, true)
+                    val cleanSelected = selectedRecipes.filterNotNull() as MutableList<Recipe?>
+                    val poll = Poll(5, pollName.text.toString(), users, MockDatabase.loggedInUser?.username.toString(), cleanSelected, null, date!!, true)
 
                     MockDatabase.polls.add(poll)
 
@@ -182,7 +182,7 @@ class CreatePollFragment : Fragment() {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val recipeSelected = recipes.find { it.name == recipes[position].name }
             if (!firstInit && view != null) {
-                selectedRecipes.add(0, recipeSelected!!)
+                selectedRecipes[0] = recipeSelected!!
 
                     val outerView = activity
                     val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper)
@@ -218,7 +218,7 @@ class CreatePollFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val recipeSelected = recipes.find { it.name == recipes[position].name }
                 if (!firstInit2 && view != null) {
-                    selectedRecipes.add(1, recipeSelected!!)
+                    selectedRecipes[1] = recipeSelected!!
 
                     val outerView = activity
                     val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper2)
@@ -255,7 +255,7 @@ class CreatePollFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val recipeSelected = recipes.find { it.name == recipes[position].name }
                 if (!firstInit3 && view != null) {
-                    selectedRecipes.add(2, recipeSelected!!)
+                    selectedRecipes[2] = recipeSelected!!
 
                     val outerView = activity
                     val container = outerView?.findViewById<RelativeLayout>(R.id.addRecipeWrappper3)
