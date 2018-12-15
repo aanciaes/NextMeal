@@ -13,6 +13,7 @@ import pt.unl.fct.mealroullete.R
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeActivity
 import pt.unl.fct.mealroullete.homepage.recipe.RecipeCard
 import pt.unl.fct.mealroullete.persistance.MockDatabase
+import java.net.URI
 
 
 class PollVoteActivity : AppCompatActivity() {
@@ -31,7 +32,11 @@ class PollVoteActivity : AppCompatActivity() {
             for (r in poll!!.recipes ){
                 if(counter == 0){
                     findViewById<TextView>(R.id.firstRecipeName).text = r.name
-                    findViewById<ImageView>(R.id.firstRecipeImage).setImageResource(r.image as Int)
+                    if (r.image is Int) {
+                        findViewById<ImageView>(R.id.firstRecipeImage).setImageResource(r.image as Int)
+                    } else {
+                        findViewById<ImageView>(R.id.firstRecipeImage).setImageURI(Uri.parse(r.image as String))
+                    }
                     val openRecipe = findViewById<RelativeLayout>(R.id.recipeNav1)
                     openRecipe.setOnClickListener{
                         val intent = Intent(this, RecipeCard::class.java)
@@ -61,7 +66,11 @@ class PollVoteActivity : AppCompatActivity() {
                 }
                 else if(counter == 1){
                     findViewById<TextView>(R.id.secondRecipeName).text = r.name
-                    findViewById<ImageView>(R.id.secondRecipeImage).setImageResource(r.image as Int)
+                    if (r.image is Int) {
+                        findViewById<ImageView>(R.id.secondRecipeImage).setImageResource(r.image as Int)
+                    } else {
+                        findViewById<ImageView>(R.id.secondRecipeImage).setImageURI(Uri.parse(r.image as String))
+                    }
                     val openRecipe = findViewById<RelativeLayout>(R.id.recipeNav2)
                     openRecipe.setOnClickListener{
                         val intent = Intent(this, RecipeCard::class.java)
@@ -90,7 +99,12 @@ class PollVoteActivity : AppCompatActivity() {
 
                 }else{
                     findViewById<TextView>(R.id.thirdRecipeName).text = r.name
-                    findViewById<ImageView>(R.id.thirdRecipeImage).setImageResource(r.image as Int)
+
+                    if (r.image is Int) {
+                        findViewById<ImageView>(R.id.thirdRecipeImage).setImageResource(r.image as Int)
+                    } else {
+                        findViewById<ImageView>(R.id.thirdRecipeImage).setImageURI(Uri.parse(r.image as String))
+                    }
                     val openRecipe = findViewById<RelativeLayout>(R.id.recipeNav3)
                     openRecipe.setOnClickListener{
                         val intent = Intent(this, RecipeCard::class.java)
