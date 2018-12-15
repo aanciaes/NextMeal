@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -22,11 +23,8 @@ import java.time.LocalDateTime
 class CreatePollFragment : Fragment() {
 
     val recipes = mutableListOf<Recipe>()
-    var firstInit = true
-    var firstInit2 = true
-    var firstInit3 = true
 
-    val selectedRecipes = mutableListOf<Recipe?>(null, null, null)
+    val selectedRecipes = mutableListOf<Recipe>()
     var date: LocalDateTime? = null
 
     init {
@@ -42,8 +40,12 @@ class CreatePollFragment : Fragment() {
         val dropdown = view.findViewById(R.id.spinner1) as Spinner
         val dropdown2 = view.findViewById(R.id.spinner2) as Spinner
         val dropdown3 = view.findViewById(R.id.spinner3) as Spinner
-        val list = recipes.map { it.name } as MutableList
-        list.sort()
+        val tmp = recipes.map { it.name } as MutableList
+        val list = mutableListOf<String>()
+        list.add("Choose a recipe")
+        tmp.sort()
+        list.addAll(tmp)
+
         val adapter = ArrayAdapter<String>(this.context!!, R.layout.simple_spinner_dropdown_item, list)
         val adapter2 = ArrayAdapter<String>(this.context!!, R.layout.simple_spinner_dropdown_item, list)
         val adapter3 = ArrayAdapter<String>(this.context!!, R.layout.simple_spinner_dropdown_item, list)
@@ -143,7 +145,7 @@ class CreatePollFragment : Fragment() {
                     dialog.show()
                 } else {
 
-                    val poll = Poll(5, pollName.text.toString(), users, MockDatabase.loggedInUser?.username.toString(), recipes, null, date!!, true)
+                    val poll = Poll(MockDatabase.polls.size + 1, pollName.text.toString(), users, MockDatabase.loggedInUser?.username.toString(), selectedRecipes, null, date!!, true)
 
                     MockDatabase.polls.add(poll)
 
@@ -180,8 +182,8 @@ class CreatePollFragment : Fragment() {
         }
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            val recipeSelected = recipes.find { it.name == recipes[position].name }
-            if (!firstInit && view != null) {
+            if (view != null && position > 0) {
+                val recipeSelected = recipes.find { it.name == recipes[position - 1].name }
                 selectedRecipes.add(0, recipeSelected!!)
 
                     val outerView = activity
@@ -198,15 +200,18 @@ class CreatePollFragment : Fragment() {
                     if (recipeSelected.image is Int) {
                         recipeImage!!.setBackgroundResource(recipeSelected.image as Int)
                     } else {
-                        val d = Drawable.createFromPath(recipeSelected.image as String)
+                        val uri = Uri.parse(recipeSelected.image as String)
+                        val input = activity?.contentResolver?.openInputStream(uri)
+                        val d = Drawable.createFromStream(input, uri.toString())
+                        input?.close()
                         recipeImage?.background = d
                     }
 
                     val recipeName = container?.findViewById<TextView>(R.id.recipeNamePoll)
                     recipeName?.text = recipeSelected.name
-                } else {
-                    firstInit = false
-                }
+            } else if (view != null) {
+                (view as TextView).text = ""
+            }
             }
         }
 
@@ -216,8 +221,8 @@ class CreatePollFragment : Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val recipeSelected = recipes.find { it.name == recipes[position].name }
-                if (!firstInit2 && view != null) {
+                if (view != null && position > 0) {
+                    val recipeSelected = recipes.find { it.name == recipes[position - 1].name }
                     selectedRecipes.add(1, recipeSelected!!)
 
                     val outerView = activity
@@ -235,14 +240,17 @@ class CreatePollFragment : Fragment() {
                     if (recipeSelected.image is Int) {
                         recipeImage!!.setBackgroundResource(recipeSelected.image as Int)
                     } else {
-                        val d = Drawable.createFromPath(recipeSelected.image as String)
+                        val uri = Uri.parse(recipeSelected.image as String)
+                        val input = activity?.contentResolver?.openInputStream(uri)
+                        val d = Drawable.createFromStream(input, uri.toString())
+                        input?.close()
                         recipeImage?.background = d
                     }
 
                     val recipeName = container?.findViewById<TextView>(R.id.recipeNamePoll2)
                     recipeName?.text = recipeSelected.name
-                } else {
-                    firstInit2 = false
+                } else if (view != null) {
+                    (view as TextView).text = ""
                 }
             }
         }
@@ -253,8 +261,8 @@ class CreatePollFragment : Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val recipeSelected = recipes.find { it.name == recipes[position].name }
-                if (!firstInit3 && view != null) {
+                if (view != null && position > 0) {
+                    val recipeSelected = recipes.find { it.name == recipes[position - 1].name }
                     selectedRecipes.add(2, recipeSelected!!)
 
                     val outerView = activity
@@ -271,14 +279,17 @@ class CreatePollFragment : Fragment() {
                     if (recipeSelected.image is Int) {
                         recipeImage!!.setBackgroundResource(recipeSelected.image as Int)
                     } else {
-                        val d = Drawable.createFromPath(recipeSelected.image as String)
+                        val uri = Uri.parse(recipeSelected.image as String)
+                        val input = activity?.contentResolver?.openInputStream(uri)
+                        val d = Drawable.createFromStream(input, uri.toString())
+                        input?.close()
                         recipeImage?.background = d
                     }
 
                     val recipeName = container?.findViewById<TextView>(R.id.recipeNamePoll3)
                     recipeName?.text = recipeSelected.name
-                } else {
-                    firstInit3 = false
+                } else if (view != null) {
+                    (view as TextView).text = ""
                 }
             }
         }

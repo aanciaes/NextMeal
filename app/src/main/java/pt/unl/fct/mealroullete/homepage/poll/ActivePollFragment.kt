@@ -43,7 +43,7 @@ class ActivePollFragment : Fragment() {
                     child.setOnClickListener {
                         val intent = Intent(context, PollVoteActivity::class.java)
                         val b = Bundle()
-                        b.putString("name", p.name) //Your id
+                        b.putInt("name", p.id) //Your id
                         intent.putExtras(b)
                         startActivity(intent)
                     }

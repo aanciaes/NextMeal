@@ -24,9 +24,8 @@ class PollVoteActivity : AppCompatActivity() {
         val currentVote = null
 
         val b = intent.extras
-        var value = "" // or other values
         if (b != null) {
-            value = b.getString("name")
+            val value = b.getInt("name")
             val poll = MockDatabase.findPoll(value)
             var counter = 0
             for (r in poll!!.recipes ){
